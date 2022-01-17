@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+
+<section class="register-photo">
+{% if form.errors %}
+<p>
+votre mot de passe ou nom utilisateur est incorrecte
+essayer une autre fois.
+</p>
+{% else %}
+
+{% endif %}
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form method="post">
+                {% csrf_token %}
+                <h2 class="text-center"><strong>S'identiifer</strong></h2>
+                <div class="form-group">
+                    {{form.username }}
+                </div>
+                <div class="form-group">
+                    {{ form.password }}
+                </div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">
+                    S'identifier
+                </button>
+                </div>
+                <a class="already" href="{% url "account:register" %}">si vous n'avez pas un compte:Creez le</a>
+                <a class="already" href="{% url "account:password_reset" %}">Vous avez Oublier Votre mot de passe?</a>
+            </form>
+        </div>
+    </section>
+
+
+{% endblock %}

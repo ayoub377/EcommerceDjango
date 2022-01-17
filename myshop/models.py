@@ -1,0 +1,51 @@
+from django.db import models
+from django.urls import reverse
+from mptt.models import MPTTModel, TreeForeignKey
+
+
+class Category(MPTTModel):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    class MPTTMETA:
+        order_insertion = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('myshop:product_list_by_category',
+                       args=[self.id, self.slug])
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    category = TreeForeignKey('Category', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=7, decimal_places=2)
+    description = models.CharField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='produits')
+    discount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+    available = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def price_after_Discount(self):
+        price = self.price - (self.discount / 100 * self.price)
+        return round(price, 2)
+
+    def __str__(self):
+        return self.name
+
+
+class Images(models.Model):
+    image = models.ImageField(upload_to='produits/subpictures')
+    name = models.CharField(max_length=70)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

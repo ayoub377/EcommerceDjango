@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<!-- jQuery UI !-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
+  <link href="{% static 'src/css/mag.css' %}" rel="stylesheet" />
+
+
+	<link href="{% static 'src/theme/default.css' %}" rel="stylesheet" />
+    <!-- Font awesome -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="{% static 'css/jquery.smartmenus.bootstrap.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+
+    <!-- Theme color -->
+    <link id="switcher" href="{% static 'css/theme-color/default-theme.css' %}" rel="stylesheet">
+    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
+    <!-- Top Slider CSS -->
+    <link href="{% static 'css/sequence-theme.modern-slide-in.css' %}" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="{% static 'css/login-register.css' %}">
+     <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'fonts1/material-icon/css/material-design-iconic-font.min.css' %}">
+    <!-- Main css -->
+    <!-- Main style sheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style1.css' %}" rel="stylesheet">
+    <link href="https://cdn.reflowhq.com/v1/toolkit.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick-theme.css' %}"/>
+  </head>
+  <body style="position: relative">
+  <!-- SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href=""><i class="fa fa-chevron-up"></i></a>
+  <!-- END SCROLL TOP BUTTON -->
+
+  <!-- Start header section -->
+  <header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-top-area">
+              <!-- start header top left -->
+              <div class="aa-header-top-left">
+                <!-- start cellphone -->
+                <div class="cellphone hidden-xs">
+                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
+                </div>
+                <!-- / cellphone -->
+              </div>
+              <!-- / header top left -->
+              <div class="aa-header-top-right">
+                <ul class="aa-head-top-nav-right">
+                  {% if request.user.is_authenticated%}
+                      <li>
+                      <div class="dropdown show">
+                        <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{ request.user.username }}
+                        </a>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{% url "account:logout" %}">Logout
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </a>
+                          </div>
+                      </div>
+                      </li>
+                      {% else %}<li><a href="{% url "account:login" %}">
+                    Login</a></li>
+                {% endif %}
+                  <li class="hidden-xs"><a href="{% url "cart:cart_detail" %}">Mon Panier</a></li>
+                  <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header top  -->
+
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-bottom-area">
+              <!-- logo  -->
+              <div class="aa-logo">
+                <!-- Text based logo -->
+                <a href="{% url "myshop:home" %}">
+                  <span class="fa fa-shopping-cart"></span>
+                  <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
+                </a>
+                <!-- img based logo -->
+                <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
+              </div>
+              <!-- / logo  -->
+               <!-- cart box -->
+              <div class="aa-cartbox">
+                <a class="aa-cart-link" href="{% url "cart:cart_detail" %}">
+                  <span class="fa fa-shopping-basket"></span>
+                  <span class="aa-cart-title">Panier</span>
+                  <span class="aa-cart-notify">{{ cart|length }}</span>
+                </a>
+                <div class="aa-cartbox-summary">
+                  <ul>
+                      {% for item in cart %}
+                          {% with product=item.product %}
+                    <li>
+                      <a class="aa-cartbox-img" href="#"><img src="{{ product.image.url }}"
+                                                              width="150px" height="150px" alt="img">
+                      </a>
+                      <div class="aa-cartbox-info">
+                        <h4><a href="#">{{ product.name }}</a></h4>
+                        <p>{{ item.quantity }}x{{ item.price }}</p>
+                      </div>
+                      <a class="aa-remove-product" href="{% url "cart:cart_remove"  product.id%}">
+                          <span class="fa fa-times"></span>
+                      </a>
+                    </li>
+                          {% endwith %}
+                      {% endfor %}
+                    <li>
+                      <span class="aa-cartbox-total-title">
+                        Total
+                      </span>
+                      <span class="aa-cartbox-total-price">
+                        {{ cart.get_total_price }} Dhs
+                      </span>
+                    </li>
+                  </ul>
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                </div>
+              </div>
+              <!-- / cart box -->
+            <script>
+             $(function() {
+    $("#query").autocomplete({
+      source: "{% url 'myshop:search_auto' %}",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 2,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+            </script>
+
+              <!-- search box -->
+              <div class="aa-search-box">
+                <form action="{% url 'myshop:product_search' %}" method="get">
+                    {% csrf_token %}
+                  <input type="text" name="query" id="query" placeholder="rechercher ... ">
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>
+              <!-- / search box -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header bottom  -->
+  </header>
+  <!-- / header section -->
+  <!-- menu -->
+  <section id="menu">
+    <div class="container">
+      <div class="menu-area">
+        <!-- Navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header" style="margin-left: 600px">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse">
+            <!-- Left nav -->
+              {% load mptt_tags %}
+            <ul class="nav navbar-nav">
+                {% recursetree categories %}
+              <li {% if category.slug == node.slug %} class="active" {% endif %}><a href="{{ node.get_absolute_url }}">
+                  {{ node.name}}<span class="caret"></span></a>
+                  {% if not node.is_leaf_node %}
+                <ul class="dropdown-menu">
+                    {{ children }}
+                </ul>
+                  {% endif %}
+              </li>
+            {% endrecursetree %}
+                </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+  </section>
+  {% block slider %}{% endblock %}
+  <!-- / menu -->
+{% block content %}{% endblock %}
+  <!-- Products section -->
+  {% block products %} {% endblock %}
+  <!-- / Products section -->
+  <!-- banner section -->
+
+  <!-- popular section -->
+
+  <!-- / popular section -->
+  <!-- Support section -->
+
+  <!-- / Support section -->
+
+
+
+
+
+
+  <!-- footer -->
+  <footer class="footer-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3 item">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Web design</a></li>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Hosting</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-3 item">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">Company</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6 item text">
+                <h3>Company Name</h3>
+                <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+            </div>
+            <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+        </div>
+        <p class="copyright">Company Name © 2021</p>
+    </div>
+</footer>
+
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4>Login or Register</h4>
+          <form class="aa-login-form" action="{% url "account:login" %}" method="post">
+            {{ login_form.as_p }}
+              {% csrf_token %}
+            <button class="aa-browse-btn" type="submit">Login</button>
+            <p class="aa-lost-password"><a href="{% url "account:password_reset" %}">Oubliez votre mot de passe?</a></p>
+            <div class="aa-register-now">
+              Vous avez pas encore creer Un compte?<a href="{% url "account:register" %}">Creez un compte!</a>
+            </div>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- SmartMenus jQuery plugin -->
+  <script type="text/javascript" src="{% static 'js/jquery.smartmenus.js' %}"></script>
+  <!-- SmartMenus jQuery Bootstrap Addon -->
+  <script type="text/javascript" src="{% static 'js/jquery.smartmenus.bootstrap.js' %}"></script>
+  <!-- To Slider JS -->
+
+  <!-- Product view slider -->
+
+  <!-- slick slider -->
+
+  <!-- Price picker slider -->
+
+  <!-- Custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="{% static 'js/js1.js' %}"></script>
+  <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
+
+  </body>
+</html>
+

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}homePage{% endblock title%}
+{% block slider %}{% include 'shop/slider.html' %}{% endblock %}
+{% block products %}
+
+
+
+   <section class="deals-wrapper" style="position: relative;top:200px;height: 450px">
+
+       <div class="deals">
+           {% for product in hot_deals %}
+               <div class="item-deal" url="{% url 'myshop:details_product' product.id%}">
+                    <div class="img-deal">
+                        <a href="{% url 'myshop:details_product' product.id %}">
+                      <img src="{{ product.image.url }}" width="200px" height="140px">
+                            </a>
+                     </div>
+                    <div class="title-deal">
+                     <h4>{{ product.name }}</h4>
+                    </div>
+
+                    <div class="price-deal">
+                        <ul style="min-height: 21px;list-style: none">
+                            <li class="price-now">
+                                <span class="price-prod">
+                                    {{ product.price_after_Discount }}
+                                </span>
+                            </li>
+                            <li class="price-prev">
+                                <span class="prev-price-prod">
+                                    {{ product.price }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+               </div>
+           {% endfor %}
+       </div>
+
+  </section>
+
+
+
+<script>
+$('.item-deal').click(function (){
+    window.location = $(this).attr("url");
+});
+</script>
+
+
+{% endblock %}
+
+

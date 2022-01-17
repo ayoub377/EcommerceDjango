@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+   <div class="container" style="margin-right: 3px;height: 1400px">
+    <h1 class="text-center">Product Details</h1>
+    <div class="row" style="height: 846px">
+        <div class="col-md-9 col-sm-12 col-xs-12 content">
+        <div class="col-md-9 col-sm-12 col-xs-12 img-div">
+            <div class="row">
+                <div id="img-content" class="col-md-9 col-sm-12 col-xs-12 img-content" style="min-width: 360px" mag-thumb="inner">
+                    <img id="img-center" class="img-fluid center-block active" src="{{ product.image.url }}" style="margin-top: 10px;height: 220px;width: 100%" data-zoom-image="{{ product.image.url }}"/>
+                </div>
+            </div>
+            <div class="row">
+                {% for imagesecond in images %}
+                <div id="gallery_01" class="col-6 col-sm-6 col-md-6 col-xs-12" {% if forloop.counter == 1 %}style="left: 60px"{% else %}
+                style="right: 60px"{% endif %}>
+                    <img id="img-center" class="img-thumbnail img-fluid center-block" src="{{ imagesecond.image.url }}"
+                         style="width: 80px;margin-left: 10px;cursor: pointer;height: 75px"
+                         data-zoom-image="{{ imagesecond.image.url }}" onclick="ChangeImg(this)" />
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12 col-xs-12 name-info-div">
+            <h1>Lorem Ipsum</h1>
+
+        </div>
+    </div>
+
+    <div class="col-md-3 cart-div">
+        <div class="price">
+         <span>{{ product.price }} Dhs</span>
+        </div>
+        <form method="post" action="{% url 'cart:cart_add' product.id %}">
+            {% csrf_token %}
+            <div data-reflow-type="add-to-cart" data-reflow-product="558773655" data-reflow-variant="746363596_s">
+    <div class="ref-product-controls">
+        <div class="ref-quantity-widget">
+            <button id="plusminus" class="btn btn-light" style="border-right-width: 0px;
+border-left-width: 0;
+border-bottom-width: 0;
+border-top-width: 0;
+cursor: pointer;
+font-size: 22px;
+line-height: 36px;
+width: 35px;
+text-align: center;
+user-select: none;
+border-color: darkgray" type="button" data-field="quantity"
+                    data-type="minus"
+                    onclick="addplusminus(this)">
+                -
+            </button>
+            {{ formCart.quantity }}
+
+            <button id="plusminus" class="btn-light" style="
+            border-bottom-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            border-top-width: 0;
+            border-color: darkgray;
+            cursor: pointer;
+            font-size: 22px;
+            line-height: 36px;
+            width: 35px;
+            text-align: center;
+            user-select: none;" type="button" data-field="quantity" data-type="plus"
+                    onclick="addplusminus(this)">+</button>
+        </div>
+
+            <button class="ref-button" type="submit" style="background-color: green">Ajouter au panier</button>
+    </div>
+</div>
+				</form>
+    </div>
+
+    </div>
+
+   <section class="features-boxed related">
+   <h3 style="font-size: 18px;color: black">Produits apparentes:</h3>
+    <div class="container-fluid" style="margin-right: -50px">
+
+        <div class="row justify-content-center features" style="width: fit-content">
+            {% for recommended in recommended_products %}
+
+            <div id="item" class=" col-xs col-sm col-md-3 col-lg-3 item" style="width: 220px;height: 320px;
+            max-width: 220px">
+
+                <div class="box" style="width: 190px;height: 295px">
+                    <img src="{{ recommended.image.url}}" class="img-fluid"
+                style="width: 80px;height: 125px"/>
+                    <h3 class="name">{{ recommended.name }}</h3>
+                    <h3 class="price">{{ recommended.price }} Dhs</h3>
+                    <div class="product-divider product-card-module">
+                  <div class="product-card-module_add-to-cart-button-wrapper">
+                      <a href="{% url 'cart:cart_addlist' recommended.id %}">
+                      <button class="button  expanded add-to-cart-button add-to-cart-button-module_add-to-cart-button
+                      ghost">
+                          <i class="fa fa-shopping-cart"></i>
+                          Ajouter Au Panier
+                      </button>
+                      </a>
+                      <a href="{% url 'myshop:details_product' recommended.id %}">
+                          <button class="btn details">
+                             details
+                          </button>
+                      </a>
+                  </div>
+                </div>
+                </div>
+
+
+
+            </div>
+
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+   <div class="row" style="height: 546px">
+       <div class="col-md-12 description-div">
+           <div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item active" role="presentation">
+            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-1">Description</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Avis</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane active" role="tabpanel">
+            <p>{{ product.description }}</p>
+        </div>
+        <div id="tab-2" class="tab-pane" role="tabpanel">
+            <p>Content for tab 2.</p>
+        </div>
+
+    </div>
+</div>
+       </div>
+
+   </div>
+
+
+</div>
+
+    <script>
+
+$(document).ready(
+    function (){
+       StartZoom();
+    }
+)
+
+    </script>
+
+{% endblock %}

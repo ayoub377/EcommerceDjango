@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+</head>
+
+<body>
+    <section class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form method="post">
+                {% csrf_token %}
+                <h2 class="text-center"><strong>Creer</strong> un compte.</h2>
+                <div class="form-group">
+                    {{ user_form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.last_name }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.username }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.email }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.password }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.password2 }}
+                </div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">
+                    Creer votre compte
+                </button>
+                </div>
+                <a class="already" href="{% url "account:login" %}">Vous avez deja un compte? S'identifier.</a>
+            </form>
+        </div>
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Pay by credit card{% endblock %}
+{% block content %}
+    <style>
+    .hosted-field {
+  height: 50px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  display: inline-block;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+  line-height: 20px;
+  background: #fcfcfc;
+  margin-bottom: 12px;
+  background: linear-gradient(to right, white 50%, #fcfcfc 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 300ms ease-in-out;
+}
+
+.hosted-fields--label {
+  font-family: courier, monospace;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.button-container {
+  display: block;
+  text-align: center;
+}
+
+.button {
+  cursor: pointer;
+  font-weight: 500;
+  line-height: inherit;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+}
+
+.button--small {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+}
+
+.button--green {
+  outline: none;
+  background-color: #64d18a;
+  border-color: #64d18a;
+  color: white;
+  transition: all 200ms ease;
+}
+
+.button--green:hover {
+  background-color: #8bdda8;
+  color: white;
+}
+
+.braintree-hosted-fields-focused {
+  border: 1px solid #64d18a;
+  border-radius: 1px;
+  background-position: left bottom;
+}
+
+.braintree-hosted-fields-invalid {
+  border: 1px solid #ed574a;
+}
+
+.braintree-hosted-fields-valid {
+}
+
+#payment {
+  max-width: 50.75em;
+  margin: 0 auto;
+  padding: 1.875em;
+}
+    </style>
+<h1>Pay by credit card</h1>
+<form id="payment" method="post">
+<label for="card-number" class="hosted-fields--label">Card Number</label>
+<div id="card-number" class="hosted-field"></div>
+<label for="cvv" class="hosted-fields--label">CVV</label>
+<div id="cvv" class="hosted-field"></div>
+<label for="expiration-date" class="hosted-fields--label">Expiration Date</label>
+    <div id="expiration-date" class="hosted-field"></div>
+<input type="hidden" id="nonce"  name="payment_method_nonce" value="">
+{% csrf_token %}
+<input type="submit" class="button button--small button--green" value="Acheter">
+</form>
+<!-- includes the Braintree JS client SDK -->
+    <script src="https://js.braintreegateway.com/web/3.84.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.84.0/js/hosted-fields.min.js"></script>
+<script>
+let form = document.querySelector('#payment');
+let submit = document.querySelector('input[type="submit"]');
+braintree.client.create({
+authorization: '{{ client_token }}'
+}, function (clientErr, clientInstance) {}, function (clientErr, clientInstance) {
+if (clientErr) {
+console.error(clientErr);
+return;
+}
+braintree.hostedFields.create({
+client: clientInstance,
+styles: {
+'input': {'font-size': '13px'},
+'input.invalid': {'color': 'red'},
+'input.valid': {'color': 'green'}
+},
+fields: {
+number: {selector: '#card-number'},
+cvv: {selector: '#cvv'},
+expirationDate: {selector: '#expiration-date'}
+}
+}, function (hostedFieldsErr, hostedFieldsInstance) {
+    if (hostedFieldsErr) {
+        console.error(hostedFieldsErr);
+        return;
+    }
+submit.removeAttribute('disabled');
+    form.addEventListener('submit', function (event) {
+event.preventDefault();
+hostedFieldsInstance.tokenize(function (tokenizeErr,
+payload) {
+if (tokenizeErr) {
+console.error(tokenizeErr);
+return;
+}
+// set nonce to send to the server
+document.getElementById('nonce').value = payload.nonce;
+// submit form
+document.getElementById('payment').submit();
+});
+}, false);
+});
+});
+</script>
+{% endblock %}

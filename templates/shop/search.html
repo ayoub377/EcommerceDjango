@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>products containing : "{{ query }}"</h1>
+
+    <section class="features-boxed boox">
+    <div class="container-fluid prods" style="max-width: 1200px;position: relative;left: 100px;">
+
+        <div class="row justify-content-center features" style="width: fit-content;position: relative
+;top:-200px;">
+            {% for product in results %}
+
+            <div id="item" class=" col-xs col-sm col-md-3 col-lg-3 col-xl-3 item" style="width: 220px;height: 320px;
+            max-width: 220px">
+
+                <div class="box" style="width: 190px;height: 295px">
+                    <img src="{{ product.image.url}}" class="img-fluid"
+                style="width: 80px;height: 125px"/>
+                    <h3 class="name">{{ product.name }}</h3>
+                    <h3 class="price">{{ product.price }} Dhs</h3>
+                    <div class="product-divider product-card-module">
+                  <div class="product-card-module_add-to-cart-button-wrapper">
+                      <a href="{% url 'cart:cart_addlist' product.id %}">
+                      <button class="button  expanded add-to-cart-button add-to-cart-button-module_add-to-cart-button
+                      ghost">
+                          <i class="fa fa-shopping-cart"></i>
+                          Ajouter Au Panier
+                      </button>
+                      </a>
+                      <a href="{% url 'myshop:details_product' product.id %}">
+                          <button class="btn details">
+                             details
+                          </button>
+                      </a>
+                  </div>
+                </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
