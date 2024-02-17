@@ -1,124 +1,125 @@
 {% load static %}
-
 <header class="header">
-           <div class="header-top">
-                <div class="container">
-                    <div class="header-right">
-                        <span class="separator"></span>
+    <div class="header-top">
+        <div class="container">
+            <div class="header-right">
+                <span class="separator"></span>
 
-                        <div class="header-dropdown dropdown-expanded mx-2 px-1">
-                            <a href="#">Links</a>
-                            <div class="header-menu">
-                                <ul>
-                                    <li>
-                                        {% if request.user.is_authenticated %}
-                                           <a href="{% url 'account:dashboard' %}">{{ request.user.username }} </a>
-                                        {% else %}
-                                            <a href="{% url 'account:login' %}">s'identifier </a>
-                                        {% endif %}
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Nous contacter</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Mon Panier</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- End .header-menu -->
-                        </div>
-                        <!-- End .header-dropown -->
-
-                        <span class="separator"></span>
-
-                        <div class="social-icons d-flex">
-                            <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
-                            <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-                            <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
-                        </div>
-                        <!-- End .social-icons -->
+                <div class="header-dropdown dropdown-expanded mx-2 px-1">
+                    <a href="#">Links</a>
+                    <div class="header-menu">
+                        <ul>
+                            <li>
+                                {% if request.user.is_authenticated %}
+                                    <a href="{% url 'account:dashboard' %}">{{ request.user.username }} </a>
+                                {% else %}
+                                    <a href="{% url 'account:login' %}">s'identifier </a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <a href="contact.html">Nous contacter</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Mon Panier</a>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- End .header-right -->
+                    <!-- End .header-menu -->
                 </div>
-                <!-- End .container -->
+                <!-- End .header-dropown -->
+
+                <span class="separator"></span>
+
+                <div class="social-icons d-flex">
+                    <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
+                    <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
+                    <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
+                </div>
+                <!-- End .social-icons -->
             </div>
-            <!-- End .header-top -->
+            <!-- End .header-right -->
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .header-top -->
 
-            <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
-                <div class="container">
-                    <div class="header-left w-lg-max ml-auto ml-lg-0">
-                        <div class="header-icon header-search header-search-inline header-search-category">
-                            <a href="#" class="search-toggle" role="button">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required>
-                                    <div class="select-custom body-text">
-                                        <select id="cat" name="cat">
-											<option value="">Tous</option>
-                                                {% for category in categories %}
-                                                <option value="{{ category.id }}">{{ category.name }}</option>
-                                            {% endfor %}
-										</select>
-                                    </div>
-                                    <!-- End .select-custom -->
-                                    <button class="btn icon-magnifier p-0" type="submit"></button>
-                                </div>
-                                <!-- End .header-search-wrapper -->
-                            </form>
+    <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
+        <div class="container">
+            <div class="header-left w-lg-max ml-auto ml-lg-0">
+                <div class="header-icon header-search header-search-inline header-search-category">
+                    <a href="#" class="search-toggle" role="button">
+                        <i class="icon-magnifier"></i>
+                    </a>
+                    <form action="{% url 'myshop:product_search' %}" method="get">
+                        <div class="header-search-wrapper">
+                            <input type="search" class="form-control" name="query" id="qqq" placeholder="Search..."
+                                   required>
+                            <div class="select-custom">
+                                <select id="cat-1" name="cat">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!-- End .select-custom -->
+                            <button class="btn p-0 icon-magnifier" type="submit"></button>
                         </div>
-                        <!-- End .header-search -->
-                    </div>
-                    <!-- End .header-left -->
+                        <!-- End .header-search-wrapper -->
+                    </form>
+                </div>
+                <!-- End .header-search -->
+            </div>
+            <!-- End .header-left -->
 
-                    <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
-                        <button class="mobile-menu-toggler" type="button">
-							<i class="fas fa-bars"></i>
-						</button>
-                        <a href="demo14.html" class="logo">
-                            <img src="assets/images/logo-black.png" alt="Porto Logo" width="202" height="80">
-                        </a>
-                    </div>
-                    <!-- End .header-center -->
+            <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
+                <button class="mobile-menu-toggler" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="demo14.html" class="logo">
+                    <img src="assets/images/logo-black.png" alt="Porto Logo" width="202" height="80">
+                </a>
+            </div>
+            <!-- End .header-center -->
 
-                    <div class="header-right w-lg-max ml-0 ml-lg-auto">
-                        <div class="header-contact d-none d-lg-flex align-items-center ml-auto mr-4">
-                            <i class="icon-phone-2"></i>
-                            <h6 class="line-height-1 pr-2">Call us now
-                                <a href="tel:#" class="d-block text-dark font1">+123 5678 890</a>
-                            </h6>
-                        </div>
-                        <!-- End .header-contact -->
+            <div class="header-right w-lg-max ml-0 ml-lg-auto">
+                <div class="header-contact d-none d-lg-flex align-items-center ml-auto mr-4">
+                    <i class="icon-phone-2"></i>
+                    <h6 class="line-height-1 pr-2">Call us now
+                        <a href="tel:#" class="d-block text-dark font1">+123 5678 890</a>
+                    </h6>
+                </div>
+                <!-- End .header-contact -->
 
-                        <a href="login.html" class="header-icon login-link pl-1">
-                            <i class="icon-user-2"></i>
-                        </a>
+                <a href="login.html" class="header-icon login-link pl-1">
+                    <i class="icon-user-2"></i>
+                </a>
 
-                        <a href="#" class="header-icon btn-wishlist pl-1 pr-2">
-                            <i class="icon-wishlist-2"></i>
-                        </a>
+                <a href="#" class="header-icon btn-wishlist pl-1 pr-2">
+                    <i class="icon-wishlist-2"></i>
+                </a>
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="minicart-icon"></i>
-                                <span class="cart-count badge-circle">{{ cart|length }}</span>
-                            </a>
+                <div class="dropdown cart-dropdown">
+                    <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="minicart-icon"></i>
+                        <span class="cart-count badge-circle">{{ cart|length }}</span>
+                    </a>
 
-                            <div class="cart-overlay"></div>
+                    <div class="cart-overlay"></div>
 
-                            <div class="dropdown-menu mobile-cart">
-                                <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                    <div class="dropdown-menu mobile-cart">
+                        <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
-                                <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
-                                    <!-- End .dropdown-cart-header -->
+                        <div class="dropdownmenu-wrapper custom-scrollbar">
+                            <div class="dropdown-cart-header">Shopping Cart</div>
+                            <!-- End .dropdown-cart-header -->
 
-                                    <div class="dropdown-cart-products">
-                                       {% for item in cart %}
-                                           {% with product=item.product %}
-                                             <div class="product">
-                                                <div class="product-details">
+                            <div class="dropdown-cart-products">
+                                {% for item in cart %}
+                                    {% with product=item.product %}
+                                        <div class="product">
+                                            <div class="product-details">
                                                 <h4 class="product-title">
                                                     <a href="demo14-product.html">{{ product.name }}</a>
                                                 </h4>
@@ -130,62 +131,66 @@
                                             <!-- End .product-details -->
                                             <figure class="product-image-container">
                                                 <a href="demo14-product.html" class="product-image">
-                                                    <img src="{{ product.image.url }}" alt="product" width="80" height="80">
+                                                    <img src="{{ product.image.url }}" alt="product" width="80"
+                                                         height="80">
                                                 </a>
-                                                <a href="{% url 'cart:cart_remove' product.id %}" class="btn-remove" title="Remove Product">
+                                                <a href="{% url 'cart:cart_remove' product.id %}" class="btn-remove"
+                                                   title="Remove Product">
                                                     <span>×</span>
                                                 </a>
                                             </figure>
                                         </div>
-                                        {% endwith %}
-                                        {% endfor %}
-                                    </div>
-                                    <!-- End .cart-product -->
-
-                                    <div class="dropdown-cart-total">
-                                        <span>SUBTOTAL:</span>
-
-                                        <span class="cart-total-price float-right">{{ cart.get_total_price }}</span>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray btn-block view-cart">View Cart
-										</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-                                </div>
-                                <!-- End .dropdownmenu-wrapper -->
+                                    {% endwith %}
+                                {% endfor %}
                             </div>
-                            <!-- End .dropdown-menu -->
-                        </div>
-                        <!-- End .dropdown -->
-                    </div>
-                    <!-- End .header-right -->
-                </div>
-                <!-- End .container -->
-            </div>
-            <!-- End .header-middle -->
+                            <!-- End .cart-product -->
 
-            <div class="header-bottom sticky-header d-lg-block d-none" data-sticky-options="{'mobile': false}">
-                <div class="container">
-                    <div class="header-left">
-                        <a href="demo14.html" class="logo">
-                            <img src="assets/images/logo-black.png" class="white-logo sticky-logo" alt="Porto Logo" width="110" height="46">
-                        </a>
+                            <div class="dropdown-cart-total">
+                                <span>SUBTOTAL:</span>
+
+                                <span class="cart-total-price float-right">{{ cart.get_total_price }}</span>
+                            </div>
+                            <!-- End .dropdown-cart-total -->
+
+                            <div class="dropdown-cart-action">
+                                <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray btn-block view-cart">View
+                                    Cart
+                                </a>
+                                <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
+                            </div>
+                            <!-- End .dropdown-cart-total -->
+                        </div>
+                        <!-- End .dropdownmenu-wrapper -->
                     </div>
-                    <nav class="main-nav d-flex w-lg-max justify-content-center">
-                          {% load mptt_tags %}
-                        <ul class="menu">
-                            <!-- Implement check if its active -->
-                            <li class="active">
-                                <a href="{% url 'myshop:home' %}">Home</a>
-                            </li>
-                            {% recursetree categories %}
-                            <li>
-                                <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ node.name }}</a>
-                                {% if not node.is_leaf_node %}
+                    <!-- End .dropdown-menu -->
+                </div>
+                <!-- End .dropdown -->
+            </div>
+            <!-- End .header-right -->
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .header-middle -->
+
+    <div class="header-bottom sticky-header d-lg-block d-none" data-sticky-options="{'mobile': false}">
+        <div class="container">
+            <div class="header-left">
+                <a href="demo14.html" class="logo">
+                    <img src="assets/images/logo-black.png" class="white-logo sticky-logo" alt="Porto Logo" width="110"
+                         height="46">
+                </a>
+            </div>
+            <nav class="main-nav d-flex w-lg-max justify-content-center">
+                {% load mptt_tags %}
+                <ul class="menu">
+                    <!-- Implement check if its active -->
+                    <li class="active">
+                        <a href="{% url 'myshop:home' %}">Home</a>
+                    </li>
+                    {% recursetree categories %}
+                        <li>
+                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ node.name }}</a>
+                            {% if not node.is_leaf_node %}
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
                                         <div class="col-lg-4">
@@ -195,62 +200,65 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% endif %}
-                                <!-- End .megamenu -->
-                            </li>
-                            {% endrecursetree %}
-                        </ul>
-                    </nav>
-                    <div class="header-right">
-                        <div class="header-search header-icon header-search-inline header-search-category w-lg-max">
-                            <a href="#" class="search-toggle" role="button">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="q" id="qqq" placeholder="Search..." required>
-                                    <div class="select-custom">
-                                        <select id="cat-1" name="cat">
-                                            {% for category in categories %}
-                                               <option value="{{ category.id }}">{{ category.name }}</option>
-                                            {% endfor %}
-										</select>
-                                    </div>
-                                    <!-- End .select-custom -->
-                                    <button class="btn p-0 icon-magnifier" type="submit"></button>
-                                </div>
-                                <!-- End .header-search-wrapper -->
-                            </form>
+                            {% endif %}
+                            <!-- End .megamenu -->
+                        </li>
+                    {% endrecursetree %}
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="header-search header-icon header-search-inline header-search-category w-lg-max">
+                    <a href="#" class="search-toggle" role="button">
+                        <i class="icon-magnifier"></i>
+                    </a>
+                    <form action="{% url 'myshop:product_search' %}" method="get">
+                        <div class="header-search-wrapper">
+                            <input type="search" class="form-control" name="query" id="qqq" placeholder="Search..."
+                                   required>
+                            <div class="select-custom">
+                                <select id="cat-1" name="cat">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!-- End .select-custom -->
+                            <button class="btn p-0 icon-magnifier" type="submit"></button>
                         </div>
-                        <!-- End .header-search -->
+                        <!-- End .header-search-wrapper -->
+                    </form>
+                </div>
+                <!-- End .header-search -->
 
-                        <a href="login.html" class="header-icon account-icon">
-                            <i class="icon-user-2"></i>
-                        </a>
+                <a href="login.html" class="header-icon account-icon">
+                    <i class="icon-user-2"></i>
+                </a>
 
-                        <a href="wishlist.html" class="header-icon">
-                            <i class="icon-wishlist-2"></i>
-                        </a>
+                <a href="wishlist.html" class="header-icon">
+                    <i class="icon-wishlist-2"></i>
+                </a>
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="minicart-icon"></i>
-                                <span class="cart-count badge-circle">{{ cart|length }}</span>
-                            </a>
+                <div class="dropdown cart-dropdown">
+                    <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="minicart-icon"></i>
+                        <span class="cart-count badge-circle">{{ cart|length }}</span>
+                    </a>
 
-                            <div class="cart-overlay"></div>
+                    <div class="cart-overlay"></div>
 
-                            <div class="dropdown-menu mobile-cart">
-                                <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                    <div class="dropdown-menu mobile-cart">
+                        <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
-                                <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
-                                    <!-- End .dropdown-cart-header -->
+                        <div class="dropdownmenu-wrapper custom-scrollbar">
+                            <div class="dropdown-cart-header">Shopping Cart</div>
+                            <!-- End .dropdown-cart-header -->
 
-                                    <div class="dropdown-cart-products">
-                                       {% for item in cart %}
-                                           {% with product=item.product %}
-                                             <div class="product">
+                            <div class="dropdown-cart-products">
+                                {% for item in cart %}
+                                    {% with product=item.product %}
+                                        <div class="product">
                                             <div class="product-details">
                                                 <h4 class="product-title">
                                                     <a href="demo14-product.html">{{ product.name }}</a>
@@ -263,7 +271,8 @@
 
                                             <figure class="product-image-container">
                                                 <a href="demo14-product.html" class="product-image">
-                                                    <img src="assets/images/products/product-1.jpg" alt="product" width="80" height="80">
+                                                    <img src="assets/images/products/product-1.jpg" alt="product"
+                                                         width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product">
@@ -271,33 +280,33 @@
                                                 </a>
                                             </figure>
                                         </div>
-                                        {% endwith %}
-                                        {% endfor %}
-                                        <!-- End .product -->
-                                    </div>
-                                    <!-- End .cart-product -->
-                                    <div class="dropdown-cart-total">
-                                        <span>SUBTOTAL:</span>
-
-                                        <span class="cart-total-price float-right">$134.00</span>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-gray btn-block view-cart">View Cart
-										</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
-                                    </div>
-                                    <!-- End .dropdown-cart-total -->
-                                </div>
-                                <!-- End .dropdownmenu-wrapper -->
+                                    {% endwith %}
+                                {% endfor %}
+                                <!-- End .product -->
                             </div>
-                            <!-- End .dropdown-menu -->
+                            <!-- End .cart-product -->
+                            <div class="dropdown-cart-total">
+                                <span>SUBTOTAL:</span>
+
+                                <span class="cart-total-price float-right">$134.00</span>
+                            </div>
+                            <!-- End .dropdown-cart-total -->
+
+                            <div class="dropdown-cart-action">
+                                <a href="cart.html" class="btn btn-gray btn-block view-cart">View Cart
+                                </a>
+                                <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
+                            </div>
+                            <!-- End .dropdown-cart-total -->
                         </div>
-                        <!-- End .dropdown -->
+                        <!-- End .dropdownmenu-wrapper -->
                     </div>
+                    <!-- End .dropdown-menu -->
                 </div>
-                <!-- End .container -->
+                <!-- End .dropdown -->
             </div>
-            <!-- End .header-bottom -->
-        </header>
+        </div>
+        <!-- End .container -->
+    </div>
+    <!-- End .header-bottom -->
+</header>

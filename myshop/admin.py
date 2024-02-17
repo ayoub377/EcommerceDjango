@@ -48,7 +48,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
-    list_display = ['name', 'slug', 'created', 'updated']
+    list_display = ['name', 'slug', 'created', 'updated', 'featured', 'available']
     prepopulated_fields = {'slug': ('name',)}
 
 

@@ -79,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'myshop.context_processors.list_categories',
-                'myshop.context_processors.hot_prods',
+                'myshop.context_processors.get_featured_products',
                 'cart.context_processors.cart',
                 'account.context_processors.getLogin',
                 'account.context_processors.userRegister',

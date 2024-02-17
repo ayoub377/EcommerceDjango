@@ -1,48 +1,129 @@
 {% extends 'base.html' %}
-{% block content %}
-<h1>products containing : "{{ query }}"</h1>
+{% block main %}
 
-    <section class="features-boxed boox">
-    <div class="container-fluid prods" style="max-width: 1200px;position: relative;left: 100px;">
+  {% if results %}
+              <main class="main caty-page">
+            <!-- parallax -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 main-content">
+                        <div class="row products-group products-caty">
+                            {% for product in results %}
+                                <div class="col-md-4 col-6">
+                                    <div class="product-default inner-quickview inner-icon quantity-input">
+                                        <figure>
+                                            <a href="{{ product.get_absolute_url }}">
+                                                <img src="{{ product.image.url }}" width="280" height="280"
+                                                     alt="{{ product.title }}">
+                                            </a>
+                                            {% if product.is_hot %}
+                                                <div class="label-group">
+                                                    <span class="product-label label-hot">HOT</span>
+                                                </div>
+                                            {% endif %}
+                                            {% if product.discount_percentage %}
+                                                <div class="label-group">
+                                                    <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
+                                                </div>
+                                            {% endif %}
+                                            <div class="btn-icon-group">
+                                                <a href="#" class="btn-icon btn-icon-wish">
+                                                    <i class="icon-heart"></i>
+                                                </a>
+                                            </div>
+                                            <a href="#" class="btn-quickview" title="Quick View">Quick View</a>
+                                        </figure>
+                                        <div class="product-details">
+                                            <div class="category-list">
+                                                <a href="{{ product.category.get_absolute_url }}"
+                                                   class="product-category">{{ product.category }}</a>
+                                            </div>
+                                            <h3 class="product-title"><a
+                                                    href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                            <div class="ratings-container">
+                                                <!-- Render product ratings here if available -->
+                                            </div>
+                                            <div class="price-box">
+                                                {% if product.discounted_price %}
+                                                    <span class="product-price">${{ product.discounted_price }}</span>
+                                                    <del class="product-old-price">${{ product.price }}</del>
+                                                {% else %}
+                                                    <span class="product-price">${{ product.price }}</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-action">
+                                                <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    <div class="product-single-qty">
+                                                        {{ formCart.quantity }}
+                                                    </div>
+                                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                                    {{ formCart.override }}
+                                                    <button type="submit"
+                                                            class="btn-icon btn-add-cart product-type-simple"><i
+                                                            class="icon-shopping-cart"></i><span>Ajouter Au Panier</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
 
-        <div class="row justify-content-center features" style="width: fit-content;position: relative
-;top:-200px;">
-            {% for product in results %}
+                    </div>
+                    <!-- End .col-lg-9 -->
 
-            <div id="item" class=" col-xs col-sm col-md-3 col-lg-3 col-xl-3 item" style="width: 220px;height: 320px;
-            max-width: 220px">
+                    <div class="sidebar-overlay"></div>
+                    <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
+                        <div class="sidebar-wrapper">
+                            <div class="widget">
+                            </div>
+                            <!-- End .widget -->
+                            <div class="widget widget-featured">
+                                <h3 class="widget-title">Featured</h3>
+                                <div class="widget-body">
+                                    <div class="owl-carousel widget-featured-products">
+                                        {% for product in featured_products %}
+                                            <div class="featured-col">
+                                                <div class="product-default left-details product-widget">
+                                                    <figure>
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            <img src="{{ product.image.url }}" width="84" height="84"
+                                                                 alt="{{ product.title }}"/>
+                                                        </a>
+                                                    </figure>
+                                                    <div class="product-details">
+                                                        <h3 class="product-title"><a
+                                                                href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                                        </h3>
+                                                        <div class="ratings-container">
+                                                            <!-- Add your rating display logic here if applicable -->
+                                                        </div>
+                                                        <div class="price-box">
+                                                            <span class="product-price">{{ product.price }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="box" style="width: 190px;height: 295px">
-                    <img src="{{ product.image.url}}" class="img-fluid"
-                style="width: 80px;height: 125px"/>
-                    <h3 class="name">{{ product.name }}</h3>
-                    <h3 class="price">{{ product.price }} Dhs</h3>
-                    <div class="product-divider product-card-module">
-                  <div class="product-card-module_add-to-cart-button-wrapper">
-                      <a href="{% url 'cart:cart_addlist' product.id %}">
-                      <button class="button  expanded add-to-cart-button add-to-cart-button-module_add-to-cart-button
-                      ghost">
-                          <i class="fa fa-shopping-cart"></i>
-                          Ajouter Au Panier
-                      </button>
-                      </a>
-                      <a href="{% url 'myshop:details_product' product.id %}">
-                          <button class="btn details">
-                             details
-                          </button>
-                      </a>
-                  </div>
+                            <!-- End .widget -->
+                            <!-- End .widget -->
+                        </div>
+                        <!-- End .sidebar-wrapper -->
+                    </aside>
+                    <!-- End .col-lg-3 -->
                 </div>
-                </div>
+                <!-- End .row -->
             </div>
+            <!-- End .container -->
+        </main>
 
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
+    {% endif %}
 
 {% endblock %}

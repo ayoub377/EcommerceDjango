@@ -1,7 +1,11 @@
+import re
+
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.views.generic import TemplateView, ListView
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from myshop.models import Product, Category, Images
 from .recommender import Recommender
 
@@ -11,7 +15,9 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['hot_deals'] = Product.objects.exclude(discount__isnull=True).order_by('created')
+        context['hot_deals'] = Product.objects.exclude(discount__isnull=True).order_by('-created')[:10]
+        context['featured_products'] = Product.objects.filter(featured=True)
+        context['categories'] = Category.objects.all()
         return context
 
 
@@ -38,19 +44,37 @@ class ProductListView(ListView):
         return context
 
 
-class ProductSearchView(ListView):
-    template_name = 'shop/search.html'
-    context_object_name = 'results'
-    paginate_by = 10
+def product_search_view(request):
+    query = request.GET.get('query')
+    cat_id = request.GET.get('cat')
 
-    def get_queryset(self):
-        query = self.request.GET.get('query')
-        search_vector = SearchVector('name', 'description')
-        search_query = SearchQuery(query)
-        return Product.objects.annotate(
-            search=search_vector,
-            rank=SearchRank(search_vector, search_query)
-        ).filter(search=search_query).order_by('-price')
+    # Convert query to lowercase for case insensitivity
+    query_lower = query.lower() if query else None
+
+    # Extract keywords from the query
+    keywords = [keyword.lower() for keyword in re.findall(r'\b\w{3,}\b', query)] if query else []
+
+    # Use Q objects to build a complex query for partial matches
+    search_filter = Q()
+    for keyword in keywords:
+        search_filter |= Q(name__icontains=keyword) | Q(description__icontains=keyword)
+
+    # Apply category filter if provided
+    if cat_id:
+        search_filter &= Q(category_id=cat_id)
+
+    # Execute the filtered query
+    queryset = Product.objects.filter(search_filter).order_by('-price')
+
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'results': page_obj,
+    }
+
+    return render(request, 'shop/search.html', context)
 
 
 class ProductDetailView(TemplateView):

@@ -10,9 +10,8 @@ def list_categories(request, category_slug=None):
     return {'categories': categories, 'category': category}
 
 
-def hot_prods(request):
-    products = Product.objects.all().order_by('created')[:3]
-    return {'products': products}
-
-
-
+def get_featured_products(request):
+    featured_products = Product.objects.filter(featured=True)
+    return {
+        'featured_products': featured_products
+    }

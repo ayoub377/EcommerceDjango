@@ -29,26 +29,6 @@ def register_customer(request):
         })
 
 
-# def register_customer(request):
-#     if request.method == 'POST':
-#         # Extract form data from request
-#         username = request.POST.get('username')
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         # Create and save Customer instance
-#         customer = Customer.objects.create_user(
-#             username=username,
-#             password=password,
-#             email=email,
-#         )
-#         customer.save()
-#         # Redirect to a success page
-#         return redirect('myshop:home')
-#
-#     # Render the registration form
-#     return render(request, 'registration/login.html')
-
-
 def login_customer(request):
     register_form = UserRegistrationForm()
     user_form = LoginForm()
