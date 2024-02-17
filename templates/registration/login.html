@@ -1,36 +1,93 @@
 {% extends "base.html" %}
-{% block title %}Log-in{% endblock %}
-{% block content %}
+{% block main %}
+		<main class="main">
+			<div class="container login-container">
+				<div class="row">
+					<div class="col-lg-10 mx-auto">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="heading mb-1">
+									<h2 class="title">Login</h2>
+								</div>
 
-<section class="register-photo">
-{% if form.errors %}
-<p>
-votre mot de passe ou nom utilisateur est incorrecte
-essayer une autre fois.
-</p>
-{% else %}
+								<form action="{% url 'account:login' %}" method="POST">
+									{% csrf_token %}
+                                    <label for="login-email">
+										Username
+										<span class="required">*</span>
+									</label>
+									{{ user_form.email }}
 
-{% endif %}
-        <div class="form-container">
-            <div class="image-holder"></div>
-            <form method="post">
-                {% csrf_token %}
-                <h2 class="text-center"><strong>S'identiifer</strong></h2>
-                <div class="form-group">
-                    {{form.username }}
-                </div>
-                <div class="form-group">
-                    {{ form.password }}
-                </div>
-                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">
-                    S'identifier
-                </button>
-                </div>
-                <a class="already" href="{% url "account:register" %}">si vous n'avez pas un compte:Creez le</a>
-                <a class="already" href="{% url "account:password_reset" %}">Vous avez Oublier Votre mot de passe?</a>
-            </form>
-        </div>
-    </section>
+									<label for="login-password">
+										Password
+										<span class="required">*</span>
+									</label>
+									{{ user_form.password }}
 
+									<div class="form-footer">
+										<div class="custom-control custom-checkbox mb-0">
+											<input type="checkbox" class="custom-control-input" id="lost-password" />
+											<label class="custom-control-label mb-0" for="lost-password">Remember
+												me</label>
+										</div>
+
+										<a href="forgot-password.html"
+											class="forget-password text-dark form-footer-right">Forgot
+											Password?</a>
+
+									</div>
+									<button type="submit" class="btn btn-dark btn-md w-100">
+										LOGIN
+									</button>
+								</form>
+							</div>
+							<div class="col-md-6">
+								<div class="heading mb-1">
+									<h2 class="title">Register</h2>
+								</div>
+								<form action="{% url 'account:register' %}" method="POST">
+                                    {% csrf_token %}
+                                    <label for="register-email">
+										Fist Name
+										<span class="required">*</span>
+									</label>
+                                        {{ register_form.first_name }}
+									  <label for="register-email">
+										Last Name
+										<span class="required">*</span>
+									</label>
+                                        {{ register_form.last_name }}
+                                      <label for="register-email">
+										Username
+										<span class="required">*</span>
+									</label>
+                                        {{ register_form.username }}
+                                    <label for="register-email">
+										Email address
+										<span class="required">*</span>
+									</label>
+                                        {{ register_form.email }}
+									<label for="register-password">
+										Password
+										<span class="required">*</span>
+									</label>
+                                    {{ register_form.password }}
+                                    <label for="register-password">
+										Confirm Password
+										<span class="required">*</span>
+									</label>
+                                    {{ register_form.password2 }}
+									<div class="form-footer mb-2">
+										<button type="submit" class="btn btn-dark btn-md w-100 mr-0">
+											Register
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main><!-- End .main -->
 
 {% endblock %}

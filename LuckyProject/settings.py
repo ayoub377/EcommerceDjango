@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 import braintree
@@ -19,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'django-insecure-lslk@q+e+u3^te@e(2%y8(#8j+p_k-0ywnu9wi672d2s=bcm$v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -30,8 +31,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
-    'account.apps.AccountConfig',
+    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +60,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTH_USER_MODEL = 'account.Customer'
+
 ROOT_URLCONF = 'LuckyProject.urls'
+
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 TEMPLATES = [
@@ -95,9 +100,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ecommerce_projet',
         'USER': 'postgres',
-        'PASSWORD': 'Tabahmout55',
+        'PASSWORD': "Tabahmout55",
+        'HOST': '127.0.0.1',
+        'PORT': '5433',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -127,7 +141,6 @@ EMAIL_HOST_PASSWORD = "Tabahmout55'"
 
 CELERY_BROKER_URL = 'amqp://localhost'
 
-
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID
 BRAINTREE_PUBLIC_KEY = 'ppq66w4mj3c64mhr'  # Public Key
 BRAINTREE_PRIVATE_KEY = '8d9a786ff00c868ed91468fb8ef3ff58'  # Private key
@@ -138,6 +151,7 @@ BRAINTREE_CONF = Configuration(
     BRAINTREE_PUBLIC_KEY,
     BRAINTREE_PRIVATE_KEY
 )
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -153,12 +167,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

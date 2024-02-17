@@ -1,8 +1,10 @@
+import csv
+
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Images
+from .models import Category, Product, Images, Rating
 
 
 @admin.register(Category)
@@ -54,3 +56,13 @@ class ProductAdmin(ModelAdmin):
 class ImagesAdmin(ModelAdmin):
     list_display = ['name']
     list_display_links = ('name',)
+
+
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ('user', 'product', 'rating', 'created_at')
+    list_filter = ('product', 'created_at')
+    search_fields = ('user__username', 'product__name')
+    date_hierarchy = 'created_at'
+
+
+admin.site.register(Rating, RatingAdmin)

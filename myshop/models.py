@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models import Avg
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+
+from account.models import Customer
 
 
 class Category(MPTTModel):
@@ -30,6 +33,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='produits')
     discount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     available = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)  # New field for featured products
 
     class Meta:
         ordering = ('name',)
@@ -40,6 +44,27 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    def average_rating(self):
+        return self.rating_set.aggregate(Avg('rating'))['rating__avg'] or 0
+
+    @staticmethod
+    def get_top_rated_products(limit=5):
+        return Product.objects.annotate(avg_rating=Avg('rating__rating')).order_by('-avg_rating')[:limit]
+
+    @staticmethod
+    def get_featured_products():
+        return Product.objects.filter(featured=True)
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+    review = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name} - {self.rating}"
 
 
 class Images(models.Model):

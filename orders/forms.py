@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import Select
 
 from .models import Order
 
@@ -8,9 +7,11 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['prenom', 'nom', 'email', 'addresse', 'code_postal', 'ville', 'telephone', 'type_paiement']
-        widgets={
-            'type_paiement':forms.RadioSelect(attrs={'id':'options'})
+
+        widgets = {
+            'type_paiement': forms.RadioSelect(attrs={'id': 'options'})
         }
+
     def __init__(self, *args, **kwargs):
         super(OrderCreateForm, self).__init__(*args, **kwargs)
         self.fields['prenom'].widget = forms.TextInput(attrs={

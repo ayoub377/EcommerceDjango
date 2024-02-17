@@ -1,23 +1,70 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
-from account.forms import UserEditForm, UserRegistrationForm
+from account.forms import UserEditForm, LoginForm, UserRegistrationForm
+from account.models import Customer
 
 
-def user_registration(request):
+def register_customer(request):
+    register_form = UserRegistrationForm()
     if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
-            cd = user_form.cleaned_data
-            new_user = user_form.save(commit=False)
-            new_user.set_password(cd['password'])
+        register_form = UserRegistrationForm(request.POST)
+        if register_form.is_valid():
+            new_user = Customer.objects.create_user(
+                username=register_form.cleaned_data["username"],
+                first_name=register_form.cleaned_data["first_name"],
+                last_name=register_form.cleaned_data["last_name"],
+                email=register_form.cleaned_data["email"],
+                password= register_form.cleaned_data["password"],
+            )
             new_user.save()
-            return render(request, 'account/register_done.html', {'new_user': new_user})
+            login(request, new_user)  # Log in the user
+            return redirect('myshop:home')
     else:
-        return render(request, 'account/registration.html', {
+        return render(request, 'registration/login.html', {
+            'register_form': register_form
         })
+
+
+# def register_customer(request):
+#     if request.method == 'POST':
+#         # Extract form data from request
+#         username = request.POST.get('username')
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         # Create and save Customer instance
+#         customer = Customer.objects.create_user(
+#             username=username,
+#             password=password,
+#             email=email,
+#         )
+#         customer.save()
+#         # Redirect to a success page
+#         return redirect('myshop:home')
+#
+#     # Render the registration form
+#     return render(request, 'registration/login.html')
+
+
+def login_customer(request):
+    register_form = UserRegistrationForm()
+    user_form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            print(f'user is : {user}')
+            if user is not None:
+                login(request, user)
+                return redirect('myshop:home')  # Redirect to dashboard upon successful login
+    else:
+        user_form = LoginForm()
+    return render(request, 'registration/login.html', {'user_form': user_form, 'register_form': register_form})
 
 
 @login_required
@@ -35,3 +82,17 @@ def edit(request):
     return render(request,
                   'account/edit.html',
                   {'user_form': user_form})
+
+
+@login_required
+def dashboard(request):
+    # Logic to retrieve user data or any other dashboard-related data
+    # For example:
+    user = request.user
+    user_data = {
+        'username': user.username,
+        'email': user.email,
+        # Add more user-related data as needed
+    }
+
+    return render(request, 'account/dashboard.html', {'user_data': user_data})

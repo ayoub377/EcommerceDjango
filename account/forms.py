@@ -1,43 +1,76 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+
+from account.models import Customer
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.CharField(max_length=100,
+                            required=True,
+                            widget=forms.TextInput(attrs={
+                                'class': 'form-input form-wide',
+                                'name': 'email'
+                            }))
+
+    password = forms.CharField(max_length=50,
+                               required=True,
+                               widget=forms.PasswordInput(attrs={
+                                   'class': 'form-input form-wide',
+                                   'data-toggle': 'password', 'id': 'password',
+                                   'name': 'password',
+                               }))
 
 
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'votre mot de passe'}))
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'repeter mot de passe'}))
+class UserRegistrationForm(forms.Form):
+    first_name = forms.CharField(max_length=50,
+                                 required=True,
+                                 widget=forms.TextInput(attrs={
+                                     'class': 'form-input form-wide',
+                                     'name': 'first_name',
+                                 }))
+    last_name = forms.CharField(max_length=50,
+                                required=True,
+                                widget=forms.TextInput(attrs={
+                                    'class': 'form-input form-wide',
+                                    'name': 'last_name',
+                                }))
+    email = forms.CharField(max_length=100,
+                            required=True,
+                            widget=forms.EmailInput(attrs={
+                                'class': 'form-input form-wide',
+                                'name': 'email'
+                            }))
 
-    class Meta:
-        model = User
-        fields = ('username', 'first_name','last_name', 'email')
+    username = forms.CharField(max_length=100,
+                            required=True,
+                            widget=forms.TextInput(attrs={
+                                'class': 'form-input form-wide',
+                                'name': 'username'
+                            }))
+    password = forms.CharField(max_length=50,
+                               required=True,
+                               widget=forms.PasswordInput(attrs={
+                                   'class': 'form-input form-wide',
+                                   'data-toggle': 'password',
+                                   'name': 'password2',
+                               }))
 
-    def __init__(self, *args, **kwargs):
-        super(UserRegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'nom utilisateur'})
-        self.fields['first_name'].widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'prenom'})
-        self.fields['last_name'].widget = forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'nom'})
-        self.fields['email'].widget = forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'email'})
+    password2 = forms.CharField(max_length=50,
+                                required=True,
+                                widget=forms.PasswordInput(attrs={
+                                    'class': 'form-input form-wide',
+                                    'data-toggle': 'password',
+                                    'name': 'password2',
+                                }))
 
-
-    def CleanPassword(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError('password doesn\'t match!')
-        return cd['password2']
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password")
+        password2 = self.cleaned_data.get("password2")
+        if password1 != password2:
+            raise forms.ValidationError("Passwords do not match")
+        return password2
 
 
 class UserEditForm(forms.ModelForm):

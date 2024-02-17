@@ -1,4 +1,6 @@
 from django.db import models
+
+from account.models import Customer
 from myshop.models import Product
 
 type_paiements = [
@@ -8,6 +10,7 @@ type_paiements = [
 
 
 class Order(models.Model):
+    customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
     prenom = models.CharField('prenom', max_length=50)
     nom = models.CharField('nom', max_length=50)
     email = models.EmailField()
@@ -19,7 +22,6 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    braintree_id = models.CharField(max_length=150, blank=True)
 
     class Meta:
         ordering = ('-created',)
