@@ -2,163 +2,169 @@
 {% load static %}
 {% block main %}
     <main class="main">
-            <div class="home-top-container appear-animate" data-animation-name="fadeIn" data-animation-delay="100">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 mb-2">
-                            <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
-                                <figure class="w-100">
-                                    <img src={% static "images/demoes/demo7/banners/banner-1.jpg"%} style="background-color: #4a4a4a; alt="banner">
-                                </figure>
-                                <div class="banner-layer">
-                                    <h4 class=" text-white mb-0">Find the Boundaries</h4>
-                                    <h2 class="text-white mb-0">Flash Sale</h2>
-                                    <h3 class="text-white text-uppercase m-b-3">70% Off</h3>
-                                    <h5 class="text-white text-uppercase ls-n-20 align-text-bottom">
-                                        Starting At <b
-                                            class="coupon-sale-text bg-secondary text-white d-inline-block">$<em
-                                                class="align-text-top">199</em>99</b></h5>
-                                    <a href="demo7-shop.html" class="btn bg-white btn-md ls-10">Shop Now!</a>
-                                </div><!-- End .banner-layer -->
-                            </div><!-- End .home-slide -->
-                        </div>
-                        <div class="col-lg-3 col-sm-6 mb-2">
-                            <div class="row h-100">
-                                <div class="col-lg-12 mb-2">
-                                    <div class="banner banner2 banner-hover-shadow d-flex align-items-center">
-                                        <figure class="w-100"><img src={% static "images/demoes/demo7/banners/banner-2.jpg" %} style="background-color: #ccc;" alt="banner">
-                                        </figure>
-                                        <div class="banner-layer">
-                                            <h3 class="m-b-2">Porto Watches</h3>
-                                            <h4 class="m-b-2 text-secondary"><sup
-                                                    class="text-dark"><del>20%</del></sup>30%<sup>OFF</sup></h4>
-                                            <a href="demo7-shop.html" class="btn btn-dark text-uppercase ls-10">Shop
-                                                Now</a>
-                                            <img src="assets/images/demoes/demo7/banners/brand-sm.png"
-                                                style="background-color: #eee;" width="48" height="15" alt="brand" />
-                                        </div>
-                                    </div><!-- End .banner -->
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div
-                                        class="banner banner3 text-uppercase banner-hover-shadow d-flex align-items-center">
-                                        <figure class="w-100">
-                                            <img src="assets/images/demoes/demo7/banners/banner-3.jpg" alt="banner">
-                                        </figure>
-
-                                        <h6 class="banner-label left-label">50<small><sup>%</sup><sub>OFF</sub></small>
-                                        </h6>
-                                        <h6 class="banner-label right-label">70<small><sup>%</sup><sub>OFF</sub></small>
-                                        </h6>
-                                        <h6 class="banner-label bottom-label mb-0">
-                                            30<small><sup>%</sup><sub>OFF</sub></small>
-                                        </h6>
-
-                                        <div class="banner-layer banner-layer-middle text-center">
-                                            <h3 class="m-b-1 ls-10">DEAL PROMOS</h3>
-                                            <h4 class="ls-0 text-body">STARTING AT $99</h4>
-                                            <a href="demo7-shop.html" class="btn btn-dark btn-black ls-10">SHOP NOW</a>
-                                        </div>
-                                    </div><!-- End .banner -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-6 mb-2">
-                            <div class="banner banner4 text-uppercase banner-hover-shadow d-flex align-items-center">
-{#                                <figure class="w-100">#}
-{#                                    <img src="{% static 'images/demoes/demo7/banners/banner-4.jpg' %}#}
-{#                                        style="background-color: #555;" alt="banner">#}
-{#                                </figure>#}
-
-                                <div class="banner-layer banner-layer-middle d-flex align-items-end flex-column">
-                                    <div class="coupon-sale-content">
-                                        <h3 class="text-white font1">Leather Jackets</h3>
-                                        <h5 class="coupon-sale-text text-white ls-0 p-0"><i class="ls-0 font1">UP
-                                                TO</i><b class="text-white bg-secondary">$100</b><sub>OFF</sub></h5>
-                                        <a href="demo7-shop.html"
-                                            class="btn bg-white btn-lg ls-10 d-block d-lg-inline-block  text-dark">Get
-                                            Yours!</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End .col-lg-5 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-
+        <div class="home-top-container appear-animate" data-animation-name="fadeIn" data-animation-delay="100">
             <div class="container">
-                <section class="featured-products-section appear-animate" data-animation-name="fadeInUpShorter"
-                    data-animation-delay="100">
-                    <h2 class="section-title text-center d-flex align-items-center">Featured Products
-                    </h2>
-                    <div class="owl-carousel owl-theme dots-top dots-small" data-owl-options="{
-    'dots': true,
-    'margin': 20,
-    'nav': false,
-    'loop': false,
-    'responsive': {
-        '0': {
-            'items': 2
-        },
-        '768': {
-            'items': 3
-        },
-        '991': {
-            'items': 4
-        }
-    }
-}">
-    {% for product in hot_deals %}
-    <div class="product-default left-details">
-        <figure>
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{{ product.image.url }}" alt="product" width="300" height="300">
-            </a>
-            <div class="label-group">
-                {% if product.discount %}
-                <span class="product-label label-sale">-{{ product.discount }}%</span>
-                {% endif %}
-                {% if product.hot_deal %}
-                <span class="product-label label-hot">HOT</span>
-                {% endif %}
-            </div>
-        </figure>
-        <div class="product-details">
-            <div class="category-list">
-                {% for category in product.categories.all %}
-                <a href="{{ category.get_absolute_url }}" class="product-category">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </div>
-            <h3 class="product-title"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
-            <div class="ratings-container">
-                <!-- Add your rating display logic here if applicable -->
-            </div>
-            <div class="price-box">
-                <span class="product-price">{{ product.price }} Dhs</span>
-            </div>
-            <div class="product-action">
-                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
-                <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-            </div>
-        </div><!-- End .product-details -->
-    </div>
-    {% endfor %}
-</div>
+                <div class="row">
+                    <div class="col-lg-6 mb-2">
+                        <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
+                            <figure class="w-100">
+                                <img src={% static "images/demoes/demo7/banners/banner-1.jpg" %} style="background-color:
+                                     #4a4a4a; alt="banner">
+                            </figure>
+                            <div class="banner-layer">
+                                <h4 class=" text-white mb-0">Find the Boundaries</h4>
+                                <h2 class="text-white mb-0">Flash Sale</h2>
+                                <h3 class="text-white text-uppercase m-b-3">70% Off</h3>
+                                <h5 class="text-white text-uppercase ls-n-20 align-text-bottom">
+                                    Starting At <b
+                                        class="coupon-sale-text bg-secondary text-white d-inline-block">$<em
+                                        class="align-text-top">199</em>99</b></h5>
+                                <a href="demo7-shop.html" class="btn bg-white btn-md ls-10">Shop Now!</a>
+                            </div><!-- End .banner-layer -->
+                        </div><!-- End .home-slide -->
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-2">
+                        <div class="row h-100">
+                            <div class="col-lg-12 mb-2">
+                                <div class="banner banner2 banner-hover-shadow d-flex align-items-center">
+                                    <figure class="w-100"><img
+                                            src={% static "images/demoes/demo7/banners/banner-2.jpg" %} style="background-color:
+                                            #ccc;" alt="banner">
+                                    </figure>
+                                    <div class="banner-layer">
+                                        <h3 class="m-b-2">Porto Watches</h3>
+                                        <h4 class="m-b-2 text-secondary"><sup
+                                                class="text-dark">
+                                            <del>20%</del>
+                                        </sup>30%<sup>OFF</sup></h4>
+                                        <a href="demo7-shop.html" class="btn btn-dark text-uppercase ls-10">Shop
+                                            Now</a>
+                                        <img src="assets/images/demoes/demo7/banners/brand-sm.png"
+                                             style="background-color: #eee;" width="48" height="15" alt="brand"/>
+                                    </div>
+                                </div><!-- End .banner -->
+                            </div>
 
-                </section>
-            </div>
+                            <div class="col-lg-12">
+                                <div
+                                        class="banner banner3 text-uppercase banner-hover-shadow d-flex align-items-center">
+                                    <figure class="w-100">
+                                        <img src="assets/images/demoes/demo7/banners/banner-3.jpg" alt="banner">
+                                    </figure>
 
-            <div class="categories-section bg-primary">
-                <div class="container">
-                    <h2 class="section-title border-0 title-decorate text-center text-white d-flex align-items-center appear-animate"
-                        data-animation-name="fadeInUpShorter">
-                        <span>Nos Categories</span></h2>
-                    <div class="owl-carousel owl-theme appear-animate show-nav-hover"
-     data-animation-name="fadeInUpShorter" data-animation-delay="200" data-owl-options="{
+                                    <h6 class="banner-label left-label">50<small><sup>%</sup><sub>OFF</sub></small>
+                                    </h6>
+                                    <h6 class="banner-label right-label">70<small><sup>%</sup><sub>OFF</sub></small>
+                                    </h6>
+                                    <h6 class="banner-label bottom-label mb-0">
+                                        30<small><sup>%</sup><sub>OFF</sub></small>
+                                    </h6>
+
+                                    <div class="banner-layer banner-layer-middle text-center">
+                                        <h3 class="m-b-1 ls-10">DEAL PROMOS</h3>
+                                        <h4 class="ls-0 text-body">STARTING AT $99</h4>
+                                        <a href="demo7-shop.html" class="btn btn-dark btn-black ls-10">SHOP NOW</a>
+                                    </div>
+                                </div><!-- End .banner -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-2">
+                        <div class="banner banner4 text-uppercase banner-hover-shadow d-flex align-items-center">
+                            {#                                <figure class="w-100">#}
+                            {#                                    <img src="{% static 'images/demoes/demo7/banners/banner-4.jpg' %}#}
+                            {#                                        style="background-color: #555;" alt="banner">#}
+                            {#                                </figure>#}
+
+                            <div class="banner-layer banner-layer-middle d-flex align-items-end flex-column">
+                                <div class="coupon-sale-content">
+                                    <h3 class="text-white font1">Leather Jackets</h3>
+                                    <h5 class="coupon-sale-text text-white ls-0 p-0"><i class="ls-0 font1">UP
+                                        TO</i><b class="text-white bg-secondary">$100</b><sub>OFF</sub></h5>
+                                    <a href="demo7-shop.html"
+                                       class="btn bg-white btn-lg ls-10 d-block d-lg-inline-block  text-dark">Get
+                                        Yours!</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End .col-lg-5 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+
+        <div class="container">
+            <section class="featured-products-section appear-animate" data-animation-name="fadeInUpShorter"
+                     data-animation-delay="100">
+                <h2 class="section-title text-center d-flex align-items-center">Featured Products
+                </h2>
+                <div class="owl-carousel owl-theme dots-top dots-small" data-owl-options="{
+                                                        'dots': true,
+                                                        'margin': 20,
+                                                        'nav': false,
+                                                        'loop': false,
+                                                        'responsive': {
+                                                            '0': {
+                                                                'items': 2
+                                                            },
+                                                            '768': {
+                                                                'items': 3
+                                                            },
+                                                            '991': {
+                                                                'items': 4
+                                                            }
+                                                        }
+                                                    }">
+                    {% for product in hot_deals %}
+                        <div class="product-default left-details">
+                            <figure>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ product.image.url }}" alt="product" width="300" height="300">
+                                </a>
+                                <div class="label-group">
+                                    {% if product.discount %}
+                                        <span class="product-label label-sale">-{{ product.discount }}%</span>
+                                    {% endif %}
+                                    {% if product.hot_deal %}
+                                        <span class="product-label label-hot">HOT</span>
+                                    {% endif %}
+                                </div>
+                            </figure>
+                            <div class="product-details">
+                                <div class="category-list">
+                                    {% for category in product.categories.all %}
+                                        <a href="{{ category.get_absolute_url }}"
+                                           class="product-category">{{ category.name }}</a>{% if not forloop.last %},
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <h3 class="product-title"><a
+                                        href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                <div class="ratings-container">
+                                    <!-- Add your rating display logic here if applicable -->
+                                </div>
+                                <div class="price-box">
+                                    <span class="product-price">{{ product.price }} Dhs</span>
+                                </div>
+                                <div class="product-action">
+                                    <a href="{% url 'cart:cart_add list' product.id %}"
+                                       class="btn-icon btn-add-cart product-type-simple"><i
+                                            class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
+                                </div>
+                            </div><!-- End .product-details -->
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+        <div class="categories-section bg-primary">
+            <div class="container">
+                <h2 class="section-title border-0 title-decorate text-center text-white d-flex align-items-center appear-animate"
+                    data-animation-name="fadeInUpShorter">
+                    <span>Nos Categories</span></h2>
+                <div class="owl-carousel owl-theme appear-animate show-nav-hover"
+                     data-animation-name="fadeInUpShorter" data-animation-delay="200" data-owl-options="{
      'dots': false,
      'margin': 20,
      'loop': false,
@@ -177,129 +183,133 @@
          }
      }
  }">
-    {% for category in categories %}
-        <div class="banner banner-image">
-            <a href="{% url 'myshop:product_list_by_category' category.id category.slug %}">
-                <img src="{{ category.image.url }}" width="272" height="231" alt="banner">
-            </a>
-            <div class="banner-layer banner-layer-middle">
-                <h3>{{ category.name }}</h3>
-            </div>
-        </div><!-- End .banner -->
-    {% endfor %}
-</div><!-- End .cat-carousel -->
+                    {% for category in categories %}
+                        <div class="banner banner-image">
+                            <a href="{% url 'myshop:product_list_by_category' category.id category.slug %}">
+                                <img src="{{ category.image.url }}" width="272" height="231" alt="banner">
+                            </a>
+                            <div class="banner-layer banner-layer-middle">
+                                <h3>{{ category.name }}</h3>
+                            </div>
+                        </div><!-- End .banner -->
+                    {% endfor %}
+                </div><!-- End .cat-carousel -->
 
-                </div><!-- End .container -->
-            </div><!-- End .banners-section -->
+            </div><!-- End .container -->
+        </div><!-- End .banners-section -->
 
-            <div class="arrival-products-section appear-animate" data-animation-name="fadeIn"
-                data-animation-delay="100">
-                <div class="container">
-                    <h2 class="section-title text-center d-flex align-items-center">Hot Deals
-                    </h2>
+        <div class="arrival-products-section appear-animate" data-animation-name="fadeIn"
+             data-animation-delay="100">
+            <div class="container">
+                <h2 class="section-title text-center d-flex align-items-center">Hot Deals
+                </h2>
 
-                    <div class="row">
-    {% for product in hot_deals %}
-    <div class="col-6 col-lg-3 col-md-4 col-xl-5col">
-        <div class="product-default left-details">
-            <figure>
-                <a href="{{ product.get_absolute_url }}">
-                    <img src="{{ product.image.url }}" alt="product" width="300" height="300">
-                </a>
-            </figure>
-            <div class="product-details">
-                <div class="category-list">
-                    {% for category in product.categories.all %}
-                    <a href="{{ category.get_absolute_url }}" class="product-category">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+                <div class="row">
+                    {% for product in hot_deals %}
+                        <div class="col-6 col-lg-3 col-md-4 col-xl-5col">
+                            <div class="product-default left-details">
+                                <figure>
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img src="{{ product.image.url }}" alt="product" width="300" height="300">
+                                    </a>
+                                </figure>
+                                <div class="product-details">
+                                    <div class="category-list">
+                                        {% for category in product.categories.all %}
+                                            <a href="{{ category.get_absolute_url }}"
+                                               class="product-category">{{ category.name }}</a>{% if not forloop.last %}
+                                            , {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <h3 class="product-title"><a
+                                            href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                    <div class="ratings-container">
+                                        <!-- Add your rating display logic here if applicable -->
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="product-price">{{ product.price }} Dhs</span>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="{% url 'cart:cart_add list' product.id %}"
+                                           class="btn-icon btn-add-cart product-type-simple"><i
+                                                class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
+                                        <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                                class="fas fa-external-link-alt"></i></a>
+                                    </div>
+                                </div><!-- End .product-details -->
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
-                <h3 class="product-title"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
-                <div class="ratings-container">
-                    <!-- Add your rating display logic here if applicable -->
-                </div>
-                <div class="price-box">
-                    <span class="product-price">{{ product.price }} Dhs</span>
-                </div>
-                <div class="product-action">
-                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
-                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div><!-- End .product-details -->
-        </div>
-    </div>
-    {% endfor %}
-</div>
 
-
-                    <hr class="mt-1 mb-4">
-                </div>
+                <hr class="mt-1 mb-4">
             </div>
+        </div>
 
-            <div class="container">
-                <div class="blog-section row">
-                    <div class="col-lg-6 appear-animate" data-animation-name="fadeInRightShorter"
-                        data-animation-delay="300">
-                        <h2 class="section-title text-center  border-0 d-flex align-items-center">LATEST NEWS
-                        </h2>
+        <div class="container">
+            <div class="blog-section row">
+                <div class="col-lg-6 appear-animate" data-animation-name="fadeInRightShorter"
+                     data-animation-delay="300">
+                    <h2 class="section-title text-center  border-0 d-flex align-items-center">LATEST NEWS
+                    </h2>
 
-                        <article class="post d-sm-flex align-items-center mb-2 mb-lg-0">
-                            <div class="post-media">
-                                <a href="single.html">
-                                    <img src="assets/images/demoes/demo7/blog/shop7_post1.jpg" width="280" height="209"
-                                        alt="Post">
-                                </a>
-                                <div class="post-date">
-                                    <span class="day">29</span>
-                                    <span class="month">Jun</span>
-                                </div><!-- End .post-date -->
-                            </div><!-- End .post-media -->
+                    <article class="post d-sm-flex align-items-center mb-2 mb-lg-0">
+                        <div class="post-media">
+                            <a href="single.html">
+                                <img src="assets/images/demoes/demo7/blog/shop7_post1.jpg" width="280" height="209"
+                                     alt="Post">
+                            </a>
+                            <div class="post-date">
+                                <span class="day">29</span>
+                                <span class="month">Jun</span>
+                            </div><!-- End .post-date -->
+                        </div><!-- End .post-media -->
 
-                            <div class="post-body">
-                                <h2 class="post-title">
-                                    <a href="single.html">Top Jeans Collection</a>
-                                </h2>
+                        <div class="post-body">
+                            <h2 class="post-title">
+                                <a href="single.html">Top Jeans Collection</a>
+                            </h2>
 
-                                <div class="post-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non placerat mi.
-                                        Etiam non tellus sem. Aenean...</p>
-                                </div><!-- End .post-content -->
+                            <div class="post-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non placerat mi.
+                                    Etiam non tellus sem. Aenean...</p>
+                            </div><!-- End .post-content -->
 
-                                <div class="post-meta">
-                                    <i class="far fa-comments"></i>
-                                    <a href="#" title="Comment on Top Jeans Collection">0 COMMENTS</a>
+                            <div class="post-meta">
+                                <i class="far fa-comments"></i>
+                                <a href="#" title="Comment on Top Jeans Collection">0 COMMENTS</a>
+                            </div>
+                        </div><!-- End .post-body -->
+                    </article>
+                </div><!-- End .col-lg-6 -->
+
+                <div class="col-lg-6 appear-animate" data-animation-name="fadeInRightShorter"
+                     data-animation-delay="100">
+                    <h2 class="section-title text-center  border-0  d-flex align-items-center">LATEST REVIEWS
+                    </h2>
+
+                    <div class="testimonials-slider mt-1">
+                        <div class="testimonial">
+                            <div class="testimonial-owner">
+                                <figure>
+                                    <img src="assets/images/demoes/demo7/clients/client1.png" alt="client">
+                                </figure>
+
+                                <div>
+                                    <h4 class="testimonial-title font1">john Smith</h4>
+                                    <span class="font1 ls-n-10">CEO & Founder</span>
                                 </div>
-                            </div><!-- End .post-body -->
-                        </article>
-                    </div><!-- End .col-lg-6 -->
+                            </div><!-- End .testimonial-owner -->
 
-                    <div class="col-lg-6 appear-animate" data-animation-name="fadeInRightShorter"
-                        data-animation-delay="100">
-                        <h2 class="section-title text-center  border-0  d-flex align-items-center">LATEST REVIEWS
-                        </h2>
-
-                        <div class="testimonials-slider mt-1">
-                            <div class="testimonial">
-                                <div class="testimonial-owner">
-                                    <figure>
-                                        <img src="assets/images/demoes/demo7/clients/client1.png" alt="client">
-                                    </figure>
-
-                                    <div>
-                                        <h4 class="testimonial-title font1">john Smith</h4>
-                                        <span class="font1 ls-n-10">CEO & Founder</span>
-                                    </div>
-                                </div><!-- End .testimonial-owner -->
-
-                                <blockquote>
-                                    <p>Hello, I want to thank you for creating a great template and for the excellent
-                                        and quick support and help that you have been providing to me as I begin to work
-                                        with it.</p>
-                                </blockquote>
-                            </div><!-- End .testimonial -->
-                        </div><!-- End .testimonials-slider -->
-                    </div><!-- End .col-lg-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </main>
+                            <blockquote>
+                                <p>Hello, I want to thank you for creating a great template and for the excellent
+                                    and quick support and help that you have been providing to me as I begin to work
+                                    with it.</p>
+                            </blockquote>
+                        </div><!-- End .testimonial -->
+                    </div><!-- End .testimonials-slider -->
+                </div><!-- End .col-lg-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </main>
 {% endblock %}
