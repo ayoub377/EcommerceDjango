@@ -11,6 +11,7 @@ class Cart(object):
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        self.shipping_cost = 0  # Initialize shipping cost to 0
 
     def add(self, product, quantity=1, override_quantity=False):
         product_id = str(product.id)
@@ -47,9 +48,12 @@ class Cart(object):
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
 
-    def get_total_price(self):
+    def get_sub_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item
                    in self.cart.values())
+
+    def get_total_price(self):
+        return self.get_sub_total_price() + self.shipping_cost
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]

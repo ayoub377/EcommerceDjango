@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+
+from account.models import Customer
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
@@ -18,29 +20,31 @@ type_paiements = [
 ]
 
 
-@login_required()
+@login_required
 def Order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            username = request.user.username
+            customer, _ = Customer.objects.get_or_create(username= username)
+            order.save()
             for item in cart:
                 OrderItem.objects.create(order=order, product=item['product'], price=item['price'],
                                          quantity=item['quantity'])
             cart.clear()
             order_created.delay(order.id)
             request.session['order_id'] = order.id
-            # redirect for payment
-            if form['type_paiement'] == 'paiement par carte bancaire':
+            # Redirect for payment based on the selected payment type
+            payment_type = form.cleaned_data.get('type_paiement')
+            if payment_type == 'paiement par carte bancaire':
                 return redirect(reverse('payment:process'))
             else:
                 return render(request, 'orders/order/created.html')
     else:
         form = OrderCreateForm()
-        return render(request,
-                      'orders/order/create.html',
-                      {'cart': cart, 'form': form})
+    return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
 
 
 @staff_member_required
