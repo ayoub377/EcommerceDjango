@@ -1,10 +1,10 @@
-from celery import task
+from celery import app
+
 from orders.models import Order
 from django.core.mail import EmailMessage
 from easy_pdf.rendering import render_to_pdf
 
 
-@task
 def payment_completed(order_id):
     order = Order.objects.get(id=order_id)
     subject = f'My Shop - EE Invoice no. {order.id}'

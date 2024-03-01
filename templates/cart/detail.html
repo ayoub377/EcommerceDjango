@@ -56,7 +56,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-right"><span
-                                                    class="subtotal-price">{{ product.price }}</span></td>
+                                                    class="subtotal-price">{{ item.total_price }}</span></td>
                                         </tr>
                                     {% endwith %}
                                 {% endfor %}
@@ -163,7 +163,6 @@
                                                 xhr.send('shipping_option=' + encodeURIComponent(selectedValue)); // Send selected value to server
                                             }
                                         });
-
                                         function getCookie(name) {
                                             var cookieValue = null;
                                             if (document.cookie && document.cookie !== '') {
@@ -179,8 +178,6 @@
                                             }
                                             return cookieValue;
                                         }
-
-
                                     </script>
                                 </td>
                             </tr>

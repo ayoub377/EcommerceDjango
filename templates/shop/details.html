@@ -1,163 +1,726 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
-   <div class="container" style="margin-right: 3px;height: 1400px">
-    <h1 class="text-center">Product Details</h1>
-    <div class="row" style="height: 846px">
-        <div class="col-md-9 col-sm-12 col-xs-12 content">
-        <div class="col-md-9 col-sm-12 col-xs-12 img-div">
-            <div class="row">
-                <div id="img-content" class="col-md-9 col-sm-12 col-xs-12 img-content" style="min-width: 360px" mag-thumb="inner">
-                    <img id="img-center" class="img-fluid center-block active" src="{{ product.image.url }}" style="margin-top: 10px;height: 220px;width: 100%" data-zoom-image="{{ product.image.url }}"/>
+{% block main %}
+    <main class="main">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="demo12.html"><i class="icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="#">Produits</a></li>
+                </ol>
+            </nav>
+
+            <div class="product-single-container product-single-default">
+                <div class="cart-message d-none">
+                    <strong class="single-cart-notice">“{{ product.name }}”</strong>
+                    <span>est ajoutee dans votre panier.</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5 col-md-6 product-single-gallery">
+                        <div class="product-slider-container">
+                            <div class="label-group">
+                                {% if product.discount > 0 %}
+                                    <div class="product-label label-sale">
+                                        -{{ product.discount }}%
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
+                                {% for image in images %}
+                                    <div class="product-item">
+                                        <img class="product-single-image" src="{{ image.image.url }}"
+                                             data-zoom-image="{{ image.image.url }}" width="468" height="468"
+                                             alt="product"/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- End .product-single-carousel -->
+                            <span class="prod-full-screen">
+                             <i class="icon-plus"></i>
+                            </span>
+                        </div>
+
+                        <div class="prod-thumbnail owl-dots">
+                            {% for image in images %}
+
+                                <div class="owl-dot">
+                                <img src="{{ image.image.url }}" width="110" height="110"
+                                     alt="product-thumbnail"/>
+                            </div>
+
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!-- End .product-single-gallery -->
+
+                    <div class="col-lg-7 col-md-6 product-single-details">
+                        <h1 class="product-title">{{ product.name }}</h1>
+
+                        <div class="product-nav">
+                            <div class="product-prev">
+                                <a href="#">
+                                    <span class="product-link"></span>
+                                    <span class="product-popup">
+                    <span class="box-content">
+                        <img alt="product" width="150" height="150" src="{{ product.image.url }}"
+                             style="padding-top: 0px;">
+
+                    </span>
+                </span>
+                                </a>
+                            </div>
+
+                            <div class="product-next">
+                                <a href="#">
+                                    <span class="product-link"></span>
+                                    <span class="product-popup">
+                    <span class="box-content">
+                        <img alt="product" width="150" height="150" src="{{ product.image.url }}"
+                             style="padding-top: 0px;">
+                        <span>{{ product.next_name }}</span>
+                    </span>
+                </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="ratings-container">
+                            <div class="product-ratings">
+                                <span class="ratings" style="width: {{ product.rating_percent }}%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                            <a href="#" class="rating-link">({{ product.num_reviews }} Reviews)</a>
+                        </div>
+
+                        <hr class="short-divider">
+
+                        <div class="price-box">
+                            {% if product.old_price %}
+                                <span class="old-price">{{ product.price }} Dhs</span>
+                            {% endif %}
+                            <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                        </div>
+
+                        <div class="product-desc">
+                            <p>{{ product.description }}</p>
+                        </div>
+
+                        <ul class="single-info-list">
+                            <li>CATEGORIE: <strong><a
+                                    href="{% url 'myshop:product_list_by_category' product.id product.slug %}"
+                                    class="product-category">{{ product.category }}</a></strong></li>
+                        </ul>
+
+                        <div class="product-action">
+                            <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                            <div class="product-single-qty">
+                                {{ formCart.quantity }}
+                            </div>
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                {{ formCart.override }}
+                            <button class="btn btn-dark add-cart mr-2" title="Add to Cart">Ajouter Au Panier</button>
+                            <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray view-cart d-none">Voir Panier</a>
+                            </form>
+                        </div>
+
+                        <hr class="divider mb-0 mt-0">
+                    </div>
+
+                    <!-- End .product-single-details -->
+                </div>
+                <!-- End .row -->
+            </div>
+            <!-- End .product-single-container -->
+
+            <div class="product-single-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content"
+                           role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content"
+                           role="tab" aria-controls="product-tags-content" aria-selected="false">informations
+                            supplémentaires</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content"
+                           role="tab" aria-controls="product-reviews-content" aria-selected="false"></a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+                         aria-labelledby="product-tab-desc">
+                        <div class="product-desc-content">
+                            <p>{{ product.description }}
+                            </p>
+                        </div>
+                        <!-- End .product-desc-content -->
+                    </div>
+                    <!-- End .tab-pane -->
+
+                    <div class="tab-pane fade" id="product-size-content" role="tabpanel"
+                         aria-labelledby="product-tab-size">
+                        <!-- End .product-size-content -->
+                    </div>
+                    <!-- End .tab-pane -->
+
+                    <div class="tab-pane fade" id="product-tags-content" role="tabpanel"
+                         aria-labelledby="product-tab-tags">
+                        <table class="table table-striped mt-2">
+                            <tbody>
+                            <tr>
+                                <th>Weight</th>
+                                <td>23 kg</td>
+                            </tr>
+
+                            <tr>
+                                <th>Dimensions</th>
+                                <td>12 × 24 × 35 cm</td>
+                            </tr>
+
+                            <tr>
+                                <th>Color</th>
+                                <td>Black, Green, Indigo</td>
+                            </tr>
+
+                            <tr>
+                                <th>Size</th>
+                                <td>Large, Medium, Small</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End .tab-pane -->
+
+                    <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
+                         aria-labelledby="product-tab-reviews">
+                        <div class="product-reviews-content">
+                            <h3 class="reviews-title">1 review for Men Black Sports Shoes</h3>
+
+                            <div class="comment-list">
+                                <div class="comments">
+                                    <figure class="img-thumbnail">
+                                        <img src="assets/images/blog/author.jpg" alt="author" width="80" height="80">
+                                    </figure>
+
+                                    <div class="comment-block">
+                                        <div class="comment-header">
+                                            <div class="comment-arrow"></div>
+
+                                            <div class="ratings-container float-sm-right">
+                                                <div class="product-ratings">
+                                                    <span class="ratings" style="width:60%"></span>
+                                                    <!-- End .ratings -->
+                                                    <span class="tooltiptext tooltip-top"></span>
+                                                </div>
+                                                <!-- End .product-ratings -->
+                                            </div>
+
+                                            <span class="comment-by">
+													<strong>Joe Doe</strong> – April 12, 2018
+												</span>
+                                        </div>
+
+                                        <div class="comment-content">
+                                            <p>Excellent.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="add-product-review">
+                                <h3 class="review-title">Add a review</h3>
+
+                                <form action="#" class="comment-form m-0">
+                                    <div class="rating-form">
+                                        <label for="rating">Your rating <span class="required">*</span></label>
+                                        <span class="rating-stars">
+												<a class="star-1" href="#">1</a>
+												<a class="star-2" href="#">2</a>
+												<a class="star-3" href="#">3</a>
+												<a class="star-4" href="#">4</a>
+												<a class="star-5" href="#">5</a>
+											</span>
+
+                                        <select name="rating" id="rating" required="" style="display: none;">
+                                            <option value="">Rate…</option>
+                                            <option value="5">Perfect</option>
+                                            <option value="4">Good</option>
+                                            <option value="3">Average</option>
+                                            <option value="2">Not that bad</option>
+                                            <option value="1">Very poor</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Your review <span class="required">*</span></label>
+                                        <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
+                                    </div>
+                                    <!-- End .form-group -->
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-xl-12">
+                                            <div class="form-group">
+                                                <label>Name <span class="required">*</span></label>
+                                                <input type="text" class="form-control form-control-sm" required>
+                                            </div>
+                                            <!-- End .form-group -->
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-12">
+                                            <div class="form-group">
+                                                <label>Email <span class="required">*</span></label>
+                                                <input type="text" class="form-control form-control-sm" required>
+                                            </div>
+                                            <!-- End .form-group -->
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="save-name"/>
+                                                <label class="custom-control-label mb-0" for="save-name">Save my
+                                                    name, email, and website in this browser for the next time I
+                                                    comment.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                </form>
+                            </div>
+                            <!-- End .add-product-review -->
+                        </div>
+                        <!-- End .product-reviews-content -->
+                    </div>
+                    <!-- End .tab-pane -->
+                </div>
+                <!-- End .tab-content -->
+            </div>
+            <!-- End .product-single-tabs -->
+
+            <div class="products-section pt-0">
+                <h2 class="section-title mt-0">Related Products</h2>
+
+                <div class="products-slider 5col owl-carousel owl-theme dots-top dots-small" data-owl-options="{
+						'dots': true
+					}">
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-6.jpg" alt="product">
+                            </a>
+
+                            <div class="label-group">
+                                <span class="product-label label-sale">-15%</span>
+                            </div>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Men Black Shoes</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+
+                            <div class="price-box">
+                                <span class="old-price">{{ product.price }} Dhs</span>
+                                <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
+                            </div>
+                            <!-- End .price-box -->
+
+                            <div class="product-action">
+                                <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <div class="product-single-qty">
+                                        {{ formCart.quantity }}
+                                    </div>
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    {{ formCart.override }}
+                                    <button type="submit"
+                                            class="btn-icon btn-add-cart product-type-simple"><i
+                                            class="icon-shopping-cart"></i><span>Ajouter Au Panier</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-7.jpg" alt="product">
+                                <img src="assets/images/demoes/demo12/products/home/product-5.jpg" alt="product">
+                            </a>
+
+                            <div class="label-group">
+                                <span class="product-label label-sale">-26%</span>
+                            </div>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Porto Black Watch</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+
+                            <div class="product-action">
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-8.jpg" alt="product">
+                                <img src="assets/images/demoes/demo12/products/home/product-4.jpg" alt="product">
+                            </a>
+
+                            <div class="label-group">
+                                <span class="product-label label-sale">-34%</span>
+                            </div>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Porto Sports Shoes</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+
+                            <div class="price-box">
+                                <span class="product-price">$19.00 - $29.00</span>
+                            </div>
+                            <!-- End .price-box -->
+
+                            <div class="product-action">
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-3.jpg" alt="product">
+                            </a>
+
+                            <div class="label-group">
+                                <span class="product-label label-sale">-13%</span>
+                            </div>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Speaker</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+
+                            <div class="price-box">
+                                <span class="old-price">$299.00</span>
+                                <span class="product-price">$259.00</span>
+                            </div>
+                            <!-- End .price-box -->
+
+                            <div class="product-action">
+                                <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
+                                        class="icon-heart"></i></a>
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                        class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-9.jpg" alt="product">
+                            </a>
+
+                            <div class="label-group">
+                                <span class="product-label label-sale">-13%</span>
+                            </div>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Woman Shoes</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+
+                            <div class="price-box">
+                                <span class="product-price">$88.00 - $111.00</span>
+                            </div>
+                            <!-- End .price-box -->
+
+                            <div class="product-action">
+                                <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
+                                        class="icon-heart"></i></a>
+                                <a href="demo12-product.html" class="btn-icon btn-add-cart"><i
+                                        class="fa fa-arrow-right"></i><span>SELECT
+											OPTIONS</span></a>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                    <div class="product-default">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/home/product-5.jpg" alt="product">
+                            </a>
+                        </figure>
+
+                        <div class="product-details">
+                            <h3 class="product-title">
+                                <a href="demo12-product.html">Men Gentle Watch</a>
+                            </h3>
+
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+
+                            <div class="price-box">
+                                <span class="product-price">$299.00</span>
+                            </div>
+                            <!-- End .price-box -->
+
+                            <div class="product-action">
+                                <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
+                                        class="icon-heart"></i></a>
+                                <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                                        class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    <!-- End .product-default -->
+                </div>
+                <!-- End .products-slider -->
+            </div>
+            <!-- End .products-section -->
+
+            <div class="product-widgets-container custom-widget-container row pb-2">
+                <div class="col-lg-3 col-sm-6 pb-5 pb-md-0">
+                    <h4 class="section-sub-title m-b-3">Produits populaires</h4>
+                    {% for product in featured_products %}
+                    <div class="product-default left-details product-widget">
+                        <figure>
+                            <a href="{% url 'myshop:details_product' product.id %}">
+                                <img src="{{ product.image.url }}" alt="product">
+                            </a>
+                        </figure>
+                        <div class="product-details">
+                            <h3 class="product-title"><a href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a>
+                            </h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price">{{ product.price }} Dhs</span>
+                            </div>
+                            <!-- End .price-box -->
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="col-lg-3 col-sm-6 pb-5 pb-md-0">
+                    <h4 class="section-sub-title m-b-3">Latest Products</h4>
+                    {% for product in latest_products %}
+                    <div class="product-default left-details product-widget">
+                        <figure>
+                            <a href="{% url 'myshop:details_product' product.id %}">
+                                <img src="{{ product.image.url }}" alt="product">
+                            </a>
+                        </figure>
+                        <div class="product-details">
+                            <h3 class="product-title"><a href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a></h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price">{{ product.price }} Dhs</span>
+                            </div>
+                            <!-- End .price-box -->
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <div class="col-lg-3 col-sm-6 pb-5 pb-md-0">
+                    <h4 class="section-sub-title m-b-3">Top Rated Products</h4>
+
+                    <div class="product-default left-details product-widget">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/small/product-2.jpg" alt="product">
+                            </a>
+                        </figure>
+                        <div class="product-details">
+                            <h3 class="product-title"><a href="demo12-product.html">Product Extended</a></h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price">$39.00</span>
+                            </div>
+                            <!-- End .price-box -->
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+
+                    <div class="product-default left-details product-widget">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/small/product-8.jpg" alt="product">
+                            </a>
+                        </figure>
+                        <div class="product-details">
+                            <h3 class="product-title"><a href="demo12-product.html">Porto Sports Shoes</a></h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price">$19.00 - $29.00</span>
+                            </div>
+                            <!-- End .price-box -->
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
+
+                    <div class="product-default left-details product-widget">
+                        <figure>
+                            <a href="demo12-product.html">
+                                <img src="assets/images/demoes/demo12/products/small/product-11.jpg" alt="product">
+                                <img src="assets/images/demoes/demo12/products/small/product-4.jpg" alt="product">
+                            </a>
+                        </figure>
+                        <div class="product-details">
+                            <h3 class="product-title"><a href="demo12-product.html">Porto Black Bag</a></h3>
+                            <div class="ratings-container">
+                                <div class="product-ratings">
+                                    <span class="ratings" style="width: 0%"></span>
+                                    <!-- End .ratings -->
+                                    <span class="tooltiptext tooltip-top">0</span>
+                                </div>
+                                <!-- End .product-ratings -->
+                            </div>
+                            <!-- End .product-container -->
+                            <div class="price-box">
+                                <span class="product-price">$101.00 - $111.00</span>
+                            </div>
+                            <!-- End .price-box -->
+                        </div>
+                        <!-- End .product-details -->
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                {% for imagesecond in images %}
-                <div id="gallery_01" class="col-6 col-sm-6 col-md-6 col-xs-12" {% if forloop.counter == 1 %}style="left: 60px"{% else %}
-                style="right: 60px"{% endif %}>
-                    <img id="img-center" class="img-thumbnail img-fluid center-block" src="{{ imagesecond.image.url }}"
-                         style="width: 80px;margin-left: 10px;cursor: pointer;height: 75px"
-                         data-zoom-image="{{ imagesecond.image.url }}" onclick="ChangeImg(this)" />
-                </div>
-                {% endfor %}
-            </div>
+            <!-- End .row -->
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12 name-info-div">
-            <h1>Lorem Ipsum</h1>
+        <!-- End .container -->
+    </main>
+    <!-- End .main -->
 
-        </div>
-    </div>
-
-    <div class="col-md-3 cart-div">
-        <div class="price">
-         <span>{{ product.price }} Dhs</span>
-        </div>
-        <form method="post" action="{% url 'cart:cart_add' product.id %}">
-            {% csrf_token %}
-            <div data-reflow-type="add-to-cart" data-reflow-product="558773655" data-reflow-variant="746363596_s">
-    <div class="ref-product-controls">
-        <div class="ref-quantity-widget">
-            <button id="plusminus" class="btn btn-light" style="border-right-width: 0px;
-border-left-width: 0;
-border-bottom-width: 0;
-border-top-width: 0;
-cursor: pointer;
-font-size: 22px;
-line-height: 36px;
-width: 35px;
-text-align: center;
-user-select: none;
-border-color: darkgray" type="button" data-field="quantity"
-                    data-type="minus"
-                    onclick="addplusminus(this)">
-                -
-            </button>
-            {{ formCart.quantity }}
-
-            <button id="plusminus" class="btn-light" style="
-            border-bottom-width: 0;
-            border-left-width: 0;
-            border-right-width: 0;
-            border-top-width: 0;
-            border-color: darkgray;
-            cursor: pointer;
-            font-size: 22px;
-            line-height: 36px;
-            width: 35px;
-            text-align: center;
-            user-select: none;" type="button" data-field="quantity" data-type="plus"
-                    onclick="addplusminus(this)">+</button>
-        </div>
-
-            <button class="ref-button" type="submit" style="background-color: green">Ajouter au panier</button>
-    </div>
-</div>
-				</form>
-    </div>
-
-    </div>
-
-   <section class="features-boxed related">
-   <h3 style="font-size: 18px;color: black">Produits apparentes:</h3>
-    <div class="container-fluid" style="margin-right: -50px">
-
-        <div class="row justify-content-center features" style="width: fit-content">
-            {% for recommended in recommended_products %}
-
-            <div id="item" class=" col-xs col-sm col-md-3 col-lg-3 item" style="width: 220px;height: 320px;
-            max-width: 220px">
-
-                <div class="box" style="width: 190px;height: 295px">
-                    <img src="{{ recommended.image.url}}" class="img-fluid"
-                style="width: 80px;height: 125px"/>
-                    <h3 class="name">{{ recommended.name }}</h3>
-                    <h3 class="price">{{ recommended.price }} Dhs</h3>
-                    <div class="product-divider product-card-module">
-                  <div class="product-card-module_add-to-cart-button-wrapper">
-                      <a href="{% url 'cart:cart_addlist' recommended.id %}">
-                      <button class="button  expanded add-to-cart-button add-to-cart-button-module_add-to-cart-button
-                      ghost">
-                          <i class="fa fa-shopping-cart"></i>
-                          Ajouter Au Panier
-                      </button>
-                      </a>
-                      <a href="{% url 'myshop:details_product' recommended.id %}">
-                          <button class="btn details">
-                             details
-                          </button>
-                      </a>
-                  </div>
-                </div>
-                </div>
-
-
-
-            </div>
-
-
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
-   <div class="row" style="height: 546px">
-       <div class="col-md-12 description-div">
-           <div>
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item active" role="presentation">
-            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-1">Description</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Avis</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div id="tab-1" class="tab-pane active" role="tabpanel">
-            <p>{{ product.description }}</p>
-        </div>
-        <div id="tab-2" class="tab-pane" role="tabpanel">
-            <p>Content for tab 2.</p>
-        </div>
-
-    </div>
-</div>
-       </div>
-
-   </div>
-
-
-</div>
-
-    <script>
-
-$(document).ready(
-    function (){
-       StartZoom();
-    }
-)
-
-    </script>
 
 {% endblock %}

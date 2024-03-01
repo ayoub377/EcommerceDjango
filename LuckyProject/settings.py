@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'django.forms',
     'django_filters',
-    'widget_tweaks'
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

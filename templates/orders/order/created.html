@@ -1,8 +1,51 @@
 {% extends "base.html" %}
-{% block title %}
-Merci
-{% endblock %}
-{% block content %}
-<h1>Merci</h1>
-<p>Votre Commande a ete complete avec succes.Votre numero de commande est:<strong>{{ order.id }}</strong>.</p>
+{% block main %}
+    <div class="created-container">
+        <div class="order-created">
+            <h1>Commande crée avec succès !</h1>
+            <p>Merci pour votre commande. Votre commande a été placée avec succès.</p>
+            <p>Vous recevrez bientôt un e-mail de confirmation.</p>
+            <a href="{% url 'myshop:home' %}" class="btn-order">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <style>
+        .created-container {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .order-created {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .order-created h1 {
+            color: #333;
+        }
+
+        .order-created p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn-order {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #34393f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-order:hover {
+            background-color: #34393f;
+        }
+
+    </style>
+
 {% endblock %}

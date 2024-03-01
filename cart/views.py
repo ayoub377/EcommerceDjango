@@ -1,5 +1,5 @@
 from _decimal import Decimal
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from myshop.models import Product
 from .cart import Cart
@@ -8,12 +8,11 @@ from myshop.recommender import Recommender
 
 
 def cart_Add_list(request, product_id):
-    print('added to the cart')
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.add(product=product,
              quantity=1)
-    return redirect('cart:cart_detail')
+    return redirect(request.path)
 
 
 def cart_update(request):
@@ -36,16 +35,18 @@ def cart_update(request):
 
 def cart_update_shipping_cost(request):
     if request.method == 'POST':
-        cart = Cart(request)
         shipping_option = request.POST.get('shipping_option')
         shipping_cost = Decimal(shipping_option)  # Convert to Decimal
-        cart.shipping_cost = shipping_cost  # Update shipping cost
-        cart.save()
 
-        total_with_shipping = cart.get_total_price()  # Calculate total with shipping
-        print(total_with_shipping)
-        # Return JSON response with updated total
-        return JsonResponse({'total_with_shipping': total_with_shipping})
+        # Save shipping cost to session
+        request.session['shipping_cost'] = str(shipping_cost)  # Convert Decimal to string
+
+        # Retrieve total price from Cart object
+        cart = Cart(request)
+        total_with_shipping = cart.get_total_price()
+
+        # Return JSON response with updated shipping cost and total price
+        return JsonResponse({'shipping_cost': str(shipping_cost), 'total_with_shipping': str(total_with_shipping)})
     else:
         return HttpResponseBadRequest("Invalid request")
 

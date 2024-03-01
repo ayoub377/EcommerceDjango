@@ -11,7 +11,7 @@ class Cart(object):
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        self.shipping_cost = 0  # Initialize shipping cost to 0
+        self.shipping_cost = self.session.get('shipping_cost', 0)
 
     def add(self, product, quantity=1, override_quantity=False):
         product_id = str(product.id)
@@ -25,6 +25,7 @@ class Cart(object):
         self.save()
 
     def save(self):
+        self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
     def remove(self, product):
@@ -42,7 +43,7 @@ class Cart(object):
             cart[str(product.id)]['product'] = product
         for item in cart.values():
             item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+            item['total_price'] = Decimal(item['price']) * item['quantity']
             yield item
 
     def __len__(self):
@@ -53,8 +54,12 @@ class Cart(object):
                    in self.cart.values())
 
     def get_total_price(self):
-        return self.get_sub_total_price() + self.shipping_cost
+        return self.get_sub_total_price() + Decimal(self.shipping_cost)
 
     def clear(self):
-        del self.session[settings.CART_SESSION_ID]
+        """
+        Remove all items from the cart.
+        """
+        for key in list(self.cart.keys()):  # Use list() to create a copy of keys
+            del self.cart[key]
         self.save()

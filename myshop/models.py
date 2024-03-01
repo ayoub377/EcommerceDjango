@@ -33,6 +33,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='produits')
     discount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+    information = models.TextField(blank=True)
     available = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)  # New field for featured products
 
@@ -45,6 +46,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
     def average_rating(self):
         return self.rating_set.aggregate(Avg('rating'))['rating__avg'] or 0
 

@@ -22,7 +22,6 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    different_shipping = models.BooleanField()
 
     class Meta:
         ordering = ('-created',)
@@ -45,3 +44,4 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+

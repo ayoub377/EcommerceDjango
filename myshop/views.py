@@ -1,6 +1,4 @@
 import re
-
-from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.generic import TemplateView, ListView
@@ -85,6 +83,8 @@ class ProductDetailView(TemplateView):
         product = get_object_or_404(Product, id=self.kwargs['pk'])
         context['product'] = product
         context['images'] = Images.objects.filter(product_id=product.id)
+        context['featured_products'] = Product.objects.filter(featured=True)[:3]
+        context['latest_products'] = Product.objects.order_by('-created')[:3]
         r = Recommender()
         context['recommended_products'] = r.suggest_products_for([product], 4)
         return context

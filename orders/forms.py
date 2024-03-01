@@ -4,16 +4,13 @@ from .models import Order
 
 
 class OrderCreateForm(forms.ModelForm):
-    different_shipping = forms.BooleanField()
-
     class Meta:
         model = Order
-        fields = ['customer', 'prenom', 'nom', 'addresse', 'code_postal', 'ville', 'telephone', 'type_paiement',
-                  'different_shipping']
+        fields = ['prenom', 'nom', 'addresse', 'code_postal', 'ville', 'telephone', 'type_paiement','email'
+                  ]
 
         widgets = {
             'type_paiement': forms.RadioSelect(attrs={'id': 'options'}),
-
         }
 
     def __init__(self, *args, **kwargs):
@@ -34,6 +31,11 @@ class OrderCreateForm(forms.ModelForm):
             'placeholder': 'addresse de livraison'
         })
 
+        self.fields['email'].widget = forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'email'
+        })
+
         self.fields['code_postal'].widget = forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'code postal'
@@ -48,9 +50,3 @@ class OrderCreateForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'numero de telephone'
         })
-
-        self.fields['different_shipping'].widget = forms.CheckboxInput(
-            attrs={
-                'class': 'custom-control-input'
-            }
-        )
