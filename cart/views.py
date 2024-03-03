@@ -12,7 +12,7 @@ def cart_Add_list(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.add(product=product,
              quantity=1)
-    return redirect(request.path)
+    return redirect('cart:cart_detail')
 
 
 def cart_update(request):
@@ -20,7 +20,6 @@ def cart_update(request):
         cart = Cart(request)
         # Extract product_id and quantity from FormData
         for key, value in request.POST.items():
-            print(key, value)
             if key.startswith('product_'):
                 product_id = int(key.replace('product_', ''))
                 quantity = int(value)
@@ -84,8 +83,10 @@ def cart_detail(request):
         item['update_quantity_form'] = CartAddProductForm(initial={
             'quantity': item['quantity'],
             'override': True})
-    # r = Recommender()
-    # cart_products = [item['product'] for item in cart]
-    # r.products_bought(cart_products)
-    # recommended_products = r.suggest_products_for(cart_products, max_results=4)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    r = Recommender()
+    user_id = request.user.id
+    cart_products = [item['product'] for item in cart]
+    r.update_interaction(request.user.id, cart_products, 'added_to_cart')
+    recommended_products = r.suggest_products_for(user_id, max_results=4)
+    print(recommended_products)
+    return render(request, 'cart/detail.html', {'cart': cart, 'recommended_products': recommended_products})
