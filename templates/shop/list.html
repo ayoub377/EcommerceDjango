@@ -49,7 +49,6 @@
                                 <!-- End .toolbox-item -->
                             </div>
                             <!-- End .toolbox-left -->
-
                             <div class="toolbox-right">
                                 <div class="toolbox-item toolbox-show">
                                     <label>Show:</label>
@@ -80,7 +79,6 @@
                             </div>
                             <!-- End .toolbox-right -->
                         </nav>
-
                         <div class="row products-group products-caty">
                             {% for product in productfound %}
                                 <div class="col-md-4 col-6">
@@ -126,7 +124,7 @@
                                                 {% endif %}
                                             </div>
                                             <div class="product-action">
-                                                <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}"
+                                                <form class= "add-to-cart-form" action="{% url 'cart:cart_add' product.id %}"
                                                       method="post">
                                                     {% csrf_token %}
                                                     <div class="product-single-qty">
@@ -180,7 +178,6 @@
                                 </li>
                             </ul>
                         </nav>
-
                     </div>
                     <!-- End .col-lg-9 -->
                     <div class="sidebar-overlay"></div>

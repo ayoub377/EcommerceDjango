@@ -28,6 +28,7 @@ class ProductListView(ListView):
         count = self.request.GET.get('count')
         if count:
             self.paginate_by = int(count)
+            print(f'count is {count}')
         categor_slug = self.kwargs['categor_slug']
         my_category = get_object_or_404(Category, slug=categor_slug)
         return Product.objects.filter(category__in=my_category.get_descendants(include_self=True))
@@ -77,7 +78,6 @@ def product_search_view(request):
 
 class ProductDetailView(TemplateView):
     template_name = 'shop/details.html'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = get_object_or_404(Product, id=self.kwargs['pk'])
