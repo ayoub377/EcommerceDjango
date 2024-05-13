@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table th {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confirmation de votre Commande</h1>
+    <p>Cher,Chère {{ order.prenom }},</p>
+    <p>Nous vous remercions de votre commande. Ci-dessous les détails:</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="height: 60px;"><br>
+                    {{ item.product.name }}
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}dhs</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Order ID: {{ order.id }}</p>
+    <p>Merci pour votre achat ! Votre mode de paiement est le paiement à la livraison. Nous vous contacterons bientôt pour confirmer les détails de votre commande et organiser la livraison.</p>
+</body>
+</html>

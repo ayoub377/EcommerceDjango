@@ -25,13 +25,11 @@ class Recommender:
 
     def suggest_products_for(self, products, max_results=6):
         product_ids = [p.id for p in products]
-
         if len(products) == 1:
             # only 1 product
             suggestions = r.zrange(
                 self.get_product_key(product_ids[0]),
                 0, -1, desc=True)[:max_results]
-
         else:
             # generate a temporary key
             flat_ids = ''.join([str(id) for id in product_ids])
@@ -55,9 +53,6 @@ class Recommender:
 
         return suggested_products
 
-    def iter_all(self):
-        prods = r.keys()
-        return prods
     def clear_purchases(self):
         for id in Product.objects.values_list('id', flat=True):
-            r.delete(self.get_product_key(id, 'purchased_with'))
+            r.delete(self.get_product_key(id))

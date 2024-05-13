@@ -1,10 +1,9 @@
 from django.db import models
-
 from account.models import Customer
 from myshop.models import Product
 
 type_paiements = [
-    ('paiement par carte bancaire', 'paiement par carte bancaire'),
+    ('paiement par virement bancaire', 'paiement par virement bancaire'),
     ('paiement sur livraison', 'paiement sur livraison')
 ]
 

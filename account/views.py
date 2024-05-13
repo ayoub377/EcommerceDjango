@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from account.forms import UserEditForm, LoginForm, UserRegistrationForm
 from account.models import Customer
+from orders.models import Order
 
 
 def register_customer(request):
@@ -74,5 +75,6 @@ def dashboard(request):
         'email': user.email,
         # Add more user-related data as needed
     }
-
-    return render(request, 'account/dashboard.html', {'user_data': user_data})
+    customer = Customer.objects.get(username=user.username)
+    orders = Order.objects.filter(customer=customer)
+    return render(request, 'account/dashboard.html', {'user_data': user_data, 'orders':orders})

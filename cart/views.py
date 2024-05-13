@@ -52,9 +52,7 @@ def cart_update_shipping_cost(request):
 
 def cart_add(request, product_id):
     cart = Cart(request)
-    print(product_id)
     product = get_object_or_404(Product, id=product_id)
-    print(product.name)
     form = CartAddProductForm(request.POST)
     previous_url = request.POST.get('next')
     if form.is_valid():
@@ -62,11 +60,10 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=int(cd['quantity']),
                  override_quantity=cd['override'])
-        return redirect('cart:cart_detail')
-        # if previous_url:
-        #     return redirect(previous_url)
-        # else:
-        #     return redirect('cart:cart_detail')
+        if previous_url:
+            return redirect(previous_url)
+        else:
+            return redirect('cart:cart_detail')
 
 
 def cart_remove(request, product_id):
@@ -90,9 +87,10 @@ def cart_detail(request):
 
     cart_products = [item['product'] for item in cart]
 
-    # if cart_products:
-    #     recommended_products = r.suggest_products_for([cart_products], max_results=4)
-    # else:
-    #     recommended_products = []
-    # print(f'recommended products are : {recommended_products}')
-    return render(request, 'cart/detail.html', {'cart': cart,})
+    if cart_products:
+        recommended_products = r.suggest_products_for(cart_products, max_results=4)
+    else:
+        recommended_products = []
+
+    print(f'recommended products are : {recommended_products}')
+    return render(request, 'cart/detail.html', {'cart': cart,'recommended_products':recommended_products})

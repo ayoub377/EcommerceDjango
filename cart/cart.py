@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from myshop.models import Product
-from myshop.recommender import Recommender
+
 
 
 class Cart(object):

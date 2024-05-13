@@ -106,13 +106,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -137,9 +130,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'tommypep20@gmail.com'
-EMAIL_HOST_PASSWORD = "zekf yphr qeqg jpyd"
-
-CELERY_BROKER_URL = 'amqp://localhost'
+EMAIL_HOST_PASSWORD = "wdmo obla jnei ejmp"
+CELERY_BROKER_URL = 'amqp://localhost:5672'
 
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID
 BRAINTREE_PUBLIC_KEY = 'ppq66w4mj3c64mhr'  # Public Key
