@@ -5,7 +5,7 @@
         <div class="container account-container custom-account-container">
             <div class="row">
                 <div class="sidebar widget widget-dashboard mb-lg-0 mb-3 col-lg-3 order-0">
-                    <h2 class="text-uppercase">My Account</h2>
+                    <h2 class="text-uppercase">Mon Compte</h2>
                     <ul class="nav nav-tabs list flex-column mb-0" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard"
@@ -14,7 +14,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" id="order-tab" data-toggle="tab" href="#order" role="tab"
-                               aria-controls="order" aria-selected="true">Orders</a>
+                               aria-controls="order" aria-selected="true">Commandes</a>
                         </li>
 
                         <li class="nav-item">
@@ -24,27 +24,32 @@
 
                         <li class="nav-item">
                             <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab"
-                               aria-controls="edit" aria-selected="false">Account
-                                details</a>
+                               aria-controls="edit" aria-selected="false">Compte détails</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="shop-address-tab" data-toggle="tab" href="#shipping" role="tab"
-                               aria-controls="edit" aria-selected="false">Shopping Address</a>
+                               aria-controls="edit" aria-selected="false">Adresse d'achat</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="shop-address-tab" data-toggle="tab" href="#review" role="tab"
+                               aria-controls="edit" aria-selected="false">Reviews</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
                         </li>
                     </ul>
                 </div>
+
                 <div class="col-lg-9 order-lg-last order-1 tab-content">
                     <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
                         <div class="dashboard-content">
                             <p>
-                                Hello <strong class="text-dark">{{ user_data.username }}</strong>
+                                Bonjour <strong class="text-dark">{{ user_data.username }}</strong>
                             </p>
 
                             <p>
-                                From your account dashboard you can view your
+                                Depuis le tableau de bord de votre compte, vous pouvez consulter votre
                                 <a class="btn btn-link link-to-tab" href="#order">Dernières commandes</a>,
                                 Gestion
                                 <a class="btn btn-link link-to-tab" href="#address">expédition et facturation
@@ -118,7 +123,7 @@
                                     {% else %}
                                         <tr>
                                             <td colspan="4" class="text-center p-0">
-                                                <p class="mb-5 mt-5">No Order has been made yet.</p>
+                                                <p class="mb-5 mt-5">Aucune commande n'a encore été passée.</p>
                                             </td>
                                         </tr>
                                     {% endif %}
@@ -126,7 +131,7 @@
                                 </table>
                                 <hr class="mt-0 mb-3 pb-2"/>
 
-                                <a href="category.html" class="btn btn-dark">Go Shop</a>
+                                <a href="{% url 'myshop:home' %}" class="btn btn-dark">Aller Au Magasin</a>
                             </div>
                         </div>
                     </div><!-- End .tab-pane -->
@@ -134,10 +139,10 @@
                     <div class="tab-pane fade" id="download" role="tabpanel">
                         <div class="download-content">
                             <h3 class="account-sub-title d-none d-md-block"><i
-                                    class="sicon-cloud-download align-middle mr-3"></i>Downloads</h3>
+                                    class="sicon-cloud-download align-middle mr-3"></i>téléchargements</h3>
                             <div class="download-table-container">
-                                <p>No downloads available yet.</p> <a href="category.html"
-                                                                      class="btn btn-primary text-transform-none mb-2">GO
+                                <p>Aucun téléchargement disponible pour l'instant.</p> <a href="category.html"
+                                                                                          class="btn btn-primary text-transform-none mb-2">GO
                                 SHOP</a>
                             </div>
                         </div>
@@ -183,18 +188,18 @@
                             </div>
                         </div>
                     </div><!-- End .tab-pane -->
-
+                    {# change this into form for updating user data #}
                     <div class="tab-pane fade" id="edit" role="tabpanel">
                         <h3 class="account-sub-title d-none d-md-block mt-0 pt-1 ml-1"><i
                                 class="icon-user-2 align-middle mr-3 pr-1"></i>Account Details</h3>
                         <div class="account-content">
-                            <form action="#">
+                            <form action="{% url 'account:edit_account' %}" method="post">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="acc-name">First name <span class="required">*</span></label>
-                                            <input type="text" class="form-control" placeholder="Editor"
-                                                   id="acc-name" name="acc-name" required/>
+                                            {{ user_form.first_name }}
                                         </div>
                                     </div>
 
@@ -202,61 +207,70 @@
                                         <div class="form-group">
                                             <label for="acc-lastname">Last name <span
                                                     class="required">*</span></label>
-                                            <input type="text" class="form-control" id="acc-lastname"
-                                                   name="acc-lastname" required/>
+                                            {{ user_form.last_name }}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <label for="acc-text">Display name <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="acc-text" name="acc-text"
-                                           placeholder="Editor" required/>
-                                    <p>This will be how your name will be displayed in the account section and
-                                        in
-                                        reviews</p>
+                                    {{ user_form.username }}
+                                    {% if user_form.username.errors %}
+                                        <div class="text-danger">{{ user_form.username.errors }}</div>
+                                    {% endif %}
+                                    <p>Ce sera ainsi que votre nom sera affiché dans la section compte </p>
                                 </div>
-
 
                                 <div class="form-group mb-4">
                                     <label for="acc-email">Email address <span class="required">*</span></label>
-                                    <input type="email" class="form-control" id="acc-email" name="acc-email"
-                                           placeholder="editor@gmail.com" required/>
+                                    {{ user_form.email }}
+                                    {% if user_form.email.errors %}
+                                        <div class="text-danger">{{ user_form.email.errors }}</div>
+                                    {% endif %}
                                 </div>
 
                                 <div class="change-password">
                                     <h3 class="text-uppercase mb-2">Password Change</h3>
-
                                     <div class="form-group">
                                         <label for="acc-password">Current Password (leave blank to leave
                                             unchanged)</label>
                                         <input type="password" class="form-control" id="acc-password"
                                                name="acc-password"/>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-eye toggle-password" toggle="#acc-password"></i>
+                                            </span>
+                                        </div>
                                     </div>
-
+                                    {% if user_form.current_password.errors %}
+                                        <div class="text-danger">{{ user_form.current_password.errors }}</div>
+                                    {% endif %}
                                     <div class="form-group">
                                         <label for="acc-password">New Password (leave blank to leave
                                             unchanged)</label>
-                                        <input type="password" class="form-control" id="acc-new-password"
-                                               name="acc-new-password"/>
+                                        {{ user_form.new_password }}
                                     </div>
-
+                                    {% if user_form.new_password.errors %}
+                                        <div class="text-danger">{{ user_form.new_password.errors }}</div>
+                                    {% endif %}
                                     <div class="form-group">
                                         <label for="acc-password">Confirm New Password</label>
-                                        <input type="password" class="form-control" id="acc-confirm-password"
-                                               name="acc-confirm-password"/>
+                                        {{ user_form.confirm_password }}
                                     </div>
                                 </div>
-
+                                {% if user_form.confirm_password.errors %}
+                                    <div class="text-danger">{{ user_form.confirm_password.errors }}</div>
+                                {% endif %}
                                 <div class="form-footer mt-3 mb-0">
                                     <button type="submit" class="btn btn-dark mr-0">
-                                        Save changes
+                                        Enregistrer
                                     </button>
                                 </div>
                             </form>
                         </div>
                     </div><!-- End .tab-pane -->
 
+                    {# change this into billing addresses #}
                     <div class="tab-pane fade" id="billing" role="tabpanel">
                         <div class="address account-content mt-0 pt-2">
                             <h4 class="title">Billing address</h4>
@@ -340,7 +354,7 @@
                             </form>
                         </div>
                     </div><!-- End .tab-pane -->
-
+                    {# change this into shipping addresses #}
                     <div class="tab-pane fade" id="shipping" role="tabpanel">
                         <div class="address account-content mt-0 pt-2">
                             <h4 class="title mb-3">Shipping Address</h4>
@@ -413,13 +427,62 @@
                             </form>
                         </div>
                     </div><!-- End .tab-pane -->
+                    <!-- Edit Review Modal -->
+                    <div class="tab-pane fade" id="review" role="tabpanel">
+                        <div class="address account-content mt-0 pt-2">
+                            <div class="row">
+                                <!-- Section for Adding a Review -->
+                                <div class="col-md-6">
+                                    <h4 class="title">Add Review</h4>
+                                    <form class="mb-2" method="post" action="{% url 'account:dashboard' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="id_rating">Comment <span class="required">*</span></label>
+                                            {{ review_form.review }}
+                                        </div>
+                                        <div class="form-footer mb-0">
+                                            <div style="justify-content: center">
+                                                <button type="submit" class="btn btn-dark py-4">Save Review</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Section for Showing Past Reviews -->
+                                <div class="col-md-6">
+                                    <h4 class="title">Past Reviews</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Comment</th>
+                                                <th>Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for review in reviews %}
+                                                <tr>
+                                                    <td>{{ review.review|safe }}</td>
+                                                    <td>{{ review.created_at|date:"F j, Y, g:i a" }}</td>
+                                                    <td>
+                                                        <a href="{% url 'myshop:edit_review' review.id %}"
+                                                           class="btn btn-sm btn-dark">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div><!-- End .tab-content -->
             </div><!-- End .row -->
         </div><!-- End .container -->
-
         <div class="mb-5"></div><!-- margin -->
     </main><!-- End .main -->
-
 
     <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
 

@@ -44,11 +44,11 @@ class UserRegistrationForm(forms.Form):
                             }))
 
     username = forms.CharField(max_length=100,
-                            required=True,
-                            widget=forms.TextInput(attrs={
-                                'class': 'form-input form-wide',
-                                'name': 'username'
-                            }))
+                               required=True,
+                               widget=forms.TextInput(attrs={
+                                   'class': 'form-input form-wide',
+                                   'name': 'username'
+                               }))
     password = forms.CharField(max_length=50,
                                required=True,
                                widget=forms.PasswordInput(attrs={
@@ -74,6 +74,23 @@ class UserRegistrationForm(forms.Form):
 
 
 class UserEditForm(forms.ModelForm):
+    current_password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={
+        'class': 'form-control', 'placeholder': 'Current Password (leave blank if unchanged)','name':'current_password'
+    }))
+    new_password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={
+        'class': 'form-control', 'placeholder': 'New Password (leave blank if unchanged)','name':'new_password'
+    }))
+    confirm_password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={
+        'class': 'form-control', 'placeholder': 'Confirm New Password','name':'confirm_password'
+    }))
+
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email', 'username')
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("new_password")
+        password2 = self.cleaned_data.get("confirm_password")
+        if password1 != password2:
+            raise forms.ValidationError("Passwords do not match")
+        return password2

@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.views.generic import TemplateView, ListView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from myshop.models import Product, Category, Images
+from myshop.models import Product, Category, Images, Review
 from .recommender import Recommender
 
 
@@ -16,6 +16,7 @@ class HomeView(TemplateView):
         context['hot_deals'] = Product.objects.exclude(discount__isnull=True).order_by('-created')[:10]
         context['featured_products'] = Product.objects.filter(featured=True)
         context['categories'] = Category.objects.all()
+        context['last_five_reviews'] = Review.objects.all().order_by('created_at')[:4]
         return context
 
 

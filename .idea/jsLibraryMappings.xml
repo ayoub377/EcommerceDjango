@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{jquery-1.11.0, jquery-latest, jquery-migrate-1.2.1, jquery-ui, jquery.ez-plus, slick, slick-carousel, slick-theme, toolkit}" />
+    <file url="file://$PROJECT_DIR$" libraries="{ckeditor, tinymce}" />
   </component>
 </project>

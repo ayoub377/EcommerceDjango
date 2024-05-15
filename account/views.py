@@ -1,11 +1,16 @@
+from aiohttp.http_exceptions import HttpBadRequest
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 
 # Create your views here.
 from account.forms import UserEditForm, LoginForm, UserRegistrationForm
 from account.models import Customer
+from myshop.forms import ReviewForm
+from myshop.models import Review
 from orders.models import Order
 
 
@@ -19,7 +24,7 @@ def register_customer(request):
                 first_name=register_form.cleaned_data["first_name"],
                 last_name=register_form.cleaned_data["last_name"],
                 email=register_form.cleaned_data["email"],
-                password= register_form.cleaned_data["password"],
+                password=register_form.cleaned_data["password"],
             )
             new_user.save()
             login(request, new_user)  # Log in the user
@@ -49,32 +54,73 @@ def login_customer(request):
 
 
 @login_required
-def edit(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user,
-                                 data=request.POST)
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'profile updated successfully')
-        else:
-            messages.error(request, 'Error updating your profile')
-    else:
-        user_form = UserEditForm(instance=request.user)
-    return render(request,
-                  'account/edit.html',
-                  {'user_form': user_form})
-
-
-@login_required
 def dashboard(request):
     # Logic to retrieve user data or any other dashboard-related data
-    # For example:
     user = request.user
     user_data = {
         'username': user.username,
         'email': user.email,
         # Add more user-related data as needed
     }
+
+    # Fetch customer and orders
     customer = Customer.objects.get(username=user.username)
     orders = Order.objects.filter(customer=customer)
-    return render(request, 'account/dashboard.html', {'user_data': user_data, 'orders':orders})
+    reviews = Review.objects.filter(user=user)
+    user_form = UserEditForm(instance=user)
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = user
+            review.save()
+            return redirect('account:dashboard')  # Redirect to the dashboard to show the form again
+    else:
+        review_form = ReviewForm()
+
+    context = {
+        'user_data': user_data,
+        'orders': orders,
+        'review_form': review_form,
+        'reviews': reviews,
+        'user_form': user_form
+    }
+
+    return render(request, 'account/dashboard.html', context)
+
+
+@login_required
+def edit_account(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            update_user = user_form.save(commit=False)
+            new_password = user_form.cleaned_data.get('new_password')
+
+            if new_password:
+                print('it is changed now')
+                update_user.set_password(new_password)
+                update_user.save()
+            # You may want to add a success message or redirect after saving
+            return redirect('account:dashboard')  # Change to your success URL
+        else:
+            return render(request, 'account/dashboard.html', {'user_form':user_form},status=400)
+
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('account:dashboard'))
+    else:
+        form = ReviewForm(instance=review)
+
+
+    return render(request, 'account/edit_reviews.html', {
+        'form_reviews': form,
+        'review': review,
+    })

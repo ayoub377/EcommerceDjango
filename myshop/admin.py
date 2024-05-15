@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Images, Rating
+from .models import Category, Product, Images, Review
 
 
 @admin.register(Category)
@@ -59,10 +59,8 @@ class ImagesAdmin(ModelAdmin):
 
 
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'rating', 'created_at')
-    list_filter = ('product', 'created_at')
-    search_fields = ('user__username', 'product__name')
+    list_display = ('user', 'review', 'created_at')
     date_hierarchy = 'created_at'
 
 
-admin.site.register(Rating, RatingAdmin)
+admin.site.register(Review, RatingAdmin)

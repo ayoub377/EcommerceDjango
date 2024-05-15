@@ -27,12 +27,14 @@
     <orderEntry type="library" name="toolkit" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
     <orderEntry type="library" name="jquery.ez-plus" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
+    <orderEntry type="library" name="tinymce" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../LuckyProject\templates" />
+        <option value="$USER_HOME$/LuckyProject\templates" />
       </list>
     </option>
   </component>

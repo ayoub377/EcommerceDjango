@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from tinymce.models import HTMLField
 
 from account.models import Customer
 
@@ -59,15 +60,13 @@ class Product(models.Model):
         return Product.objects.filter(featured=True)
 
 
-class Rating(models.Model):
+class Review(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
-    review = models.TextField(blank=True)
+    review = HTMLField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.name} - {self.rating}"
+        return f"{self.user.username} - {self.review}"
 
 
 class Images(models.Model):

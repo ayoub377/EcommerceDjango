@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% block head %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,6 +40,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'vendor/simple-line-icons/css/simple-line-icons.min.css' %}">
 </head>
 
+{% endblock %}
 <body>
     <div class="page-wrapper">
         {% include 'shop/header.html' %}
@@ -119,12 +121,12 @@
             </a>
         </div>
         <div class="sticky-info">
-            <a href="login.html" class="">
+            <a href="{% url 'account:dashboard' %}" class="">
                 <i class="icon-user-2"></i>Account
             </a>
         </div>
         <div class="sticky-info">
-            <a href="cart.html" class="">
+            <a href="{% url 'cart:cart_detail' %}" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
                 </i>Cart
@@ -142,6 +144,34 @@
 
     <!-- Main JS File -->
     <script src="{% static 'js/main.min.js' %}"></script>
+{% block extra_js %}
+{% endblock %}
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.0/tinymce.min.js" integrity="sha512-Va3PZJRSZ8TlnqUfjkA5YPR57+oIscCVoNGjYK1JYsOTw8VU7517hHqs90/h/YuUm8KZl9iD+Dt8K6T8uAJCqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript">
+  tinymce.init({
+    selector: 'textarea'
+  });
 
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePasswordElements = document.querySelectorAll('.toggle-password');
+
+        togglePasswordElements.forEach(function (togglePassword) {
+            togglePassword.addEventListener('click', function (e) {
+                const input = document.querySelector(togglePassword.getAttribute('toggle'));
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    togglePassword.classList.remove('fa-eye');
+                    togglePassword.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+            });
+        });
+    });
+</script>
 </html>

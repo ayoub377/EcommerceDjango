@@ -16,9 +16,9 @@
                                     <a href="{% url 'account:login' %}">s'identifier </a>
                                 {% endif %}
                             </li>
-                            <li>
-                                <a href="contact.html">Nous contacter</a>
-                            </li>
+{#                            <li>#}
+{#                                <a href="contact.html">Nous contacter</a>#}
+{#                            </li>#}
                             <li>
                                 <a href="{% url 'cart:cart_detail' %}">Mon Panier</a>
                             </li>
@@ -91,7 +91,7 @@
                 </div>
                 <!-- End .header-contact -->
 
-                <a href="login.html" class="header-icon login-link pl-1">
+                <a href="{% url 'account:dashboard' %}" class="header-icon login-link pl-1">
                     <i class="icon-user-2"></i>
                 </a>
 
@@ -231,7 +231,7 @@
                 </div>
                 <!-- End .header-search -->
 
-                <a href="login.html" class="header-icon account-icon">
+                <a href="{% url 'account:dashboard' %}" class="header-icon account-icon">
                     <i class="icon-user-2"></i>
                 </a>
 
@@ -309,4 +309,9 @@
         <!-- End .container -->
     </div>
     <!-- End .header-bottom -->
+<script>
+    document.on("click",".login-link",function (e){
+        e.preventDefault();
+    })
+</script>
 </header>

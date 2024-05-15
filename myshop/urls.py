@@ -1,5 +1,6 @@
 from django.urls import path
 
+from account.views import edit_review
 from .views import (
     HomeView,
     ProductDetailView, product_search_view,
@@ -15,4 +16,5 @@ urlpatterns = [
          name='product_list_by_category'),
     path('details/<int:pk>/', ProductDetailView.as_view(), name='details_product'),
     path('search/', product_search_view, name='product_search'),
+    path('review/edit/<int:review_id>/', edit_review, name='edit_review'),
 ]
