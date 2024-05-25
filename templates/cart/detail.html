@@ -198,7 +198,7 @@
             </div><!-- End .row -->
             <div class="row">
                 <div class="col-lg-9 main-content">
-                     <h2 class="section-title text-center d-flex align-items-center">Similar Products</h2>
+                     <h2 class="section-title text-center d-flex align-items-center">Produits Similaire</h2>
 
                     <div class="row products-group products-caty">
                         {% for product in recommended_products %}
@@ -263,7 +263,13 @@
             <div class="mb-6"></div>
         </div>
     </main><!-- End .main -->
-    <script>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+        <script>
         document.addEventListener('DOMContentLoaded', function () {
             var updateCartBtn = document.getElementById('update-cart');
             if (updateCartBtn) {
@@ -299,6 +305,33 @@
         });
 
     </script>
-    <script>
-    </script>
+
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var cartTotal = parseFloat("{{ cart.get_total_price }}");
+
+        var livraisonGratuite = document.getElementById('livraisonGratuite');
+        var livraisonCasablanca = document.getElementById('livraisonCasablanca');
+        var livraisonHorsCasablanca = document.getElementById('livraisonHorsCasablanca');
+
+        // Function to enable or disable shipping options based on cart total
+        function updateShippingOptions() {
+            if (cartTotal >= 400) {
+                livraisonGratuite.disabled = false;
+                livraisonCasablanca.disabled = true;
+                livraisonHorsCasablanca.disabled = true;
+            } else {
+                livraisonGratuite.disabled = true;
+                livraisonCasablanca.disabled = false;
+                livraisonHorsCasablanca.disabled = false;
+            }
+        }
+
+        // Initial check
+        updateShippingOptions();
+    });
+</script>
+
+
 {% endblock %}

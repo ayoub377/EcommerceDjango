@@ -15,3 +15,4 @@ def get_featured_products(request):
     return {
         'featured_products': featured_products
     }
+

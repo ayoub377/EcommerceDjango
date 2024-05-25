@@ -1,4 +1,5 @@
-{% load static %}
+
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,15 +9,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Ecommerce Name of website</title>
+    <title>Jouets Palace</title>
 
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="description" content="JouetsPalace">
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{% static "images/icons/favicon.png" %}">
+    <link rel="icon" type="image/x-icon" href="{% static "images/Icon-Small-40@2x.png" %}">
 
+    {% tailwind_css %}
 
     <script>
         WebFontConfig = {
@@ -81,10 +83,9 @@
                     {% if request.user.isAuthenticated %}
                     <li><a href="{% url 'account:dashboard' %}">Mon Compte</a></li>
                     {% else %}
-                    <li><a href="{% url 'account:login' %}" class="login-link">s'identifier</a></li>
                     {% endif %}
-                    <li><a href="demo7-contact.html">Nous contacter</a></li>
-                    <li><a href="cart.html">Mon Panier</a></li>
+                    <li><a href="{% url 'myshop:contact_us' %}">Nous contacter</a></li>
+                    <li><a href="{% url 'cart:cart_detail' %}">Mon Panier</a></li>
                 </ul>
             </nav><!-- End .mobile-nav -->
 
@@ -106,7 +107,7 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="demo7.html">
+            <a href="{% url 'myshop:home' %}">
                 <i class="icon-home"></i>Home
             </a>
         </div>
@@ -116,20 +117,15 @@
             </a>
         </div>
         <div class="sticky-info">
-            <a href="wishlist.html" class="">
-                <i class="icon-wishlist-2"></i>Wishlist
-            </a>
-        </div>
-        <div class="sticky-info">
             <a href="{% url 'account:dashboard' %}" class="">
-                <i class="icon-user-2"></i>Account
+                <i class="icon-user-2"></i>Compte
             </a>
         </div>
         <div class="sticky-info">
             <a href="{% url 'cart:cart_detail' %}" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
-                </i>Cart
+                </i>Panier
             </a>
         </div>
     </div>
@@ -148,7 +144,7 @@
 {% endblock %}
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.0/tinymce.min.js" integrity="sha512-Va3PZJRSZ8TlnqUfjkA5YPR57+oIscCVoNGjYK1JYsOTw8VU7517hHqs90/h/YuUm8KZl9iD+Dt8K6T8uAJCqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="text/javascript">
+<script type="text/javascript">
   tinymce.init({
     selector: 'textarea'
   });
@@ -174,4 +170,7 @@
         });
     });
 </script>
+{% block scripts %}
+
+{% endblock %}
 </html>

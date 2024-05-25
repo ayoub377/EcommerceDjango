@@ -17,7 +17,7 @@ from django.template.loader import render_to_string
 from xhtml2pdf import pisa
 
 
-
+@login_required
 @login_required
 def Order_create(request):
     cart = Cart(request)
@@ -48,7 +48,6 @@ def Order_create(request):
     else:
         form = OrderCreateForm()
     return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
-
 
 @staff_member_required
 def admin_order_detail(request, order_id):

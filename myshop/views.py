@@ -1,11 +1,14 @@
 import re
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.urls import reverse
 from django.views.generic import TemplateView, ListView
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from myshop.models import Product, Category, Images, Review
+from .forms import ContactForm
 from .recommender import Recommender
+from .tasks import send_form
 
 
 class HomeView(TemplateView):
@@ -79,6 +82,7 @@ def product_search_view(request):
 
 class ProductDetailView(TemplateView):
     template_name = 'shop/details.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = get_object_or_404(Product, id=self.kwargs['pk'])
@@ -98,3 +102,18 @@ def search_auto(request):
         results = [product.name for product in products]
         return JsonResponse(results, safe=False)
     return JsonResponse({'error': 'Fail'})
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['email']
+            print(message)
+            send_form.delay(sender, message, request.user.username)
+            return redirect(reverse('myshop:home'))
+    else:
+        form = ContactForm()
+    return render(request, 'shop/contact.html', {'form': form})

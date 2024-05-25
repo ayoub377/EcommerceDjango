@@ -6,8 +6,6 @@ type_paiements = [
     ('paiement par virement bancaire', 'paiement par virement bancaire'),
     ('paiement sur livraison', 'paiement sur livraison')
 ]
-
-
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
     prenom = models.CharField('prenom', max_length=50)
@@ -44,3 +42,14 @@ class OrderItem(models.Model):
     def get_cost(self):
         return self.price * self.quantity
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return str(self.id)
+
+    def get_cost(self):
+        return self.price * self.quantity

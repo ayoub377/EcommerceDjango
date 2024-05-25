@@ -4,7 +4,8 @@ from account.views import edit_review
 from .views import (
     HomeView,
     ProductDetailView, product_search_view,
-    ProductListView
+    ProductListView,
+    contact
 
 )
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path('details/<int:pk>/', ProductDetailView.as_view(), name='details_product'),
     path('search/', product_search_view, name='product_search'),
     path('review/edit/<int:review_id>/', edit_review, name='edit_review'),
+    path('contact/', contact, name='contact_us')
 ]

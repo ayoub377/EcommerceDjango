@@ -36,6 +36,7 @@
 											Password?</a>
 
 									</div>
+                                     <input type="hidden" name="next" value="{{ request.GET.next  }}">
 									<button type="submit" class="btn btn-dark btn-md w-100">
 										LOGIN
 									</button>
@@ -78,6 +79,7 @@
 									</label>
                                     {{ register_form.password2 }}
 									<div class="form-footer mb-2">
+                                        <input type="hidden" name="next" value="{{ request.GET.next  }}">
 										<button type="submit" class="btn btn-dark btn-md w-100 mr-0">
 											Register
 										</button>

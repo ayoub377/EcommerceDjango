@@ -1,8 +1,6 @@
-from aiohttp.http_exceptions import HttpBadRequest
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -18,6 +16,7 @@ def register_customer(request):
     register_form = UserRegistrationForm()
     if request.method == 'POST':
         register_form = UserRegistrationForm(request.POST)
+        next_url = request.POST.get('next', '/')
         if register_form.is_valid():
             new_user = Customer.objects.create_user(
                 username=register_form.cleaned_data["username"],
@@ -28,7 +27,7 @@ def register_customer(request):
             )
             new_user.save()
             login(request, new_user)  # Log in the user
-            return redirect('myshop:home')
+            return redirect(next_url)
     else:
         return render(request, 'registration/login.html', {
             'register_form': register_form
@@ -39,15 +38,16 @@ def login_customer(request):
     register_form = UserRegistrationForm()
     user_form = LoginForm()
     if request.method == 'POST':
+        next_url = request.POST.get('next','/')
+        print(next_url+"ois this")
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            print(f'user is : {user}')
             if user is not None:
                 login(request, user)
-                return redirect('myshop:home')  # Redirect to dashboard upon successful login
+                return redirect(next_url)  # Redirect to dashboard upon successful login
     else:
         user_form = LoginForm()
     return render(request, 'registration/login.html', {'user_form': user_form, 'register_form': register_form})
@@ -98,7 +98,6 @@ def edit_account(request):
             new_password = user_form.cleaned_data.get('new_password')
 
             if new_password:
-                print('it is changed now')
                 update_user.set_password(new_password)
                 update_user.save()
             # You may want to add a success message or redirect after saving

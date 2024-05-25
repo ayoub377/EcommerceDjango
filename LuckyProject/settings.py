@@ -24,13 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-lslk@q+e+u3^te@e(2%y8(#8j+p_k-0ywnu9wi672d2s=bcm$v'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
-
 
 INSTALLED_APPS = [
     'account',
@@ -44,6 +42,8 @@ INSTALLED_APPS = [
     'myshop.apps.MyshopConfig',
     'tinymce',
     'mptt',
+    'tailwind',
+    'theme',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django.forms',
@@ -93,6 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LuckyProject.wsgi.application'
 
+ASGI_APPLICATION = "LuckyProject.asgi.application"
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -125,6 +127,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
+
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -137,6 +148,10 @@ CELERY_BROKER_URL = 'amqp://localhost:5672'
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID
 BRAINTREE_PUBLIC_KEY = 'ppq66w4mj3c64mhr'  # Public Key
 BRAINTREE_PRIVATE_KEY = '8d9a786ff00c868ed91468fb8ef3ff58'  # Private key
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 BRAINTREE_CONF = Configuration(
     Environment.Sandbox,
@@ -177,7 +192,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "myshop:home"
 LOGOUT_REDIRECT_URL = "myshop:home"
 LOGIN_URL = "account:login"
-
+TAILWIND_APP_NAME = "theme"
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1

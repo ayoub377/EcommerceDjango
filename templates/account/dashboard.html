@@ -8,7 +8,7 @@
                     <h2 class="text-uppercase">Mon Compte</h2>
                     <ul class="nav nav-tabs list flex-column mb-0" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard"
+                            <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="{% url 'account:dashboard' %}"
                                role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</a>
                         </li>
 
@@ -640,11 +640,6 @@
         <div class="sticky-info">
             <a href="category.html" class="">
                 <i class="icon-bars"></i>Categories
-            </a>
-        </div>
-        <div class="sticky-info">
-            <a href="wishlist.html" class="">
-                <i class="icon-wishlist-2"></i>Wishlist
             </a>
         </div>
         <div class="sticky-info">

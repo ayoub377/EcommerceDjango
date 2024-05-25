@@ -29,53 +29,22 @@
                                     </svg>
                                     <span>Filter</span>
                                 </a>
-
-                                <div class="toolbox-item toolbox-sort">
-                                    <label>Sort By:</label>
-
-                                    <div class="select-custom">
-                                        <select name="orderby" class="form-control">
-                                            <option value="menu_order" selected="selected">Default sorting</option>
-                                            <option value="popularity">Sort by popularity</option>
-                                            <option value="rating">Sort by average rating</option>
-                                            <option value="date">Sort by newness</option>
-                                            <option value="price">Sort by price: low to high</option>
-                                            <option value="price-desc">Sort by price: high to low</option>
-                                        </select>
-                                    </div>
-                                    <!-- End .select-custom -->
-
-                                </div>
                                 <!-- End .toolbox-item -->
                             </div>
                             <!-- End .toolbox-left -->
                             <div class="toolbox-right">
                                 <div class="toolbox-item toolbox-show">
-                                    <label>Show:</label>
+                                    <label>Montrer</label>
                                     <div class="select-custom">
-                                        <select id="product-count" name="count" class="form-control">
-                                            <option value="12" {% if request.GET.count == '12' %}selected{% endif %}>
-                                                12
-                                            </option>
-                                            <option value="24" {% if request.GET.count == '24' %}selected{% endif %}>
-                                                24
-                                            </option>
-                                            <option value="36" {% if request.GET.count == '36' %}selected{% endif %}>
-                                                36
-                                            </option>
+                                        <select id="product-count-top" name="count" class="form-control">
+                                            <option value="12" {% if request.GET.count == '12' %}selected{% endif %}>12</option>
+                                            <option value="24" {% if request.GET.count == '24' %}selected{% endif %}>24</option>
+                                            <option value="36" {% if request.GET.count == '36' %}selected{% endif %}>36</option>
                                         </select>
                                     </div>
                                     <!-- End .select-custom -->
                                 </div>
                                 <!-- End .toolbox-item -->
-                                <script>
-                                    document.getElementById('product-count').addEventListener('change', function () {
-                                        var count = this.value;
-                                        var url = window.location.href.split('?')[0]; // Get the current URL without query parameters
-                                        var query = '?count=' + count; // Construct the new query parameter
-                                        window.location.href = url + query; // Redirect to the updated URL
-                                    });
-                                </script>
                             </div>
                             <!-- End .toolbox-right -->
                         </nav>
@@ -146,12 +115,12 @@
                         <!-- End .row -->
                         <nav class="toolbox toolbox-pagination">
                             <div class="toolbox-item toolbox-show">
-                                <label>Show:</label>
+                                <label>Montrer:</label>
                                 <div class="select-custom">
-                                    <select name="count" class="form-control">
-                                        <option value="12">12</option>
-                                        <option value="24">24</option>
-                                        <option value="36">36</option>
+                                    <select id="product-count-bottom" name="count" class="form-control">
+                                        <option value="12" {% if request.GET.count == '12' %}selected{% endif %}>12</option>
+                                        <option value="24" {% if request.GET.count == '24' %}selected{% endif %}>24</option>
+                                        <option value="36" {% if request.GET.count == '36' %}selected{% endif %}>36</option>
                                     </select>
                                 </div>
                                 <!-- End .select-custom -->
@@ -228,4 +197,25 @@
             <!-- End .container -->
         </main>
     {% endif %}
+{% endblock %}
+{% block scripts %}
+    <script>
+        function updateSelects(newValue) {
+            document.getElementById('product-count-top').value = newValue;
+            document.getElementById('product-count-bottom').value = newValue;
+
+            var url = window.location.href.split('?')[0]; // Get the current URL without query parameters
+            var query = '?count=' + newValue; // Construct the new query parameter
+            window.location.href = url + query; // Redirect to the updated URL
+        }
+
+        document.getElementById('product-count-top').addEventListener('change', function () {
+            updateSelects(this.value);
+        });
+
+        document.getElementById('product-count-bottom').addEventListener('change', function () {
+            updateSelects(this.value);
+        });
+    </script>
+
 {% endblock %}

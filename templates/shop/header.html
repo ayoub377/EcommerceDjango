@@ -76,8 +76,8 @@
                 <button class="mobile-menu-toggler" type="button">
                     <i class="fas fa-bars"></i>
                 </button>
-                <a href="demo14.html" class="logo">
-                    <img src="assets/images/logo-black.png" alt="Porto Logo" width="202" height="80">
+                <a href="{% url 'myshop:home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Porto Logo" width="202" height="80">
                 </a>
             </div>
             <!-- End .header-center -->
@@ -85,18 +85,14 @@
             <div class="header-right w-lg-max ml-0 ml-lg-auto">
                 <div class="header-contact d-none d-lg-flex align-items-center ml-auto mr-4">
                     <i class="icon-phone-2"></i>
-                    <h6 class="line-height-1 pr-2">Call us now
-                        <a href="tel:#" class="d-block text-dark font1">+123 5678 890</a>
+                    <h6 class="line-height-1 pr-2">nous contacter
+                        <a href="{% url 'myshop:contact_us' %}" class="d-block text-dark font1">+212 654511608</a>
                     </h6>
                 </div>
                 <!-- End .header-contact -->
 
                 <a href="{% url 'account:dashboard' %}" class="header-icon login-link pl-1">
                     <i class="icon-user-2"></i>
-                </a>
-
-                <a href="#" class="header-icon btn-wishlist pl-1 pr-2">
-                    <i class="icon-wishlist-2"></i>
                 </a>
 
                 <div class="dropdown cart-dropdown">
@@ -112,7 +108,7 @@
                         <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
                         <div class="dropdownmenu-wrapper custom-scrollbar">
-                            <div class="dropdown-cart-header">Shopping Cart</div>
+                            <div class="dropdown-cart-header">Mon Panier</div>
                             <!-- End .dropdown-cart-header -->
 
                             <div class="dropdown-cart-products">
@@ -146,15 +142,15 @@
                             <!-- End .cart-product -->
 
                             <div class="dropdown-cart-total">
-                                <span>SUBTOTAL:</span>
+                                <span>Sous-Total:</span>
 
                                 <span class="cart-total-price float-right">{{ cart.get_total_price }}</span>
                             </div>
                             <!-- End .dropdown-cart-total -->
 
                             <div class="dropdown-cart-action">
-                                <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray btn-block view-cart">View
-                                    Cart
+                                <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray btn-block view-cart">
+                                    Panier
                                 </a>
                                 <a href="{% url 'orders:Order_create' %}" class="btn btn-dark btn-block">Valider</a>
                             </div>
@@ -175,8 +171,8 @@
     <div class="header-bottom sticky-header d-lg-block d-none" data-sticky-options="{'mobile': false}">
         <div class="container">
             <div class="header-left">
-                <a href="demo14.html" class="logo">
-                    <img src="assets/images/logo-black.png" class="white-logo sticky-logo" alt="Porto Logo" width="110"
+                <a href="{% url 'myshop:home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" class="white-logo sticky-logo" alt="Porto Logo" width="110"
                          height="46">
                 </a>
             </div>
@@ -235,10 +231,6 @@
                     <i class="icon-user-2"></i>
                 </a>
 
-                <a href="wishlist.html" class="header-icon">
-                    <i class="icon-wishlist-2"></i>
-                </a>
-
                 <div class="dropdown cart-dropdown">
                     <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -293,9 +285,9 @@
                             <!-- End .dropdown-cart-total -->
 
                             <div class="dropdown-cart-action">
-                                <a href="cart.html" class="btn btn-gray btn-block view-cart">View Cart
+                                <a href="{% url 'cart:cart_detail' %}" class="btn btn-gray btn-block view-cart">Mon Panier
                                 </a>
-                                <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
+                                <a href="{% url 'orders:Order_create' %}" class="btn btn-dark btn-block">Valider</a>
                             </div>
                             <!-- End .dropdown-cart-total -->
                         </div>
