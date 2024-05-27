@@ -16,7 +16,7 @@
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{% static "images/Icon-Small-40@2x.png" %}">
+    <link rel="icon" type="image/x-icon" href="{% static "images/icons/favicon.png" %}">
 
     {% tailwind_css %}
 
@@ -89,13 +89,14 @@
                 </ul>
             </nav><!-- End .mobile-nav -->
 
-            <form class="search-wrapper mb-2" action="#">
-                <input type="text" class="form-control mb-0" placeholder="Search..." required />
+            <form class="search-wrapper mb-2" action="{% url 'myshop:product_search' %}" method="get">
+               <input type="search" class="form-control" name="query" id="qqq" placeholder="Search..."
+                                   required>
                 <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
             </form>
 
             <div class="social-icons">
-                <a href="#" class="social-icon social-facebook icon-facebook" target="_blank">
+                <a href="https://www.facebook.com/profile.php?id=61560206640309" class="social-icon social-facebook icon-facebook" target="_blank">
                 </a>
                 <a href="#" class="social-icon social-twitter icon-twitter" target="_blank">
                 </a>

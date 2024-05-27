@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Images, Review
+from .models import Category, Product, Images, Review, AdditionalInformation
 
 
 @admin.register(Category)
@@ -63,4 +63,10 @@ class RatingAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
 
 
+class AdditionalInformationInline(admin.ModelAdmin):
+    list_display = ('poids','couleurs','marque','product')
+
+
 admin.site.register(Review, RatingAdmin)
+
+admin.site.register(AdditionalInformation,AdditionalInformationInline)

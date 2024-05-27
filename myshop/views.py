@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, ListView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from myshop.models import Product, Category, Images, Review
+from myshop.models import Product, Category, Images, Review, AdditionalInformation
 from .forms import ContactForm
 from .recommender import Recommender
 from .tasks import send_form
@@ -88,6 +88,7 @@ class ProductDetailView(TemplateView):
         product = get_object_or_404(Product, id=self.kwargs['pk'])
         context['product'] = product
         context['images'] = Images.objects.filter(product_id=product.id)
+        context['infos_supplementaires'] = AdditionalInformation.objects.filter(product_id=product.id)
         context['featured_products'] = Product.objects.filter(featured=True)[:3]
         context['latest_products'] = Product.objects.order_by('-created')[:3]
         r = Recommender()
@@ -117,3 +118,15 @@ def contact(request):
     else:
         form = ContactForm()
     return render(request, 'shop/contact.html', {'form': form})
+
+
+def politique(request):
+    return render(request, 'shop/politique_retours_remb.html')
+
+
+def quick_view(request,product_id):
+    product_quick_view = Product.objects.get(id=product_id)
+    images = Images.objects.filter(product_id=product_quick_view.id)
+    return render(request, 'shop/product-quick-view.html', {'product_quick_view' : product_quick_view, 'images':images})
+
+

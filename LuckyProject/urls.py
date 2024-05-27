@@ -22,11 +22,11 @@ from LuckyProject import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('coupons/', include('coupons.urls', namespace='coupons')),
     path('', include('myshop.urls', namespace='myshop')),
     path('panier/', include('cart.urls', namespace='cart')),
     path('account/', include('account.urls', namespace='account')),
     path('orders/', include('orders.urls', namespace='orders')),
-    # path('payment/', include('payment.urls', namespace='payment')),
     path('tinymce/', include('tinymce.urls')),
 ]
 

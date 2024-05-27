@@ -12,7 +12,7 @@
                                 <div class="col-md-4 col-6">
                                     <div class="product-default inner-quickview inner-icon quantity-input">
                                         <figure>
-                                            <a href="{{ product.get_absolute_url }}">
+                                            <a href="{% url 'myshop:details_product' product.id %}">
                                                 <img src="{{ product.image.url }}" width="280" height="280"
                                                      alt="{{ product.title }}">
                                             </a>
@@ -45,10 +45,10 @@
                                             </div>
                                             <div class="price-box">
                                                 {% if product.discounted_price %}
-                                                    <span class="product-price">${{ product.discounted_price }}</span>
-                                                    <del class="product-old-price">${{ product.price }}</del>
+                                                    <span class="product-price">{{ product.discounted_price }} Dhs</span>
+                                                    <del class="product-old-price">{{ product.price }} Dhs</del>
                                                 {% else %}
-                                                    <span class="product-price">${{ product.price }}</span>
+                                                    <span class="product-price">{{ product.price }} Dhs</span>
                                                 {% endif %}
                                             </div>
                                             <div class="product-action">
@@ -82,21 +82,21 @@
                             </div>
                             <!-- End .widget -->
                             <div class="widget widget-featured">
-                                <h3 class="widget-title">Featured</h3>
+                                <h3 class="widget-title">Populaire</h3>
                                 <div class="widget-body">
                                     <div class="owl-carousel widget-featured-products">
                                         {% for product in featured_products %}
                                             <div class="featured-col">
                                                 <div class="product-default left-details product-widget">
                                                     <figure>
-                                                        <a href="{{ product.get_absolute_url }}">
+                                                        <a href="{% url 'myshop:details_product' product.id %}">
                                                             <img src="{{ product.image.url }}" width="84" height="84"
                                                                  alt="{{ product.title }}"/>
                                                         </a>
                                                     </figure>
                                                     <div class="product-details">
                                                         <h3 class="product-title"><a
-                                                                href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                                                href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a>
                                                         </h3>
                                                         <div class="ratings-container">
                                                             <!-- Add your rating display logic here if applicable -->

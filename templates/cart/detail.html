@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 {% load static %}
 {% block main %}
+    <style>
+    .apply-coupon-button {
+    background-color: black; /* Initial button color */
+    border: none;
+    color: whitesmoke;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for color change */
+}
+
+.apply-coupon-button:hover {
+    background-color: lightskyblue; /* Color when hovered */
+}
+
+    </style>
     <main class="main">
         <div class="container">
             <ul class="checkout-progress-bar d-flex justify-content-center flex-wrap">
@@ -78,7 +98,7 @@
                 </div><!-- End .col-lg-8 -->
                 <div class="col-lg-4">
                     <div class="cart-summary">
-                        <h3>CART TOTALS</h3>
+                        <h3>TOTAL PANIER</h3>
                         <table class="table table-totals">
                             <tbody>
                             <tr>
@@ -87,17 +107,8 @@
                             </tr>
 
                             <tr>
-                                <td colspan="2" class="text-left">
+                                <td colspan="4" class="text-left">
                                     <h4>Livraison</h4>
-
-                                    <div class="form-group form-group-custom-control">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="shipping_option"
-                                                   id="retraitMagasin" value="0">
-                                            <label class="custom-control-label" for="retraitMagasin">Retrait
-                                                Magasin</label>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
@@ -126,68 +137,42 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            // Attach event listener to all radio buttons with name "shipping_option"
-                                            var radioButtons = document.querySelectorAll('input[name="shipping_option"]');
-                                            radioButtons.forEach(function (radioButton) {
-                                                radioButton.addEventListener('change', function (event) {
-                                                    var selectedValue = event.target.value; // Get the selected value
-                                                    updateCartTotal(selectedValue); // Call function to update cart total
-                                                });
-                                            });
-
-                                            // Function to update cart total using AJAX
-                                            function updateCartTotal(selectedValue) {
-                                                var csrftoken = getCookie('csrftoken');
-
-                                                // Make AJAX request
-                                                var xhr = new XMLHttpRequest();
-                                                xhr.open('POST', '{% url 'cart:cart_update_shipping_cost' %}', true); // Replace with your Django view URL
-                                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                                xhr.setRequestHeader('X-CSRFToken', csrftoken);
-                                                xhr.onreadystatechange = function () {
-                                                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                                                        if (xhr.status === 200) {
-                                                            // Update cart total on success
-                                                            var response = JSON.parse(xhr.responseText);
-                                                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
-                                                        } else {
-                                                            // Handle error
-                                                            console.error('Error:', xhr.status);
-                                                        }
-                                                    }
-                                                };
-                                                xhr.send('shipping_option=' + encodeURIComponent(selectedValue)); // Send selected value to server
-                                            }
-                                        });
-                                        function getCookie(name) {
-                                            var cookieValue = null;
-                                            if (document.cookie && document.cookie !== '') {
-                                                var cookies = document.cookie.split(';');
-                                                for (var i = 0; i < cookies.length; i++) {
-                                                    var cookie = cookies[i].trim();
-                                                    // Check if the cookie name matches the desired name
-                                                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            return cookieValue;
-                                        }
-                                    </script>
                                 </td>
                             </tr>
                             </tbody>
-
                             <tfoot>
-                            <tr>
+                            {% if cart.coupon %}
+                                <tr class="subtotal">
+                                    <td>Sous-total</td>
+                                    <td colspan="4"></td>
+                                    <td class="num">{{ cart.get_total_price|floatformat:2 }} Dhs</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        "{{ cart.coupon.code }}" coupon
+                                        ({{ cart.coupon.discount }}% off)
+                                    </td>
+                                    <td colspan="4"></td>
+                                    <td class="num neg">
+                                        - {{ cart.get_discount|floatformat:2 }} Dhs
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            <tr class="total">
                                 <td>Total</td>
-                                <td id="cart_total">{{ cart.get_total_price }}</td>
+                                <td colspan="4"></td>
+                                <td class="num" style="width: 200px">
+                                    {{ cart.get_total_price_after_discount|floatformat:2 }} Dhs
+                                </td>
                             </tr>
                             </tfoot>
                         </table>
+                       <p>Activer le code Promo:</p>
+                        <form action="{% url "coupons:apply" %}" method="post" id="coupon-form">
+                          {{ coupon_apply_form }}
+                            <button type="submit" class="apply-coupon-button">Activer</button>
+                          {% csrf_token %}
+                        </form>
 
                         <div class="checkout-methods">
                             <a href="{% url 'orders:Order_create' %}" class="btn btn-block btn-dark">vérifier
@@ -198,7 +183,7 @@
             </div><!-- End .row -->
             <div class="row">
                 <div class="col-lg-9 main-content">
-                     <h2 class="section-title text-center d-flex align-items-center">Produits Similaire</h2>
+                    <h2 class="section-title text-center d-flex align-items-center">Produits Similaire</h2>
 
                     <div class="row products-group products-caty">
                         {% for product in recommended_products %}
@@ -248,7 +233,8 @@
                                             <a href="{% url 'cart:cart_add list' product.id %}"
                                                class="btn-icon btn-add-cart product-type-simple"><i
                                                     class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
-                                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
+                                            <a href="ajax/product-quick-view.html" class="btn-quickview"
+                                               title="Quick View"><i
                                                     class="fas fa-external-link-alt"></i></a>
                                         </div>
                                     </div>
@@ -264,12 +250,63 @@
         </div>
     </main><!-- End .main -->
 
-
 {% endblock %}
 
 {% block scripts %}
+   <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Attach event listener to all radio buttons with name "shipping_option"
+                                            var radioButtons = document.querySelectorAll('input[name="shipping_option"]');
+                                            radioButtons.forEach(function (radioButton) {
+                                                radioButton.addEventListener('change', function (event) {
+                                                    var selectedValue = event.target.value; // Get the selected value
+                                                    updateCartTotal(selectedValue); // Call function to update cart total
+                                                });
+                                            });
 
-        <script>
+                                            // Function to update cart total using AJAX
+                                            function updateCartTotal(selectedValue) {
+                                                var csrftoken = getCookie('csrftoken');
+
+                                                // Make AJAX request
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.open('POST', '{% url 'cart:cart_update_shipping_cost' %}', true); // Replace with your Django view URL
+                                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                                                        if (xhr.status === 200) {
+                                                            // Update cart total on success
+                                                            var response = JSON.parse(xhr.responseText);
+                                                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
+                                                        } else {
+                                                            // Handle error
+                                                            console.error('Error:', xhr.status);
+                                                        }
+                                                    }
+                                                };
+                                                xhr.send('shipping_option=' + encodeURIComponent(selectedValue)); // Send selected value to server
+                                            }
+                                        });
+
+                                        function getCookie(name) {
+                                            var cookieValue = null;
+                                            if (document.cookie && document.cookie !== '') {
+                                                var cookies = document.cookie.split(';');
+                                                for (var i = 0; i < cookies.length; i++) {
+                                                    var cookie = cookies[i].trim();
+                                                    // Check if the cookie name matches the desired name
+                                                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            return cookieValue;
+                                        }
+                                    </script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var updateCartBtn = document.getElementById('update-cart');
             if (updateCartBtn) {
@@ -306,32 +343,62 @@
 
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var cartTotal = parseFloat("{{ cart.get_total_price }}");
 
- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var cartTotal = parseFloat("{{ cart.get_total_price }}");
+            var livraisonGratuite = document.getElementById('livraisonGratuite');
+            var livraisonCasablanca = document.getElementById('livraisonCasablanca');
+            var livraisonHorsCasablanca = document.getElementById('livraisonHorsCasablanca');
 
-        var livraisonGratuite = document.getElementById('livraisonGratuite');
-        var livraisonCasablanca = document.getElementById('livraisonCasablanca');
-        var livraisonHorsCasablanca = document.getElementById('livraisonHorsCasablanca');
-
-        // Function to enable or disable shipping options based on cart total
-        function updateShippingOptions() {
-            if (cartTotal >= 400) {
-                livraisonGratuite.disabled = false;
-                livraisonCasablanca.disabled = true;
-                livraisonHorsCasablanca.disabled = true;
-            } else {
-                livraisonGratuite.disabled = true;
-                livraisonCasablanca.disabled = false;
-                livraisonHorsCasablanca.disabled = false;
+            // Function to enable or disable shipping options based on cart total
+            function updateShippingOptions() {
+                if (cartTotal >= 400) {
+                    livraisonGratuite.disabled = false;
+                    livraisonCasablanca.disabled = true;
+                    livraisonHorsCasablanca.disabled = true;
+                } else {
+                    livraisonGratuite.disabled = true;
+                    livraisonCasablanca.disabled = false;
+                    livraisonHorsCasablanca.disabled = false;
+                }
             }
-        }
 
-        // Initial check
-        updateShippingOptions();
-    });
-</script>
+            // Initial check
+            updateShippingOptions();
+        });
+    </script>
 
+    <script>
+        document.getElementById('coupon-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            // Include the CSRF token in the headers
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch("{% url 'coupons:apply' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message); // Display success message or update the DOM as needed
+                    } else {
+                        alert(data.message); // Display error message
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+    </script>
 
 {% endblock %}

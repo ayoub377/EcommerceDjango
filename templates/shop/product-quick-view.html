@@ -1,0 +1,79 @@
+<div class="product-single-container product-single-default product-quick-view mb-0 custom-scrollbar">
+	<div class="row">
+		<div class="col-md-6 product-single-gallery mb-md-0">
+			<div class="product-slider-container">
+				<div class="label-group">
+					<!---->
+					<div class="product-label label-sale">
+						{{ product_quick_view.discount }}
+					</div>
+				</div>
+
+				<div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
+					<div class="product-item">
+                                        {% for image in images %}
+				<div class="owl-dot">
+						<img class="product-single-image" src="{{ product_quick_view.image.url }}"
+							data-zoom-image="{{ product_quick_view.image.url }}" />
+				</div>
+                {% endfor %}
+					</div>
+				</div>
+				<!-- End .product-single-carousel -->
+			</div>
+			<div class="prod-thumbnail owl-dots">
+                {% for image in images %}
+				<div class="owl-dot">
+					<img src="{{ image.image.url }}" />
+				</div>
+                {% endfor %}
+			</div>
+		</div><!-- End .product-single-gallery -->
+
+		<div class="col-md-6">
+			<div class="product-single-details mb-0 ml-md-4">
+				<h1 class="product-title">{{ product_quick_view.name }}</h1>
+
+
+				<hr class="short-divider">
+
+				<div class="price-box">
+					<span class="product-price"> {{ product_quick_view.price }} Dhs</span>
+				</div><!-- End .price-box -->
+
+				<div class="product-desc">
+					<p>
+						{{ product_quick_view.information }}
+					</p>
+				</div><!-- End .product-desc -->
+
+				<ul class="single-info-list">
+
+					<li>
+						CATEGORY:
+						<strong>
+							<a href="{{ product_quick_view.category.get_absolute_url }}" class="product-category">{{ product_quick_view.category }}</a>
+						</strong>
+					</li>
+				</ul>
+
+				<div class="product-action">
+					<div class="product-single-qty">
+						<input class="horizontal-quantity form-control" type="text" />
+					</div><!-- End .product-single-qty -->
+
+					<a href="javascript:;" class="btn btn-dark add-cart mr-2" title="Ajouter Au Panier">Ajouter Au Panier</a>
+
+					<a href="{% url 'cart:cart_detail' %}" class="btn view-cart d-none">Mon Panier</a>
+				</div><!-- End .product-action -->
+
+				<hr class="divider mb-0 mt-0">
+
+			</div>
+		</div><!-- End .product-single-details -->
+
+		<button title="Close (Esc)" type="button" class="mfp-close">
+			×
+		</button>
+	</div><!-- End .row -->
+</div><!-- End .product-single-container -->

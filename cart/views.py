@@ -1,6 +1,8 @@
 from _decimal import Decimal
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
+
+from coupons.forms import CouponApplyForm
 from myshop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
@@ -87,10 +89,12 @@ def cart_detail(request):
 
     cart_products = [item['product'] for item in cart]
 
+    coupon_apply_form = CouponApplyForm()
+
     if cart_products:
         recommended_products = r.suggest_products_for(cart_products, max_results=4)
     else:
         recommended_products = []
 
     print(f'recommended products are : {recommended_products}')
-    return render(request, 'cart/detail.html', {'cart': cart,'recommended_products':recommended_products})
+    return render(request, 'cart/detail.html', {'cart': cart,'recommended_products':recommended_products,'coupon_apply_form': coupon_apply_form})
