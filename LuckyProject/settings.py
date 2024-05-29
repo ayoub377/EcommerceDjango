@@ -103,9 +103,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ecommerce_projet',
-        'USER': 'postgres',
+        'USER': 'ayoub',
         'PASSWORD': "Tabahmout55",
-        'HOST': '127.0.0.1',
         'PORT': '5433',
     }
 }
