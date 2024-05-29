@@ -138,12 +138,9 @@ CHANNEL_LAYERS = {
 }
 
 CART_SESSION_ID = 'cart'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tommypep20@gmail.com'
-EMAIL_HOST_PASSWORD = "wdmo obla jnei ejmp"
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = 'AKIAXYKJR3JOJAAJLK4I'
+AWS_SECRET_ACCESS_KEY = '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'
 CELERY_BROKER_URL = 'amqp://localhost:5672'
 
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID

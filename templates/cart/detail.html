@@ -2,23 +2,23 @@
 {% load static %}
 {% block main %}
     <style>
-    .apply-coupon-button {
-    background-color: black; /* Initial button color */
-    border: none;
-    color: whitesmoke;
-    padding: 8px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px 2px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for color change */
-}
+        .apply-coupon-button {
+            background-color: black; /* Initial button color */
+            border: none;
+            color: whitesmoke;
+            padding: 8px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition for color change */
+        }
 
-.apply-coupon-button:hover {
-    background-color: lightskyblue; /* Color when hovered */
-}
+        .apply-coupon-button:hover {
+            background-color: lightskyblue; /* Color when hovered */
+        }
 
     </style>
     <main class="main">
@@ -107,7 +107,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="4" class="text-left">
+                                <td colspan="6" class="text-left">
                                     <h4>Livraison</h4>
 
                                     <div class="form-group form-group-custom-control mb-0">
@@ -118,7 +118,7 @@
                                                 gratuite sur tout le Maroc à partir de 400 dhs : 0 dh</label>
                                         </div>
                                     </div>
-
+                                    <br>
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
                                             <input type="radio" name="shipping_option" class="custom-control-input"
@@ -127,7 +127,7 @@
                                                 Casablanca (moins de 400 dhs): 19.00 dhs</label>
                                         </div>
                                     </div>
-
+                                    <br>
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
                                             <input type="radio" name="shipping_option" class="custom-control-input"
@@ -167,11 +167,11 @@
                             </tr>
                             </tfoot>
                         </table>
-                       <p>Activer le code Promo:</p>
+                        <p>Activer le code Promo:</p>
                         <form action="{% url "coupons:apply" %}" method="post" id="coupon-form">
-                          {{ coupon_apply_form }}
+                            {{ coupon_apply_form }}
                             <button type="submit" class="apply-coupon-button">Activer</button>
-                          {% csrf_token %}
+                            {% csrf_token %}
                         </form>
 
                         <div class="checkout-methods">
@@ -196,7 +196,7 @@
                                         </a>
                                         {% if product.is_hot %}
                                             <div class="label-group">
-                                                <span class="product-label label-hot">HOT</span>
+                                                <span class="product-label label-hot">TOP</span>
                                             </div>
                                         {% endif %}
                                         {% if product.discount_percentage %}
@@ -209,7 +209,8 @@
                                                 <i class="icon-heart"></i>
                                             </a>
                                         </div>
-                                        <a href="#" class="btn-quickview" title="Quick View">Quick View</a>
+                                        <a href="{% url 'myshop:quick-view' %}" class="btn-quickview"
+                                           title="Quick View">aperçu rapide</a>
                                     </figure>
                                     <div class="product-details">
                                         <div class="category-list">
@@ -233,7 +234,7 @@
                                             <a href="{% url 'cart:cart_add list' product.id %}"
                                                class="btn-icon btn-add-cart product-type-simple"><i
                                                     class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
-                                            <a href="ajax/product-quick-view.html" class="btn-quickview"
+                                            <a href="{% url 'myshop:quick-view' %}" class="btn-quickview"
                                                title="Quick View"><i
                                                     class="fas fa-external-link-alt"></i></a>
                                         </div>
@@ -253,58 +254,59 @@
 {% endblock %}
 
 {% block scripts %}
-   <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            // Attach event listener to all radio buttons with name "shipping_option"
-                                            var radioButtons = document.querySelectorAll('input[name="shipping_option"]');
-                                            radioButtons.forEach(function (radioButton) {
-                                                radioButton.addEventListener('change', function (event) {
-                                                    var selectedValue = event.target.value; // Get the selected value
-                                                    updateCartTotal(selectedValue); // Call function to update cart total
-                                                });
-                                            });
 
-                                            // Function to update cart total using AJAX
-                                            function updateCartTotal(selectedValue) {
-                                                var csrftoken = getCookie('csrftoken');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Attach event listener to all radio buttons with name "shipping_option"
+            var radioButtons = document.querySelectorAll('input[name="shipping_option"]');
+            radioButtons.forEach(function (radioButton) {
+                radioButton.addEventListener('change', function (event) {
+                    var selectedValue = event.target.value; // Get the selected value
+                    updateCartTotal(selectedValue); // Call function to update cart total
+                });
+            });
 
-                                                // Make AJAX request
-                                                var xhr = new XMLHttpRequest();
-                                                xhr.open('POST', '{% url 'cart:cart_update_shipping_cost' %}', true); // Replace with your Django view URL
-                                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                                xhr.setRequestHeader('X-CSRFToken', csrftoken);
-                                                xhr.onreadystatechange = function () {
-                                                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                                                        if (xhr.status === 200) {
-                                                            // Update cart total on success
-                                                            var response = JSON.parse(xhr.responseText);
-                                                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
-                                                        } else {
-                                                            // Handle error
-                                                            console.error('Error:', xhr.status);
-                                                        }
-                                                    }
-                                                };
-                                                xhr.send('shipping_option=' + encodeURIComponent(selectedValue)); // Send selected value to server
-                                            }
-                                        });
+            // Function to update cart total using AJAX
+            function updateCartTotal(selectedValue) {
+                var csrftoken = getCookie('csrftoken');
 
-                                        function getCookie(name) {
-                                            var cookieValue = null;
-                                            if (document.cookie && document.cookie !== '') {
-                                                var cookies = document.cookie.split(';');
-                                                for (var i = 0; i < cookies.length; i++) {
-                                                    var cookie = cookies[i].trim();
-                                                    // Check if the cookie name matches the desired name
-                                                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            return cookieValue;
-                                        }
-                                    </script>
+                // Make AJAX request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url 'cart:cart_update_shipping_cost' %}', true); // Replace with your Django view URL
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Update cart total on success
+                            var response = JSON.parse(xhr.responseText);
+                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
+                        } else {
+                            // Handle error
+                            console.error('Error:', xhr.status);
+                        }
+                    }
+                };
+                xhr.send('shipping_option=' + encodeURIComponent(selectedValue)); // Send selected value to server
+            }
+        });
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Check if the cookie name matches the desired name
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
