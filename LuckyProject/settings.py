@@ -102,14 +102,14 @@ ASGI_APPLICATION = "LuckyProject.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_projet',
-        'USER': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ecommerce_project',
+        'USER': 'ayoub',
         'PASSWORD': "Tabahmout55",
-        'PORT': '5433',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -176,11 +176,13 @@ USE_TZ = True
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+     '/var/www/html/static/'
 )
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/html/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/var/www/html/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
