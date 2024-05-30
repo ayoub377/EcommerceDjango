@@ -161,7 +161,7 @@
                             <tr class="total">
                                 <td>Total</td>
                                 <td colspan="4"></td>
-                                <td class="num" style="width: 200px">
+                                <td class="num" style="width: 200px" id="cart_total">
                                     {{ cart.get_total_price_after_discount|floatformat:2 }} Dhs
                                 </td>
                             </tr>
@@ -204,12 +204,7 @@
                                                 <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
                                             </div>
                                         {% endif %}
-                                        <div class="btn-icon-group">
-                                            <a href="#" class="btn-icon btn-icon-wish">
-                                                <i class="icon-heart"></i>
-                                            </a>
-                                        </div>
-                                        <a href="{% url 'myshop:quick-view' %}" class="btn-quickview"
+                                        <a href="{% url 'myshop:quick-view' product.id %}" class="btn-quickview"
                                            title="Quick View">aperçu rapide</a>
                                     </figure>
                                     <div class="product-details">
@@ -234,7 +229,7 @@
                                             <a href="{% url 'cart:cart_add list' product.id %}"
                                                class="btn-icon btn-add-cart product-type-simple"><i
                                                     class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
-                                            <a href="{% url 'myshop:quick-view' %}" class="btn-quickview"
+                                            <a href="{% url 'myshop:quick-view' product.id %}" class="btn-quickview"
                                                title="Quick View"><i
                                                     class="fas fa-external-link-alt"></i></a>
                                         </div>

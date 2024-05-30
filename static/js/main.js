@@ -83,7 +83,6 @@
 			this.linkToTab();
 			this.productTabSroll();
 			this.scrollToElement();
-			this.loginPopup();
 			this.productManage();
 			this.ratingTooltip();
 			this.windowClick();

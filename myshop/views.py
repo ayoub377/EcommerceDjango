@@ -2,11 +2,12 @@ import re
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from myshop.models import Product, Category, Images, Review, AdditionalInformation
-from .forms import ContactForm
+from .forms import ContactForm, SubscriberForm
 from .recommender import Recommender
 from .tasks import send_form
 
@@ -128,5 +129,17 @@ def quick_view(request,product_id):
     product_quick_view = Product.objects.get(id=product_id)
     images = Images.objects.filter(product_id=product_quick_view.id)
     return render(request, 'shop/product-quick-view.html', {'product_quick_view' : product_quick_view, 'images':images})
+
+
+@csrf_exempt
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return JsonResponse({'status': 'success', 'message': 'Votre inscription à la newsletter a bien été prise en compte!'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid email address.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
 
 

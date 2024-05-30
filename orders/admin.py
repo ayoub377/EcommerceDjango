@@ -62,4 +62,3 @@ class OrderAdmin(admin.ModelAdmin):
     actions = [export_to_csv]
 
 
-

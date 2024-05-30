@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.urls import reverse
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Images, Review, AdditionalInformation
+from .models import Category, Product, Images, Review, AdditionalInformation, Subscriber
 
 
 @admin.register(Category)
@@ -56,6 +56,10 @@ class ProductAdmin(ModelAdmin):
 class ImagesAdmin(ModelAdmin):
     list_display = ['name']
     list_display_links = ('name',)
+
+@admin.register(Subscriber)
+class ImagesAdmin(ModelAdmin):
+    list_display = ['email']
 
 
 class RatingAdmin(admin.ModelAdmin):

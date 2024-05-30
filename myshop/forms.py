@@ -1,6 +1,6 @@
 from django import forms
 
-from myshop.models import Review
+from myshop.models import Review, Subscriber
 
 
 # class RangeForm(forms.Form):
@@ -21,3 +21,13 @@ class ContactForm(forms.Form):
     name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'message'}))
+
+
+class SubscriberForm(forms.ModelForm):
+    class Meta:
+        model = Subscriber
+        fields = ['email']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Entrez votre email'}),
+        }
+

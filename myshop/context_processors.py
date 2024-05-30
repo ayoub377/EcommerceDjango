@@ -1,5 +1,7 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Category, Product
+from django.contrib import messages
+from .forms import SubscriberForm
 
 
 def list_categories(request, category_slug=None):
@@ -16,3 +18,8 @@ def get_featured_products(request):
         'featured_products': featured_products
     }
 
+def newsletter_form(request):
+    form = SubscriberForm(request.POST)
+    return {
+        'newsletter_form': form
+    }

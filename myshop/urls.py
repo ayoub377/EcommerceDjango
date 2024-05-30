@@ -5,7 +5,7 @@ from .views import (
     HomeView,
     ProductDetailView, product_search_view,
     ProductListView,
-    contact, politique, quick_view
+    contact, politique, quick_view, subscribe
 
 )
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('contact/', contact, name='contact_us'),
     path('politique/', politique, name='politique'),
     path('quick-view/<int:product_id>', quick_view, name='quick-view'),
+    path('subscribe/', subscribe, name='newsletter-subscribe'),
 ]

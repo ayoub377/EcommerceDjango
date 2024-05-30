@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'myshop.context_processors.list_categories',
                 'myshop.context_processors.get_featured_products',
+                'myshop.context_processors.newsletter_form',
                 'cart.context_processors.cart',
                 'account.context_processors.getLogin',
                 'account.context_processors.userRegister',
@@ -103,7 +104,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ecommerce_projet',
-        'USER': 'ayoub',
+        'USER': 'postgres',
         'PASSWORD': "Tabahmout55",
         'PORT': '5433',
     }

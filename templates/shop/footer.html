@@ -36,6 +36,21 @@
 
                             </div><!-- End .widget -->
                         </div><!-- End .col-lg-3 -->
+                        <form id="newsletter-form" action="{% url 'myshop:newsletter-subscribe' %}" method="post">
+                             <h4>Abonnez-vous a notre newsletter</h4>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="form-group">
+                                {%  csrf_token %}
+                                {{ newsletter_form.email }}
+                            </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <button type="submit" class="btn btn-primary">S'abonner</button>
+                                </div>
+                            </divrow>
+
+                        </form>
                     </div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .footer-middle -->
