@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-lslk@q+e+u3^te@e(2%y8(#8j+p_k-0ywnu9wi672d2s=bcm$v'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['www.jouetspalace.com','45.90.123.159','localhost']
 
 # Application definition
 
@@ -103,7 +103,7 @@ ASGI_APPLICATION = "LuckyProject.asgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ecommerce_project',
+        'NAME': 'e_commerce_project',
         'USER': 'ayoub',
         'PASSWORD': "Tabahmout55",
         'HOST': 'localhost',
@@ -176,13 +176,13 @@ USE_TZ = True
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
-     '/var/www/html/static/'
+    
 )
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/html/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/html/media'
+MEDIA_ROOT = '/var/www/html/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
