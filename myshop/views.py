@@ -141,5 +141,3 @@ def subscribe(request):
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid email address.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
-
-

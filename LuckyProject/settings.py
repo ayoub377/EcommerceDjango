@@ -13,8 +13,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 import braintree
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from braintree import Configuration, Environment
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,11 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = 'django-insecure-lslk@q+e+u3^te@e(2%y8(#8j+p_k-0ywnu9wi672d2s=bcm$v'
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-DEBUG = False
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['www.jouetspalace.com','45.90.123.159','localhost']
+SECRET_KEY = env('SECRET_KEY')
+
+ALLOWED_HOSTS = ['www.jouetspalace.com', '45.90.123.159', '127.0.0.1']
 
 # Application definition
 
@@ -45,6 +54,7 @@ INSTALLED_APPS = [
     'mptt',
     'tailwind',
     'theme',
+    'google_analytics',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django.forms',
@@ -102,14 +112,15 @@ ASGI_APPLICATION = "LuckyProject.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'e_commerce_project',
-        'USER': 'ayoub',
-        'PASSWORD': "Tabahmout55",
+        'ENGINE': env('ENGINE'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': env('PORT'),
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -137,11 +148,14 @@ CHANNEL_LAYERS = {
     },
 }
 
+
 CART_SESSION_ID = 'cart'
-EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = 'AKIAXYKJR3JOJAAJLK4I'
-AWS_SECRET_ACCESS_KEY = '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'
-CELERY_BROKER_URL = 'amqp://localhost:5672'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID
 BRAINTREE_PUBLIC_KEY = 'ppq66w4mj3c64mhr'  # Public Key
@@ -173,27 +187,33 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+GOOGLE_ANALYTICS = {
+    'google_analytics_id': 'GTM-KL5HR88Q',
+}
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    
-)
+if DEBUG:
+    STATIC_URL='/static/'
+    STATICFILES_DIRS=(
+        os.path.join(BASE_DIR,'static'),
+    )
+    MEDIA_URL='/media/'
+    MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/html/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/html/media/'
+
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = '/var/www/html/static/'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = '/var/www/html/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 LOGIN_REDIRECT_URL = "myshop:home"
 LOGOUT_REDIRECT_URL = "myshop:home"
 LOGIN_URL = "account:login"
 TAILWIND_APP_NAME = "theme"
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1

@@ -39,7 +39,8 @@ def login_customer(request):
     user_form = LoginForm()
     if request.method == 'POST':
         next_url = request.POST.get('next','/')
-        print(next_url+"ois this")
+        if next_url=='':
+            next_url='home'
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['email']

@@ -5,7 +5,7 @@
             <div class="header-right">
                 <span class="separator"></span>
 
-                <div class="header-dropdown dropdown-expanded mx-2 px-1">
+                <div class="header-dropdown dropdown-expanded mx-2 px-1 bg-red-600">
                     <a href="#">Links</a>
                     <div class="header-menu">
                         <ul>
@@ -13,7 +13,7 @@
                                 {% if request.user.is_authenticated %}
                                     <a href="{% url 'account:dashboard' %}">{{ request.user.username }} </a>
                                 {% else %}
-                                    <a href="{% url 'account:login' %}">s'identifier </a>
+                                    <a href="{% url 'account:dashboard' %}">s'identifier </a>
                                 {% endif %}
                             </li>
 {#                            <li>#}

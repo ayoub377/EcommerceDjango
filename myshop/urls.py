@@ -1,5 +1,4 @@
 from django.urls import path
-
 from account.views import edit_review
 from .views import (
     HomeView,

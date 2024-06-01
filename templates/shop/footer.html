@@ -30,13 +30,13 @@
                                     <li style="color: white"><a href="{% url 'account:register' %}">Creer Un compte</a></li>
                                     <li style="color: white"><a href="{% url 'myshop:politique' %}">Politique retour et remboursements</a></li>
                                 </ul>
-                                <div class="d-flex justify-content-end mt-auto" style="position: relative;top: 220px">
-                                  <img height="60px" width="80px" src="{% static 'images/amana.png' %}">
-                                </div>
-
                             </div><!-- End .widget -->
                         </div><!-- End .col-lg-3 -->
-                        <form id="newsletter-form" action="{% url 'myshop:newsletter-subscribe' %}" method="post">
+
+                    </div><!-- End .row -->
+                    <div class="row">
+
+                            <form id="newsletter-form" action="{% url 'myshop:newsletter-subscribe' %}" method="post">
                              <h4 class="text-white">Abonnez-vous a notre newsletter</h4>
                             <div class="row">
                                 <div class="col-lg-9">
@@ -48,10 +48,8 @@
                                 <div class="col-lg-3">
                                     <button type="submit" class="btn btn-primary">S'abonner</button>
                                 </div>
-                            </divrow>
-
+                            </div>
                         </form>
-                    </div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .footer-middle -->
 

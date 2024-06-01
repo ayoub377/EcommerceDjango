@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include,re_path
 
 from LuckyProject import settings
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('account/', include('account.urls', namespace='account')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('tinymce/', include('tinymce.urls')),
+    re_path('djga/', include('google_analytics.urls')),
 ]
 
 if settings.DEBUG:
