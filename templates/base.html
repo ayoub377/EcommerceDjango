@@ -1,11 +1,20 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    {% load google_analytics_tags %}
-
 
 {% block head %}
 <head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HTGT1HLSQ0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HTGT1HLSQ0');
+</script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,9 +29,6 @@
     <link rel="icon" type="image/x-icon" href="{% static "images/icons/favicon.png" %}">
 
     {% tailwind_css %}
-    <div style="display:none">
-        <img src="{% google_analytics %}" width="0" height="0" />
-    </div>
     <script>
         WebFontConfig = {
             google: { families: ['Open+Sans:300,400,600,700', 'Poppins:300,400,500,600,700,800', 'Playfair+Display:900', 'Shadows+Into+Light:400'] }

@@ -28,7 +28,6 @@ urlpatterns = [
     path('account/', include('account.urls', namespace='account')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('tinymce/', include('tinymce.urls')),
-    re_path('djga/', include('google_analytics.urls')),
 ]
 
 if settings.DEBUG:

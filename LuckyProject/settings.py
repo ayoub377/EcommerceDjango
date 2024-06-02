@@ -187,9 +187,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-GOOGLE_ANALYTICS = {
-    'google_analytics_id': 'GTM-KL5HR88Q',
-}
 
 if DEBUG:
     STATIC_URL='/static/'
@@ -198,7 +195,6 @@ if DEBUG:
     )
     MEDIA_URL='/media/'
     MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-
 
 else:
     STATIC_URL = '/static/'
