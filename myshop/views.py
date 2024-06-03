@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from myshop.models import Product, Category, Images, Review, AdditionalInformation
 from .forms import ContactForm, SubscriberForm
