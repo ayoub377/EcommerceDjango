@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'mptt',
     'tailwind',
     'theme',
-    'google_analytics',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django.forms',
@@ -156,7 +155,6 @@ EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
 BRAINTREE_MERCHANT_ID = 'nc6drc8n7z44njgj'  # Merchant ID
 BRAINTREE_PUBLIC_KEY = 'ppq66w4mj3c64mhr'  # Public Key
 BRAINTREE_PRIVATE_KEY = '8d9a786ff00c868ed91468fb8ef3ff58'  # Private key

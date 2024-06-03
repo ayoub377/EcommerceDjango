@@ -21,4 +21,5 @@ urlpatterns = [
     path('politique/', politique, name='politique'),
     path('quick-view/<int:product_id>', quick_view, name='quick-view'),
     path('subscribe/', subscribe, name='newsletter-subscribe'),
+    path('robots.txt', robots_txt),
 ]

@@ -141,3 +141,13 @@ def subscribe(request):
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid email address.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
+
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /admin/",
+        "Disallow: /panier/",
+        "Disallow: /account/",
+        "Sitemap: https://www.yourwebsite.com/static/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
