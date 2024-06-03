@@ -148,6 +148,6 @@ def robots_txt(request):
         "Disallow: /admin/",
         "Disallow: /panier/",
         "Disallow: /account/",
-        "Sitemap: https://www.yourwebsite.com/static/sitemap.xml",
+        "Sitemap: https://www.jouetspalace.com/static/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
