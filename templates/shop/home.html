@@ -149,9 +149,9 @@
 
         <div class="arrival-products-section appear-animate" data-animation-name="fadeIn"
              data-animation-delay="100">
-            <div class="container">
-                <h2 class="section-title text-center d-flex align-items-center">Hot Deals
-                </h2>
+            {% if hot_deals %}
+                <div class="container">
+                <h2 class="section-title text-center d-flex align-items-center">Hot Deals</h2>
 
                 <div class="row">
                     {% for product in hot_deals %}
@@ -193,10 +193,12 @@
 
                 <hr class="mt-1 mb-4">
             </div>
+            {% endif %}
         </div>
 
         <div class="container">
-        <div class="blog-section">
+        {% if last_five_reviews %}
+            <div class="blog-section">
             <h2 class="section-title text-center border-0 d-flex align-items-center">Avis Clients</h2>
             <div class="reviews-container">
                 {% for review in last_five_reviews %}
@@ -229,6 +231,7 @@
                 {% endfor %}
             </div><!-- End .reviews-container -->
         </div><!-- End .blog-section -->
+        {% endif %}
     </div><!-- End .container -->
     </main>
 {% endblock %}

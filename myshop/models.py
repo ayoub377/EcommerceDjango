@@ -34,15 +34,14 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='produits')
     discount = models.DecimalField(max_digits=7, decimal_places=2, null=True)
-    information = models.TextField(blank=True)
     available = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)  # New field for featured products
 
     class Meta:
         ordering = ('name',)
 
-    def price_after_Discount(self):
-        price = self.price - (self.discount / 100 * self.price)
+    def price_before_Discount(self):
+        price = self.price + (self.discount / 100 * self.price)
         return round(price, 2)
 
     def __str__(self):
