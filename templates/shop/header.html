@@ -180,12 +180,13 @@
                 {% load mptt_tags %}
                 <ul class="menu">
                     <!-- Implement check if its active -->
-                    <li class="active">
+                    <li class="{% if '/' == request.path %}active {% endif %}">
                         <a href="{% url 'myshop:home' %}">Home</a>
                     </li>
                     {% recursetree categories %}
-                        <li>
-                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ node.name }}</a>
+                        {% with name_node=node.slug %}
+                        <li class="{% if name_node in request.path %}active {% endif %}">
+                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ name_node }}</a>
                             {% if not node.is_leaf_node %}
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
@@ -199,6 +200,7 @@
                             {% endif %}
                             <!-- End .megamenu -->
                         </li>
+                            {% endwith %}
                     {% endrecursetree %}
                 </ul>
             </nav>
