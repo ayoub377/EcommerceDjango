@@ -149,11 +149,10 @@
                             <div class="widget">
                             </div>
                             <!-- End .widget -->
-                            <div class="widget widget-featured">
-                                {% if featured_products %}
-                                    <h3 class="widget-title">Populaires</h3>
-
-                                   <div class="widget-body">
+                            {% if featured_products %}
+                                   <div class="widget widget-featured">
+                                <h3 class="widget-title">Populaires</h3>
+                                <div class="widget-body">
                                     <div class="owl-carousel widget-featured-products">
                                         {% for product in featured_products %}
                                             <div class="featured-col">
@@ -180,9 +179,8 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-
-                                {% endif %}
                             </div>
+                             {% endif %}
                             <!-- End .widget -->
                             <!-- End .widget -->
                         </div>
