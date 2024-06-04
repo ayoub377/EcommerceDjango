@@ -4,7 +4,7 @@ from .views import (
     HomeView,
     ProductDetailView, product_search_view,
     ProductListView,
-    contact, politique, quick_view, subscribe, robots_txt
+    contact, politique, quick_view, subscribe
 
 )
 

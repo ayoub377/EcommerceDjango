@@ -67,6 +67,12 @@
                                                     <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
                                                 </div>
                                             {% endif %}
+                                            <div class="btn-icon-group">
+                                                <a href="#" class="btn-icon btn-icon-wish">
+                                                    <i class="icon-heart"></i>
+                                                </a>
+                                            </div>
+                                            <a href="{% url 'myshop:quick-view' product.id %}" class="btn-quickview" title="Quick View">aperçu rapide</a>
                                         </figure>
                                         <div class="product-details">
                                             <div class="category-list">
@@ -150,10 +156,8 @@
                             </div>
                             <!-- End .widget -->
                             <div class="widget widget-featured">
-                                {% if featured_products %}
-                                    <h3 class="widget-title">Populaires</h3>
-
-                                   <div class="widget-body">
+                                <h3 class="widget-title">Populaires</h3>
+                                <div class="widget-body">
                                     <div class="owl-carousel widget-featured-products">
                                         {% for product in featured_products %}
                                             <div class="featured-col">
@@ -180,8 +184,6 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-
-                                {% endif %}
                             </div>
                             <!-- End .widget -->
                             <!-- End .widget -->

@@ -45,7 +45,8 @@
         <div class="container">
             <section class="featured-products-section appear-animate" data-animation-name="fadeInUpShorter"
                      data-animation-delay="100">
-                {% if featured_products %}
+                <h2 class="section-title text-center d-flex align-items-center">Featured Products
+                </h2>
                 <div class="owl-carousel owl-theme dots-top dots-small" data-owl-options="{
                                                         'dots': true,
                                                         'margin': 20,
@@ -103,7 +104,6 @@
                         </div>
                     {% endfor %}
                 </div>
-            {% endif %}
             </section>
         </div>
 
@@ -150,9 +150,10 @@
         <div class="arrival-products-section appear-animate" data-animation-name="fadeIn"
              data-animation-delay="100">
             <div class="container">
-                {% if hot_deals %}
-                         <h2 class="section-title text-center d-flex align-items-center">Hot Deals</h2>
-                         <div class="row">
+                <h2 class="section-title text-center d-flex align-items-center">Hot Deals
+                </h2>
+
+                <div class="row">
                     {% for product in hot_deals %}
                         <div class="col-6 col-lg-3 col-md-4 col-xl-5col">
                             <div class="product-default left-details">
@@ -189,14 +190,13 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% endif %}
+
                 <hr class="mt-1 mb-4">
             </div>
         </div>
 
         <div class="container">
-        {% if last_five_reviews %}
-            <div class="blog-section">
+        <div class="blog-section">
             <h2 class="section-title text-center border-0 d-flex align-items-center">Avis Clients</h2>
             <div class="reviews-container">
                 {% for review in last_five_reviews %}
@@ -229,7 +229,6 @@
                 {% endfor %}
             </div><!-- End .reviews-container -->
         </div><!-- End .blog-section -->
-        {% endif %}
     </div><!-- End .container -->
     </main>
 {% endblock %}
