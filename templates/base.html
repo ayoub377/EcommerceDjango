@@ -54,6 +54,24 @@
 {% endblock %}
 
 <body>
+<style>
+    #scroll-top-whatsapp.fixed {
+	transform: translateY(0);
+	visibility: visible;
+	color: #FFF;
+	width: 49px;
+	height: 48px;
+	right: 10px;
+	text-align: center;
+	text-decoration: none;
+	z-index: 996;
+	transition: background 0.3s ease-out;
+    margin-bottom: 50px;
+}
+    #scroll-top-whatsapp{
+        bottom: 0;
+    }
+</style>
     <div class="page-wrapper">
         {% include 'shop/header.html' %}
         {% block main %}{% endblock %}
@@ -140,8 +158,8 @@
             </a>
         </div>
     </div>
-
-    <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
+    <a id="scroll-top-whatsapp" href="https://api.whatsapp.com/send?phone=212654511608" title="Top" role="button" class="fixed"><image src="{% static 'images/whatsapp.png' %}"></image></a>
+    <a id="scroll-top" href="#top" title="Top" role="button" class="fixed"><i class="icon-angle-up"></i></a>
     <!-- Plugins JS File -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
