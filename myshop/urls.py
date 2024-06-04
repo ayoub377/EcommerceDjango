@@ -1,11 +1,10 @@
 from django.urls import path
-
 from account.views import edit_review
 from .views import (
     HomeView,
     ProductDetailView, product_search_view,
     ProductListView,
-    contact, politique, quick_view, subscribe
+    contact, politique, quick_view, subscribe, robots_txt
 
 )
 
@@ -22,4 +21,5 @@ urlpatterns = [
     path('politique/', politique, name='politique'),
     path('quick-view/<int:product_id>', quick_view, name='quick-view'),
     path('subscribe/', subscribe, name='newsletter-subscribe'),
+    path('robots.txt', robots_txt),
 ]

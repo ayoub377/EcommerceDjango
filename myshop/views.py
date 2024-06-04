@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from myshop.models import Product, Category, Images, Review, AdditionalInformation
 from .forms import ContactForm, SubscriberForm
@@ -142,4 +142,12 @@ def subscribe(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid email address.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
 
-
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /admin/",
+        "Disallow: /panier/",
+        "Disallow: /account/",
+        "Sitemap: https://www.jouetspalace.com/static/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")

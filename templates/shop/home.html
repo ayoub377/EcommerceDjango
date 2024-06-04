@@ -20,38 +20,32 @@
  <main class="main">
         <div class="home-top-container appear-animate" data-animation-name="fadeIn" data-animation-delay="100">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 mb-2">
-                        <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
-                            <figure class="w-100">
-                                <img src={% static "images/demoes/demo7/banners/banner-1.png" %} style="background-color:
-                                     #4a4a4a; alt="banner">
-                            </figure>
-                            <div class="banner-layer">
-                                <a href="#" class="btn bg-dark btn-md mt-8" style="position: relative;top:70px;left: 170px;color: whitesmoke">Shop Now!</a>
-                            </div><!-- End .banner-layer -->
-                        </div><!-- End .home-slide -->
-                    </div>
-                      <div class="col-lg-6 mb-2">
-                        <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
-                            <figure class="w-100">
-                                <img src={% static "images/demoes/demo7/banners/banner-2.png" %} style="background-color:
-                                     #4a4a4a; alt="banner">
-                            </figure>
-                            <div class="banner-layer">
-                                <a href="#" class="btn bg-dark btn-md mt-8" style="position: relative;top:70px;left: 170px;color: whitesmoke">Shop Now!</a>
-                            </div><!-- End .banner-layer -->
-                        </div><!-- End .home-slide -->
-                    </div>
-                </div><!-- End .col-lg-5 -->
-            </div><!-- End .row -->
+        <div class="row">
+        <div class="col-lg-6 mb-2">
+            <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
+                <figure class="w-100">
+                    <img src="{% static 'images/demoes/demo7/banners/banner-1.png' %}" style="background-color: #4a4a4a;" alt="banner">
+                </figure>
+                <!-- End .banner-layer -->
+            </div><!-- End .home-slide -->
+        </div>
+        <div class="col-lg-6 mb-2">
+            <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
+                <figure class="w-100">
+                    <img src="{% static 'images/demoes/demo7/banners/banner-2.png' %}" style="background-color: #4a4a4a;" alt="banner">
+                </figure>
+                <!-- End .banner-layer -->
+            </div><!-- End .home-slide -->
+        </div>
+    </div><!-- End .row -->
+</div><!-- End .container -->
+
         </div><!-- End .container -->
 
         <div class="container">
             <section class="featured-products-section appear-animate" data-animation-name="fadeInUpShorter"
                      data-animation-delay="100">
-                <h2 class="section-title text-center d-flex align-items-center">Featured Products
-                </h2>
+                {% if featured_products %}
                 <div class="owl-carousel owl-theme dots-top dots-small" data-owl-options="{
                                                         'dots': true,
                                                         'margin': 20,
@@ -109,6 +103,7 @@
                         </div>
                     {% endfor %}
                 </div>
+            {% endif %}
             </section>
         </div>
 
@@ -155,10 +150,9 @@
         <div class="arrival-products-section appear-animate" data-animation-name="fadeIn"
              data-animation-delay="100">
             <div class="container">
-                <h2 class="section-title text-center d-flex align-items-center">Hot Deals
-                </h2>
-
-                <div class="row">
+                {% if hot_deals %}
+                         <h2 class="section-title text-center d-flex align-items-center">Hot Deals</h2>
+                         <div class="row">
                     {% for product in hot_deals %}
                         <div class="col-6 col-lg-3 col-md-4 col-xl-5col">
                             <div class="product-default left-details">
@@ -195,13 +189,14 @@
                         </div>
                     {% endfor %}
                 </div>
-
+                {% endif %}
                 <hr class="mt-1 mb-4">
             </div>
         </div>
 
-            <div class="container">
-        <div class="blog-section">
+        <div class="container">
+        {% if last_five_reviews %}
+            <div class="blog-section">
             <h2 class="section-title text-center border-0 d-flex align-items-center">Avis Clients</h2>
             <div class="reviews-container">
                 {% for review in last_five_reviews %}
@@ -234,6 +229,7 @@
                 {% endfor %}
             </div><!-- End .reviews-container -->
         </div><!-- End .blog-section -->
+        {% endif %}
     </div><!-- End .container -->
     </main>
 {% endblock %}
