@@ -186,7 +186,7 @@
                     {% recursetree categories %}
                         {% with name_node=node.slug %}
                         <li class="{% if name_node in request.path %}active {% endif %}">
-                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ name_node }}</a>
+                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ node.name }}</a>
                             {% if not node.is_leaf_node %}
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
