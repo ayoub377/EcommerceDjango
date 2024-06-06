@@ -341,7 +341,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var cartTotal = parseFloat("{{ cart.get_total_price }}");
+            var cartTotal = parseFloat("{{ cart.get_total_price_after_discounte }}");
 
             var livraisonGratuite = document.getElementById('livraisonGratuite');
             var livraisonCasablanca = document.getElementById('livraisonCasablanca');
@@ -365,36 +365,6 @@
         });
     </script>
 
-    <script>
-        document.getElementById('coupon-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting normally
 
-            const form = event.target;
-            const formData = new FormData(form);
-
-            // Include the CSRF token in the headers
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-            fetch("{% url 'coupons:apply' %}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert(data.message); // Display success message or update the DOM as needed
-                    } else {
-                        alert(data.message); // Display error message
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-
-    </script>
 
 {% endblock %}
