@@ -45,6 +45,15 @@
 
     <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
         <div class="container">
+
+            <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
+                <button class="mobile-menu-toggler" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="{% url 'myshop:home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Porto Logo" width="202" height="80">
+                </a>
+            </div>
             <div class="header-left w-lg-max ml-auto ml-lg-0">
                 <div class="header-icon header-search header-search-inline header-search-category">
                     <a href="#" class="search-toggle" role="button">
@@ -72,14 +81,6 @@
             </div>
             <!-- End .header-left -->
 
-            <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
-                <button class="mobile-menu-toggler" type="button">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <a href="{% url 'myshop:home' %}" class="logo">
-                    <img src="{% static 'images/logo.png' %}" alt="Porto Logo" width="202" height="80">
-                </a>
-            </div>
             <!-- End .header-center -->
 
             <div class="header-right w-lg-max ml-0 ml-lg-auto">

@@ -223,16 +223,14 @@
                                                 <span class="product-price">${{ product.discounted_price }}</span>
                                                 <del class="product-old-price">${{ product.price }}</del>
                                             {% else %}
-                                                <span class="product-price">${{ product.price }}</span>
+                                                <span class="product-price">{{ product.price }} Dhs</span>
                                             {% endif %}
                                         </div>
                                         <div class="product-action">
                                             <a href="{% url 'cart:cart_add list' product.id %}"
                                                class="btn-icon btn-add-cart product-type-simple"><i
                                                     class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
-                                            <a href="{% url 'myshop:quick-view' product.id %}" class="btn-quickview"
-                                               title="Quick View"><i
-                                                    class="fas fa-external-link-alt"></i></a>
+                                          
                                         </div>
                                     </div>
                                 </div>
