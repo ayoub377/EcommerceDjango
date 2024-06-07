@@ -217,11 +217,11 @@
                                             <!-- Render product ratings here if available -->
                                         </div>
                                         <div class="price-box">
-                                            {% if product.discounted_price %}
-                                                <span class="product-price">${{ product.discounted_price }}</span>
+                                            {% if product.discount > 0 %}
+                                                <span class="product-price">${{ product.price_after_Discount }}</span>
                                                 <del class="product-old-price">${{ product.price }}</del>
                                             {% else %}
-                                                <span class="product-price">{{ price_after_discount }} Dhs</span>
+                                                <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
                                             {% endif %}
                                         </div>
                                         <div class="product-action">

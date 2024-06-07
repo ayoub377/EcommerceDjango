@@ -42,6 +42,7 @@ def Order_create(request):
             cart.clear()
             order_created.delay(order.id)
             request.session['order_id'] = order.id
+            request.session['coupon_id'] = None
             # Redirect for payment based on the selected payment type
             return redirect(reverse('orders:Order_created'))
 
