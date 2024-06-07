@@ -47,6 +47,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{% static "css/demo7.min.css" %}">
     <link rel="stylesheet" href="{% static "css/style.min.css" %}">
+
     <link rel="stylesheet" type="text/css" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'vendor/simple-line-icons/css/simple-line-icons.min.css' %}">
 </head>
@@ -54,24 +55,6 @@
 {% endblock %}
 
 <body>
-<style>
-    #scroll-top-whatsapp.fixed {
-	transform: translateY(0);
-	visibility: visible;
-	color: #FFF;
-	width: 49px;
-	height: 48px;
-	right: 10px;
-	text-align: center;
-	text-decoration: none;
-	z-index: 996;
-	transition: background 0.3s ease-out;
-    margin-bottom: 50px;
-}
-    #scroll-top-whatsapp{
-        bottom: 0;
-    }
-</style>
     <div class="page-wrapper">
         {% include 'shop/header.html' %}
         {% block main %}{% endblock %}

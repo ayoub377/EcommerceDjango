@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'mptt',
     'tailwind',
     'theme',
+    "anymail",
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django.forms',
@@ -146,7 +147,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
 
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = env('EMAIL_BACKEND')

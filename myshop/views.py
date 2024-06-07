@@ -145,9 +145,9 @@ def subscribe(request):
 def robots_txt(request):
     lines = [
         "User-Agent: *",
-        "Disallow: /admin/",
-        "Disallow: /panier/",
-        "Disallow: /account/",
+        "Disallow: /admin/*",
+        "Disallow: /panier/*",
+        "Disallow: /account/*",
         "Sitemap: https://www.jouetspalace.com/static/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")

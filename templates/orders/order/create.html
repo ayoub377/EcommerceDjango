@@ -161,13 +161,31 @@
                             {% endfor %}
                             </tbody>
                             <tfoot>
+                                <tr class="cart-subtotal">
+                                <td>
+                                    <h4>Total Avant Promo</h4>
+                                </td>
+
+                                <td class="price-col">
+                                    <span>{{ cart.get_total_price |floatformat:2}} Dhs</span>
+                                </td>
+                            </tr>
+                               <tr class="cart-subtotal">
+                                <td>
+                                    <h4>Pourcentage reduction</h4>
+                                </td>
+
+                                <td class="price-col">
+                                    <span>{{ cart.get_discount_percent }} %</span>
+                                </td>
+                            </tr>
                             <tr class="cart-subtotal">
                                 <td>
                                     <h4>Total</h4>
                                 </td>
 
                                 <td class="price-col">
-                                    <span>{{ cart.get_total_price }} Dhs</span>
+                                    <span>{{ cart.get_total_price_after_discount | floatformat:2 }} Dhs</span>
                                 </td>
                             </tr>
                             <!-- Other table rows here -->

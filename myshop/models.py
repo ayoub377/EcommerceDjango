@@ -40,8 +40,8 @@ class Product(models.Model):
     class Meta:
         ordering = ('name',)
 
-    def price_before_Discount(self):
-        price = self.price + (self.discount / 100 * self.price)
+    def price_after_Discount(self):
+        price = self.price - (self.discount / 100 * self.price)
         return round(price, 2)
 
     def __str__(self):

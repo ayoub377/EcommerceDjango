@@ -93,7 +93,7 @@
                                     <!-- Add your rating display logic here if applicable -->
                                 </div>
                                 <div class="price-box">
-                                    <span class="product-price">{{ product.price }} Dhs</span>
+                                    <span class="product-price">{{ product.price_after_discount }} Dhs</span>
                                 </div>
                                 <div class="product-action">
                                     <a href="{% url 'cart:cart_add list' product.id %}"
@@ -176,14 +176,13 @@
                                         <!-- Add your rating display logic here if applicable -->
                                     </div>
                                     <div class="price-box">
-                                        <span class="product-price">{{ product.price }} Dhs</span>
+                                        <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
                                     </div>
                                     <div class="product-action">
                                         <a href="{% url 'cart:cart_add list' product.id %}"
                                            class="btn-icon btn-add-cart product-type-simple"><i
-                                                class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
-                                        <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                                class="fas fa-external-link-alt"></i></a>
+                                                class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
+
                                     </div>
                                 </div><!-- End .product-details -->
                             </div>

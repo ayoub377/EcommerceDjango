@@ -1,5 +1,54 @@
 {% load static %}
 <header class="header">
+               <div class="container">
+                <div class="pre-header w-100">
+                    <div class="owl-carousel owl-theme feature-box-carousel" data-toggle="owl" data-owl-options="{
+                        'margin': 1,
+                        'autoplay': false,
+                        'autoplayTimeout': 3000,
+                        'nav': false,
+                        'dots': false,
+                        'loop': true,
+                        'responsive' : {
+                            '0' : {
+                                'items' : 1
+                            },
+                            '576' : {
+                                'items' : 2
+                            },
+                            '768' : {
+                                'items' : 3
+                            }
+                        }
+                    }">
+                        <div class="info-box info-box-icon-left">
+                            <i class="icon-shipping line-height-1"></i>
+
+                            <div class="info-box-content">
+                                <h4 class="ls-n-25 line-height-1">Livraison gratuite sur 400 Dhs et plus &amp; sur tout le maroc</h4>
+                            </div>
+                            <!-- End .info-box-content -->
+                        </div>
+                        <div class="info-box info-box-icon-left">
+                            <i class="icon-money line-height-1"></i>
+
+                            <div class="info-box-content">
+                                <h4 class="ls-n-25 line-height-1">Retour avant 7 jours</h4>
+                            </div>
+                            <!-- End .info-box-content -->
+                        </div>
+                        <div class="info-box info-box-icon-left">
+                            <i class="icon-support line-height-1"></i>
+
+                            <div class="info-box-content">
+                                <h4 class="ls-n-25 line-height-1">Support Client 24/7</h4>
+                            </div>
+                            <!-- End .info-box-content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     <div class="header-top">
         <div class="container">
             <div class="header-right">
@@ -45,6 +94,15 @@
 
     <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
         <div class="container">
+
+            <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
+                <button class="mobile-menu-toggler" type="button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="{% url 'myshop:home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Porto Logo" width="202" height="80">
+                </a>
+            </div>
             <div class="header-left w-lg-max ml-auto ml-lg-0">
                 <div class="header-icon header-search header-search-inline header-search-category">
                     <a href="#" class="search-toggle" role="button">
@@ -72,14 +130,6 @@
             </div>
             <!-- End .header-left -->
 
-            <div class="header-center order-first order-lg-0 ml-0 ml-lg-auto">
-                <button class="mobile-menu-toggler" type="button">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <a href="{% url 'myshop:home' %}" class="logo">
-                    <img src="{% static 'images/logo.png' %}" alt="Porto Logo" width="202" height="80">
-                </a>
-            </div>
             <!-- End .header-center -->
 
             <div class="header-right w-lg-max ml-0 ml-lg-auto">
@@ -121,7 +171,7 @@
                                                 </h4>
 
                                                 <span class="cart-product-info">
-													<span class="cart-product-qty">{{ item.quantity }}</span>x {{ product.price }} Dhs
+													<span class="cart-product-qty">{{ item.quantity }}</span>x {{ product.price_after_discount }} Dhs
                                                 </span>
                                             </div>
                                             <!-- End .product-details -->
@@ -186,7 +236,7 @@
                     {% recursetree categories %}
                         {% with name_node=node.slug %}
                         <li class="{% if name_node in request.path %}active {% endif %}">
-                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ name_node }}</a>
+                            <a href="{% url 'myshop:product_list_by_category' node.id node.slug %}">{{ node.name }}</a>
                             {% if not node.is_leaf_node %}
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
@@ -303,9 +353,6 @@
         <!-- End .container -->
     </div>
     <!-- End .header-bottom -->
-<script>
-    document.on("click",".login-link",function (e){
-        e.preventDefault();
-    })
-</script>
+
 </header>
+

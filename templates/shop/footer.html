@@ -1,64 +1,75 @@
 {% load static %}
-<footer class="footer position-relative"style="background-color: #65829d;color: white">
-            <div class="footer-middle">
-                <div class="container position-static">
-                    <div class="row">
-                        <div class="col-lg-9 col-sm-6 pb-5 pb-sm-0">
-                            <div class="widget">
-                                <h4 class="widget-title">Qui somme nous?</h4>
-                                <a href="{% url 'myshop:home' %}">
-                                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-footer">
-                                </a>
-                                <p class="m-b-4 ls-0"style="color: white">
-                                    Chez JouetsPalace, nous sommes passionnés par le bonheur des enfants et le confort des parents.<br> Fondée avec l'objectif de transformer chaque moment en une aventure joyeuse et mémorable, notre boutique en ligne propose une large gamme de jouets, piscines et articles pour bébés. Nous sélectionnons soigneusement chaque produit pour garantir sa qualité, sa sécurité et son caractère ludique.<br> Que ce soit pour des jeux créatifs, des moments de baignade en famille ou des articles essentiels pour bébés, nous avons tout ce qu'il vous faut pour créer des souvenirs inoubliables. Notre mission est de faciliter la vie des parents tout en apportant de la joie aux enfants, en offrant une expérience d'achat en ligne conviviale, fiable et agréable. Merci de nous faire confiance pour accompagner vos moments précieux !
-                                </p>
-                                <div class="social-icons">
-                                    <a href="https://www.facebook.com/profile.php?id=61560206640309" class="social-icon social-facebook icon-facebook" target="_blank"
-                                        title="Facebook"></a>
-                                    <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"
-                                        title="Instagram"></a>
-                                </div><!-- End .social-icons -->
-                            </div><!-- End .widget -->
-                        </div><!-- End .col-lg-3 -->
-
-                        <div class="col-lg-3 col-sm-6 pb-5 pb-sm-0">
-                            <div class="widget mb-2">
-
-                                <ul class="links">
-                                    <li style="color: white"><a href="{% url 'myshop:contact_us' %}">Nous contacter</a></li>
-                                    <li style="color: white"><a href="{% url 'account:dashboard' %}">Mon Compte</a></li>
-                                    <li style="color: white"><a href="{% url 'account:register' %}">Creer Un compte</a></li>
-                                    <li style="color: white"><a href="{% url 'myshop:politique' %}">Politique retour et remboursements</a></li>
-                                </ul>
-                            </div><!-- End .widget -->
-                        </div><!-- End .col-lg-3 -->
-
-                    </div><!-- End .row -->
-                    <div class="row">
-
-                            <form id="newsletter-form" action="{% url 'myshop:newsletter-subscribe' %}" method="post">
-                             <h4 class="text-white">Abonnez-vous a notre newsletter</h4>
+<footer class="footer position-relative" style="background-color: #65829d;color: white">
+    <div class="footer-middle">
+        <div class="container position-static">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 pb-5 pb-sm-0">
+                    <div class="widget">
+                        <h4 class="widget-title">Qui sommes-nous?</h4>
+                        <a href="{% url 'myshop:home' %}">
+                            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-footer">
+                        </a>
+                        <p class="m-b-4 ls-0" style="color: white">
+                            Chez JouetsPalace, nous sommes passionnés par le bonheur des enfants et le confort des
+                            parents.<br>
+                            Fondée avec l'objectif de transformer chaque moment en une aventure joyeuse et mémorable,
+                            notre boutique en ligne propose une large gamme de jouets, piscines et articles pour bébés.
+                            Nous sélectionnons soigneusement chaque produit pour garantir sa qualité, sa sécurité et son
+                            caractère ludique.<br>
+                            Que ce soit pour des jeux créatifs, des moments de baignade en famille ou des articles
+                            essentiels pour bébés, nous avons tout ce qu'il vous faut pour créer des souvenirs
+                            inoubliables. Notre mission est de faciliter la vie des parents tout en apportant de la joie
+                            aux enfants, en offrant une expérience d'achat en ligne conviviale, fiable et agréable.
+                            Merci de nous faire confiance pour accompagner vos moments précieux !
+                        </p>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/profile.php?id=61560206640309"
+                               class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                            <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"
+                               title="Instagram"></a>
+                        </div><!-- End .social-icons -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-lg-3 -->
+                <div class="col-lg-4 col-sm-6 pb-5 pb-sm-0">
+                    <div class="widget mb-2">
+                        <h4 class="widget-title pb-1">Services clients</h4>
+                        <ul class="links">
+                            <li style="color: white"><a href="{% url 'myshop:contact_us' %}">Nous contacter</a></li>
+                            <li style="color: white"><a href="{% url 'account:dashboard' %}">Mon Compte</a></li>
+                            <li style="color: white"><a href="{% url 'account:register' %}">Créer Un compte</a></li>
+                            <li style="color: white"><a href="{% url 'myshop:politique' %}">Politique retour et
+                                remboursements</a></li>
+                        </ul>
+                    </div><!-- End .widget -->
+                </div><!-- End .col-lg-3 -->
+                <div class="col-lg-4 col-sm-6 pb-5 pb-sm-0">
+                    <div class="widget widget-newsletter">
+                        <h4 class="widget-title">Abonnez-vous à notre newsletter</h4>
+                        <p class="mb-2 ls-0" style="color: white">Recevez toutes les dernières informations sur les
+                            événements, les ventes et les offres. Inscrivez-vous à notre newsletter:</p>
+                        <form id="newsletter-form" action="{% url 'myshop:newsletter-subscribe' %}" method="post">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-9">
                                     <div class="form-group">
-                                {%  csrf_token %}
-                                {{ newsletter_form.email }}
-                            </div>
+                                        {{ newsletter_form.email }}
+                                    </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <button type="submit" class="btn btn-primary">S'abonner</button>
                                 </div>
                             </div>
                         </form>
-                </div><!-- End .container -->
-            </div><!-- End .footer-middle -->
-
-            <div class="container">
-                <div class="footer-bottom d-sm-flex align-items-center">
-                    <div class="footer-left">
-                        <span class="footer-copyright" style="color:white;">© Jouets Palace. 2024. All Rights Reserved</span>
-                    </div>
-                 </div>
-                </div>
-            </div><!-- End .footer-bottom -->
-        </footer><!-- End .footer -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-middle -->
+    <div class="container">
+        <div class="footer-bottom d-sm-flex align-items-center">
+            <div class="footer-left">
+                <span class="footer-copyright" style="color:white;">© Jouets Palace. 2024. All Rights Reserved</span>
+            </div>
+        </div>
+    </div><!-- End .footer-bottom -->
+</footer><!-- End .footer -->
