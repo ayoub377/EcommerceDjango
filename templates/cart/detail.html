@@ -113,7 +113,7 @@
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
                                             <input type="radio" name="shipping_option" class="custom-control-input"
-                                                   id="livraisonGratuite" value="0">
+                                                   id="livraisonGratuite" value="0" {% if cart.get_total_price_after_discount < 400 %} disabled{% endif %}>
                                             <label class="custom-control-label" for="livraisonGratuite">Livraison
                                                 gratuite sur tout le Maroc à partir de 400 dhs : 0 dh</label>
                                         </div>
@@ -122,7 +122,7 @@
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
                                             <input type="radio" name="shipping_option" class="custom-control-input"
-                                                   id="livraisonCasablanca" value="19.00">
+                                                   id="livraisonCasablanca" value="19.00" {% if cart.get_total_price_after_discount > 400 %} disabled{% endif %}>
                                             <label class="custom-control-label" for="livraisonCasablanca">Livraison
                                                 Casablanca (moins de 400 dhs): 19.00 dhs</label>
                                         </div>
@@ -131,7 +131,7 @@
                                     <div class="form-group form-group-custom-control mb-0">
                                         <div class="custom-control custom-radio mb-0">
                                             <input type="radio" name="shipping_option" class="custom-control-input"
-                                                   id="livraisonHorsCasablanca" value="39.00">
+                                                   id="livraisonHorsCasablanca" value="39.00" {% if cart.get_total_price_after_discount > 400 %} disabled{% endif %}>
                                             <label class="custom-control-label" for="livraisonHorsCasablanca">Livraison
                                                 hors Casablanca (moins de 400 dhs): 39.00 dhs</label>
                                         </div>
@@ -145,7 +145,7 @@
                                 <tr class="subtotal">
                                     <td>Sous-total</td>
                                     <td colspan="4"></td>
-                                    <td class="num">{{ cart.get_total_price|floatformat:2 }} Dhs</td>
+                                    <td class="num">{{ cart.get_sub_total_price|floatformat:2 }} Dhs</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -175,7 +175,8 @@
                         </form>
 
                         <div class="checkout-methods">
-                            <a href="{% url 'orders:Order_create' %}" class="btn btn-block btn-dark">vérifier
+                            <a href="{% url 'orders:Order_create' %}" class="btn btn-block btn-dark"
+                               id="validateOrderButton">vérifier
                                 <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div><!-- End .cart-summary -->
@@ -183,9 +184,9 @@
             </div><!-- End .row -->
             <div class="row">
                 <div class="col-lg-9 main-content">
-{%if recommended_products %}
-                    <h2 class="section-title text-center d-flex align-items-center">Produits Similaire</h2>
-{% endif %}
+                    {% if recommended_products %}
+                        <h2 class="section-title text-center d-flex align-items-center">Produits Similaire</h2>
+                    {% endif %}
                     <div class="row products-group products-caty">
                         {% for product in recommended_products %}
                             <div class="col-md-4 col-6">
@@ -218,8 +219,8 @@
                                         </div>
                                         <div class="price-box">
                                             {% if product.discount > 0 %}
-                                                <span class="product-price">${{ product.price_after_Discount }}</span>
-                                                <del class="product-old-price">${{ product.price }}</del>
+                                                <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
+                                                <del class="product-old-price">{{ product.price }} Dhs</del>
                                             {% else %}
                                                 <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
                                             {% endif %}
@@ -228,7 +229,7 @@
                                             <a href="{% url 'cart:cart_add list' product.id %}"
                                                class="btn-icon btn-add-cart product-type-simple"><i
                                                     class="icon-shopping-cart"></i><span>Ajouter Au Panier</span></a>
-                                          
+
                                         </div>
                                     </div>
                                 </div>
@@ -247,7 +248,8 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -358,7 +360,6 @@
                 });
             }
         });
-
     </script>
 
     <script>
@@ -371,6 +372,28 @@
                 document.getElementById('modal-message-content').innerHTML = messageContent;
                 $('#messageModal').modal('show');
             {% endif %}
+        });
+    </script>
+
+    <script>
+        document.getElementById('validateOrderButton').addEventListener('click', function (event) {
+            // Get all radio buttons with name "shipping_option"
+            var shippingOptions = document.getElementsByName('shipping_option');
+
+            // Check if any of the radio buttons are selected
+            var isOptionSelected = false;
+            for (var i = 0; i < shippingOptions.length; i++) {
+                if (shippingOptions[i].checked) {
+                    isOptionSelected = true;
+                    break;
+                }
+            }
+
+            // If no option is selected, alert the user and prevent the link from being followed
+            if (!isOptionSelected) {
+                alert('Veuillez sélectionner une option de livraison.');
+                event.preventDefault();
+            }
         });
     </script>
 
