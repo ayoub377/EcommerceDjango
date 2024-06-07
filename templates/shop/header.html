@@ -171,7 +171,7 @@
                                                 </h4>
 
                                                 <span class="cart-product-info">
-													<span class="cart-product-qty">{{ item.quantity }}</span>x {{ product.price }} Dhs
+													<span class="cart-product-qty">{{ item.quantity }}</span>x {{ product.price_after_discount }} Dhs
                                                 </span>
                                             </div>
                                             <!-- End .product-details -->
@@ -353,10 +353,6 @@
         <!-- End .container -->
     </div>
     <!-- End .header-bottom -->
-<script>
-    document.on("click",".login-link",function (e){
-        e.preventDefault();
-    })
-</script>
+
 </header>
 

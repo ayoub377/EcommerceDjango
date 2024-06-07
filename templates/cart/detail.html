@@ -67,7 +67,7 @@
                                                     <a href="#">{{ product.name }}</a>
                                                 </h5>
                                             </td>
-                                            <td>{{ product.price }}</td>
+                                            <td>{{ product.price_after_discount }}</td>
                                             <td>
                                                 <div class="product-single-qty">
                                                     <input id="quantity-{{ product.id }}"
@@ -103,7 +103,7 @@
                             <tbody>
                             <tr>
                                 <td>Sous-total</td>
-                                <td>{{ cart.get_sub_total_price }}</td>
+                                <td id="sous_total">{{ cart.get_sub_total_price }}</td>
                             </tr>
 
                             <tr>
@@ -205,8 +205,6 @@
                                                 <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
                                             </div>
                                         {% endif %}
-                                        <a href="{% url 'myshop:quick-view' product.id %}" class="btn-quickview"
-                                           title="Quick View">aperçu rapide</a>
                                     </figure>
                                     <div class="product-details">
                                         <div class="category-list">
@@ -223,7 +221,7 @@
                                                 <span class="product-price">${{ product.discounted_price }}</span>
                                                 <del class="product-old-price">${{ product.price }}</del>
                                             {% else %}
-                                                <span class="product-price">{{ product.price }} Dhs</span>
+                                                <span class="product-price">{{ price_after_discount }} Dhs</span>
                                             {% endif %}
                                         </div>
                                         <div class="product-action">
@@ -244,6 +242,30 @@
             <div class="mb-6"></div>
         </div>
     </main><!-- End .main -->
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Messages will be inserted here by JavaScript -->
+                    <div id="modal-message-content"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -341,30 +363,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var cartTotal = parseFloat("{{ cart.get_total_price_after_discounte }}");
-
-            var livraisonGratuite = document.getElementById('livraisonGratuite');
-            var livraisonCasablanca = document.getElementById('livraisonCasablanca');
-            var livraisonHorsCasablanca = document.getElementById('livraisonHorsCasablanca');
-
-            // Function to enable or disable shipping options based on cart total
-            function updateShippingOptions() {
-                if (cartTotal >= 400) {
-                    livraisonGratuite.disabled = false;
-                    livraisonCasablanca.disabled = true;
-                    livraisonHorsCasablanca.disabled = true;
-                } else {
-                    livraisonGratuite.disabled = true;
-                    livraisonCasablanca.disabled = false;
-                    livraisonHorsCasablanca.disabled = false;
-                }
-            }
-
-            // Initial check
-            updateShippingOptions();
+            {% if messages %}
+                var messageContent = "";
+                {% for message in messages %}
+                    messageContent += `<div class="alert alert-{{ message.tags }}">{{ message }}</div>`;
+                {% endfor %}
+                document.getElementById('modal-message-content').innerHTML = messageContent;
+                $('#messageModal').modal('show');
+            {% endif %}
         });
     </script>
-
 
 
 {% endblock %}

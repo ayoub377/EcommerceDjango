@@ -89,12 +89,14 @@
                         <hr class="short-divider">
 
                         <div class="price-box">
-                            {% if product.price_before_Discount %}
-                         <span class="old-price">{{ product.price_before_Discount }} Dhs</span>
-                          {% endif %}
-
-                            <span class="new-price">{{ product.price }} Dhs</span>
+                            {% if product.discount > 0 %}
+                         <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            <span class="old-price">{{ product.price }} Dhs</span>
+                            {% else %}
+                            <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            {% endif %}
                         </div>
+
 
                         <div class="product-desc">
                             <p>{{ product.description }}</p>
@@ -311,7 +313,7 @@
                                 </div>
                                 <!-- End .product-container -->
                                 <div class="price-box">
-                                    <span class="product-price">{{ product.price }} Dhs</span>
+                                    <span class="product-price">{{ product.price_after_discount }} Dhs</span>
                                 </div>
                                 <!-- End .price-box -->
                             </div>

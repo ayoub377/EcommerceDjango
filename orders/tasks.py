@@ -31,8 +31,9 @@ def order_created(order_id):
     email = EmailMultiAlternatives(
         subject,
         text_content,
-        'tommypep20@gmail.com',
+        'contact@jouetspalace.com',
         [order.email]
     )
+
     email.attach_alternative(html_content, 'text/html')
     email.send()
