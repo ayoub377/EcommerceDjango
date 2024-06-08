@@ -161,7 +161,8 @@
                             {% endfor %}
                             </tbody>
                             <tfoot>
-                                <tr class="cart-subtotal">
+                                {% if cart.get_discount_percent %}
+                                    <tr class="cart-subtotal">
                                 <td>
                                     <h4>Total Avant Promo</h4>
                                 </td>
@@ -170,13 +171,25 @@
                                     <span>{{ cart.get_total_price |floatformat:2}} Dhs</span>
                                 </td>
                             </tr>
+                                {% endif %}
+                                {% if cart.get_discount_percent %}
                                <tr class="cart-subtotal">
                                 <td>
                                     <h4>Pourcentage reduction</h4>
                                 </td>
 
                                 <td class="price-col">
-                                    <span>{{ cart.get_discount_percent }} %</span>
+                                       <span>{{ cart.get_discount_percent }} %</span>
+                                </td>
+                                   {% endif %}
+                            </tr>
+                                 <tr class="cart-subtotal">
+                                <td>
+                                    <h4>Total Livraison</h4>
+                                </td>
+
+                                <td class="price-col">
+                                    <span>{{ cart.get_shipping_cost | floatformat:2 }} Dhs</span>
                                 </td>
                             </tr>
                             <tr class="cart-subtotal">

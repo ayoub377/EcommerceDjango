@@ -62,9 +62,9 @@
                                                     <span class="product-label label-hot">HOT</span>
                                                 </div>
                                             {% endif %}
-                                            {% if product.discount_percentage %}
+                                            {% if product.discount > 0 %}
                                                 <div class="label-group">
-                                                    <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
+                                                    <span class="product-label label-sale">-{{ product.discount }}%</span>
                                                 </div>
                                             {% endif %}
                                         </figure>
@@ -79,8 +79,8 @@
                                                 <!-- Render product ratings here if available -->
                                             </div>
                                             <div class="price-box">
-                                                {% if product.discounted_price %}
-                                                    <span class="product-price">{{ product.discounted_price }} Dhs</span>
+                                                {% if product.discount > 0 %}
+                                                    <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
                                                     <del class="product-old-price">{{ product.price }} Dhs</del>
                                                 {% else %}
                                                     <span class="product-price">{{ product.price }} Dhs</span>
@@ -171,7 +171,7 @@
                                                             <!-- Add your rating display logic here if applicable -->
                                                         </div>
                                                         <div class="price-box">
-                                                            <span class="product-price">{{ product.price }}</span>
+                                                            <span class="product-price">{{ product.price_after_Discount }}</span>
                                                         </div>
                                                     </div>
                                                 </div>

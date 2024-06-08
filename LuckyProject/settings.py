@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'mptt',
     'tailwind',
     'theme',
-    "anymail",
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
     'django.forms',

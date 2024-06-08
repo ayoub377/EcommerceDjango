@@ -62,6 +62,9 @@ class Cart(object):
     def get_total_price(self):
         return self.get_sub_total_price() + Decimal(self.shipping_cost)
 
+    def get_shipping_cost(self):
+        return Decimal(self.shipping_cost)
+
     def clear(self):
         """
         Remove all items from the cart.
