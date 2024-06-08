@@ -157,7 +157,15 @@
                                         - {{ cart.get_discount|floatformat:2 }} Dhs
                                     </td>
                                 </tr>
-                            {% endif %}
+{%endif %}
+                            <tr class="total">
+                                <td>Total livraison</td>
+                                <td colspan="4"></td>
+                                <td class="num" style="width: 200px" id="shipping_cost">
+                                    {{ cart.get_shipping_cost }} Dhs
+                                </td>
+                            </tr>
+
                             <tr class="total">
                                 <td>Total</td>
                                 <td colspan="4"></td>
@@ -286,19 +294,17 @@
 
             // Function to update cart total using AJAX
             function updateCartTotal(selectedValue) {
-                var csrftoken = getCookie('csrftoken');
-
                 // Make AJAX request
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '{% url 'cart:cart_update_shipping_cost' %}', true); // Replace with your Django view URL
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('X-CSRFToken', csrftoken);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             // Update cart total on success
                             var response = JSON.parse(xhr.responseText);
-                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
+                            document.getElementById('shipping_cost').innerText = response.shipping_cost + " Dhs";                            document.getElementById('cart_total').innerText = response.total_with_shipping; // Assuming there's an element with id "cart_total" to display the total
+
                         } else {
                             // Handle error
                             console.error('Error:', xhr.status);
@@ -309,21 +315,6 @@
             }
         });
 
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    // Check if the cookie name matches the desired name
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
     </script>
 
     <script>

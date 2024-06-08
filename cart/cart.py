@@ -12,7 +12,7 @@ class Cart(object):
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        self.shipping_cost = self.session.get('shipping_cost', 0)
+        self.shipping_cost = Decimal(self.session.get('shipping_cost', 0))
         # store current applied coupon
         self.coupon_id = self.session.get('coupon_id')
 
@@ -60,10 +60,11 @@ class Cart(object):
                    in self.cart.values())
 
     def get_total_price(self):
-        return self.get_sub_total_price() + Decimal(self.shipping_cost)
+        return self.get_sub_total_price() + self.shipping_cost
 
     def get_shipping_cost(self):
-        return Decimal(self.shipping_cost)
+        return self.shipping_cost
+
 
     def clear(self):
         """
@@ -91,5 +92,6 @@ class Cart(object):
     def get_discount_percent(self):
         if self.coupon:
             return self.coupon.discount
+
     def get_total_price_after_discount(self):
         return self.get_total_price() - self.get_discount()
