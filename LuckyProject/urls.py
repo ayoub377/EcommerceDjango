@@ -27,6 +27,7 @@ urlpatterns = [
     path('panier/', include('cart.urls', namespace='cart')),
     path('account/', include('account.urls', namespace='account')),
     path('orders/', include('orders.urls', namespace='orders')),
+    path('accounts/', include('social_django.urls', namespace='social')),
     path('tinymce/', include('tinymce.urls')),
 ]
 
