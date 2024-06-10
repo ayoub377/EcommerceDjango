@@ -1,7 +1,7 @@
 from _decimal import Decimal
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.views.decorators.csrf import csrf_exempt
 from coupons.forms import CouponApplyForm
 from myshop.models import Product
 from .cart import Cart
@@ -34,19 +34,20 @@ def cart_update(request):
         return HttpResponseBadRequest("Invalid request")
 
 
+@csrf_exempt
 def cart_update_shipping_cost(request):
     if request.method == 'POST':
         shipping_option = request.POST.get('shipping_option')
-        shipping_cost = Decimal(shipping_option)  # Convert to Decimal
+        try:
+            shipping_cost = Decimal(shipping_option)
+        except InvalidOperation:
+            return HttpResponseBadRequest("Invalid shipping cost")
 
-        # Save shipping cost to session
-        request.session['shipping_cost'] = str(shipping_cost)  # Convert Decimal to string
+        request.session['shipping_cost'] = str(shipping_cost)
 
-        # Retrieve total price from Cart object
         cart = Cart(request)
-        total_with_shipping = cart.get_total_price()
+        total_with_shipping = cart.get_total_price_after_discount()
 
-        # Return JSON response with updated shipping cost and total price
         return JsonResponse({'shipping_cost': str(shipping_cost), 'total_with_shipping': str(total_with_shipping)})
     else:
         return HttpResponseBadRequest("Invalid request")

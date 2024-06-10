@@ -37,8 +37,6 @@ SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = ['www.jouetspalace.com', '45.90.123.159', '127.0.0.1']
 
-# Application definition
-
 INSTALLED_APPS = [
     'account',
     'django.contrib.admin',
@@ -50,6 +48,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'myshop.apps.MyshopConfig',
     'coupons.apps.CouponsConfig',
+    'social_django',
     'tinymce',
     'mptt',
     'tailwind',
@@ -70,6 +69,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '404060147657-na30qjtg3dcksh1i5lo812po82u6irun.apps.googleusercontent.com'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'account.Customer'
 
@@ -96,6 +109,8 @@ TEMPLATES = [
                 'account.context_processors.getLogin',
                 'account.context_processors.userRegister',
                 'cart.context_processors.AddformCart',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
 
             ],
         },
@@ -138,15 +153,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("localhost", 6379)],
-        },
-    },
-}
-
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
@@ -181,6 +187,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

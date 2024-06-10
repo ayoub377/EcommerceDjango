@@ -1,94 +1,149 @@
 {% extends "base.html" %}
+
 {% block main %}
-		<main class="main">
-			<div class="container login-container">
-				<div class="row">
-					<div class="col-lg-10 mx-auto">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="heading mb-1">
-									<h2 class="title">Login</h2>
-								</div>
+    <style>
+    .google-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #757575;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
+}
 
-								<form action="{% url 'account:login' %}" method="POST">
-									{% csrf_token %}
-                                    <label for="login-email">
-										Username
-										<span class="required">*</span>
-									</label>
-									{{ user_form.email }}
+.google-btn:hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
+}
 
-									<label for="login-password">
-										Password
-										<span class="required">*</span>
-									</label>
-									{{ user_form.password }}
+.google-icon-wrapper {
+    margin-right: 10px;
+}
 
-									<div class="form-footer">
-										<div class="custom-control custom-checkbox mb-0">
-											<input type="checkbox" class="custom-control-input" id="lost-password" />
-											<label class="custom-control-label mb-0" for="lost-password">Remember
-												me</label>
-										</div>
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
 
-										<a href="forgot-password.html"
-											class="forget-password text-dark form-footer-right">Forgot
-											Password?</a>
+.btn-text {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+    </style>
+    <main class="main">
+        <div class="container login-container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="heading mb-1">
+                                <h2 class="title">Login</h2>
+                            </div>
 
-									</div>
-                                     <input type="hidden" name="next" value="{{ request.GET.next  }}">
-									<button type="submit" class="btn btn-dark btn-md w-100">
-										LOGIN
-									</button>
-								</form>
-							</div>
-							<div class="col-md-6">
-								<div class="heading mb-1">
-									<h2 class="title">Creer Un compte</h2>
-								</div>
-								<form action="{% url 'account:register' %}" method="POST">
-                                    {% csrf_token %}
-                                    <label for="register-email">
-										Fist Name
-										<span class="required">*</span>
-									</label>
-                                        {{ register_form.first_name }}
-									  <label for="register-email">
-										Last Name
-										<span class="required">*</span>
-									</label>
-                                        {{ register_form.last_name }}
-                                      <label for="register-email">
-										Username
-										<span class="required">*</span>
-									</label>
-                                        {{ register_form.username }}
-                                    <label for="register-email">
-										Email address
-										<span class="required">*</span>
-									</label>
-                                        {{ register_form.email }}
-									<label for="register-password">
-										Password
-										<span class="required">*</span>
-									</label>
-                                    {{ register_form.password }}
-                                    <label for="register-password">
-										Confirm Password
-										<span class="required">*</span>
-									</label>
-                                    {{ register_form.password2 }}
-									<div class="form-footer mb-2">
-                                        <input type="hidden" name="next" value="{{ request.GET.next  }}">
-										<button type="submit" class="btn btn-dark btn-md w-100 mr-0">
-											Register
-										</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</main><!-- End .main -->
+                            <form action="{% url 'account:login' %}" method="POST">
+                                {% csrf_token %}
+                                <label for="login-email">
+                                    Username
+                                    <span class="required">*</span>
+                                </label>
+                                {{ user_form.email }}
+
+                                <label for="login-password">
+                                    Password
+                                    <span class="required">*</span>
+                                </label>
+                                {{ user_form.password }}
+
+                                <div class="form-footer">
+                                    <div class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" id="lost-password"/>
+                                        <label class="custom-control-label mb-0" for="lost-password">Remember
+                                            me</label>
+                                    </div>
+
+                                    <a href="forgot-password.html"
+                                       class="forget-password text-dark form-footer-right">Forgot
+                                        Password?</a>
+
+                                </div>
+                                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                <button type="submit" class="btn btn-dark btn-md w-100">
+                                    LOGIN
+                                </button>
+                             <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn">
+                                <div class="google-icon-wrapper">
+                                    <img class="google-icon"
+                                         src="https://developers.google.com/identity/images/g-logo.png"
+                                         alt="Google Logo">
+                                </div>
+                                <b>Sign In with Google</b>
+                            </a>
+                            </form>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="heading mb-1">
+                                <h2 class="title">Creer Un compte</h2>
+                            </div>
+                            <form action="{% url 'account:register' %}" method="POST">
+                                {% csrf_token %}
+                                <label for="register-email">
+                                    Fist Name
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.first_name }}
+                                <label for="register-email">
+                                    Last Name
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.last_name }}
+                                <label for="register-email">
+                                    Username
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.username }}
+                                <label for="register-email">
+                                    Email address
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.email }}
+                                <label for="register-password">
+                                    Password
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.password }}
+                                <label for="register-password">
+                                    Confirm Password
+                                    <span class="required">*</span>
+                                </label>
+                                {{ register_form.password2 }}
+                                <div class="form-footer mb-2">
+                                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                    <button type="submit" class="btn btn-dark btn-md w-100 mr-0">
+                                        Register
+                                    </button>
+
+                                </div>
+                                     <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-btn">
+                                <div class="google-icon-wrapper">
+                                    <img class="google-icon"
+                                         src="https://developers.google.com/identity/images/g-logo.png"
+                                         alt="Google Logo">
+                                </div>
+                                <b>Sign Up with Google</b>
+                            </a>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main><!-- End .main -->
 {% endblock %}
