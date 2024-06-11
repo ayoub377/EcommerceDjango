@@ -5349,12 +5349,7 @@ figure .porto-loading-icon {
 .product-default .title-wrap .btn-icon-wish {
   margin-top: -2px;
 }
-.product-default .product-action {
-  position: relative;
-  margin-bottom: 1.5rem;
-  color: #333;
-  text-align: center;
-}
+
 .product-default .btn-add-cart,
 .product-default .btn-icon-wish,
 .product-default .btn-quickview {
@@ -5440,18 +5435,7 @@ figure .porto-loading-icon {
   border-color: #2b2b2d;
   color: #fff;
 }
-.product-default:hover .btn-add-cart.product-type-simple i {
-  display: inline-block;
-}
-.product-default:hover .product-action a {
-  opacity: 1;
-}
-.product-default:hover .product-action a.btn-icon-wish {
-  left: -40px;
-}
-.product-default:hover .product-action a.btn-quickview {
-  right: -40px;
-}
+
 
 .tooltip-top:after {
   content: "";
@@ -5863,26 +5847,10 @@ figure .porto-loading-icon {
   margin: 0;
   transition: 0.3s;
 }
-.divide-line.up-effect .product-default .product-action {
-  transition: 0.3s;
-  opacity: 0;
-}
-.divide-line.up-effect .product-default:hover {
-  padding-top: 1rem;
-  padding-bottom: 4rem;
-}
-.divide-line.up-effect .product-default:hover .product-action {
-  opacity: 1;
-}
-.divide-line .product-default {
-  margin-bottom: 0;
-}
-.divide-line .product-default:hover {
-  box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.1);
-}
-.divide-line .product-default:hover figure {
-  box-shadow: none;
-}
+
+
+
+
 
 .inner-quickview figure {
   position: relative;
@@ -6102,12 +6070,7 @@ figure .porto-loading-icon {
   transform: translateY(5px);
   transition: all 0.3s ease;
 }
-.hidden-description .product-action {
-  position: absolute;
-  left: 0;
-  bottom: -46px;
-  width: 100%;
-}
+
 .hidden-description .btn-quickview {
   transform: none;
   opacity: 0.85;
@@ -6433,9 +6396,7 @@ figure .porto-loading-icon {
 .product-list:not(.inner-icon) .btn-add-cart:not(.product-type-simple) i {
   display: block;
 }
-.product-list .product-action {
-  margin-bottom: 0;
-}
+
 .product-list:hover .btn-icon {
   padding-right: 0.8rem;
   transition: 0.35s;
@@ -6535,9 +6496,7 @@ figure .porto-loading-icon {
 .product-list:hover figure {
   box-shadow: none;
 }
-.product-list:hover .product-action a.btn-icon-wish {
-  left: 0;
-}
+
 
 .product-widget {
   display: flex;
@@ -7050,11 +7009,7 @@ figure .porto-loading-icon {
   .product-list:not(.inner-icon) .btn-add-cart:not(.product-type-simple) i {
     display: block;
   }
-  .product-list .product-action > a {
-    padding: 0;
-    width: 34px;
-    height: 34px;
-  }
+
   .product-list .btn-icon {
     margin-right: 1px;
   }
@@ -10775,9 +10730,7 @@ footer .contact-info-label {
   font-size: 1.5rem;
 }
 
-.product-single-container:not(.product-quick-view) .product-action .add-cart.added-to-cart:before {
-  display: none;
-}
+
 .product-single-container:not(.product-quick-view) .product-action .add-cart.added-to-cart:after {
   margin-left: 8px;
   font-family: "Font Awesome 5 Free";
@@ -10789,10 +10742,7 @@ footer .contact-info-label {
 .product-single-details {
   margin-bottom: 1.1rem;
 }
-.product-single-details .product-action .add-cart {
-  display: inline-flex;
-  align-items: center;
-}
+
 .product-single-details .product-action .add-cart:before {
   content: "";
   margin-top: -2px;
@@ -10961,9 +10911,7 @@ footer .contact-info-label {
   margin-bottom: 1rem;
   margin-top: -2px;
 }
-.product-single-details .divider + .product-action {
-  margin-top: -0.5rem;
-}
+
 .product-single-details .product-action + .divider {
   margin-top: 1.6rem;
 }
@@ -11009,10 +10957,7 @@ footer .contact-info-label {
 .product-single-details .product-desc a {
   color: #222529;
 }
-.product-single-details .product-action {
-  padding: 1.5rem 0 1.6rem;
-  border-top: 1px solid #e7e7e7;
-}
+
 .product-single-details .container {
   align-items: center;
   -ms-flex-align: center;
@@ -11080,15 +11025,7 @@ main .sticky-header.fixed .container, main .sticky-header.fixed .container-fluid
   flex-wrap: wrap;
   -ms-flex-wrap: wrap;
 }
-main .sticky-header.fixed .product-action {
-  flex: 1;
-  -ms-flex: 1;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 260px;
-  text-align: right;
-}
+
 main .sticky-header .sticky-img img {
   margin: 0;
   max-width: 60px;
@@ -14342,10 +14279,7 @@ aside .widget-info i {
 .product-default .btn-add-cart i {
   font-size: 1.6rem;
 }
-.product-default .product-action {
-  display: flex;
-  align-items: center;
-}
+
 
 .price-box {
   margin-bottom: 1.8rem;

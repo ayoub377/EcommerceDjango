@@ -1,3 +1,5 @@
+import math
+
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
@@ -29,7 +31,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=100)
     category = TreeForeignKey('Category', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    description = models.CharField(max_length=300)
+    description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='produits')
@@ -42,7 +44,7 @@ class Product(models.Model):
 
     def price_after_Discount(self):
         price = self.price - (self.discount / 100 * self.price)
-        return round(price, 2)
+        return math.floor(price)
 
     def __str__(self):
         return self.name
