@@ -110,11 +110,11 @@
                     </a>
                     <form action="{% url 'myshop:product_search' %}" method="get">
                         <div class="header-search-wrapper">
-                            <input type="search" class="form-control" name="query" id="qqq" placeholder="Search..."
+                            <input type="search" class="form-control" name="query" id="qqq" placeholder="Recherche..."
                                    required>
                             <div class="select-custom">
                                 <select id="cat-1" name="cat">
-                                    <option value="">Tous Les Categories</option>
+                                    <option value="">Categories</option>
                                     {% for category in categories %}
                                         <option value="{{ category.id }}">{{ category.name }}</option>
                                     {% endfor %}

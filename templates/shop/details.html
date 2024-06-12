@@ -228,10 +228,15 @@
                                 </h3>
                                 <!-- End .product-container -->
 
-                                <div class="price-box">
-                                    <span class="old-price">{{ product.price }} Dhs</span>
-                                    <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
-                                </div>
+                        <div class="price-box">
+                            {% if product.discount > 0 %}
+                         <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            <span class="old-price">{{ product.price }} Dhs</span>
+                            {% else %}
+                            <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            {% endif %}
+                        </div>
+
                                 <!-- End .price-box -->
 
                                 <div class="product-action">
@@ -269,21 +274,18 @@
                                 </a>
                             </figure>
                             <div class="product-details">
-                                <h3 class="product-title"><a
-                                        href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a>
+                                <h3 class="product-title">
+                                       <a href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a>
                                 </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width: 0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top">0</span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">{{ product.price }} Dhs</span>
-                                </div>
+
+                        <div class="price-box">
+                            {% if product.discount > 0 %}
+                         <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            <span class="old-price">{{ product.price }} Dhs</span>
+                            {% else %}
+                            <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            {% endif %}
+                        </div>
                                 <!-- End .price-box -->
                             </div>
                             <!-- End .product-details -->
@@ -303,19 +305,16 @@
                             <div class="product-details">
                                 <h3 class="product-title"><a
                                         href="{% url 'myshop:details_product' product.id %}">{{ product.name }}</a></h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width: 0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top">0</span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
                                 <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">{{ product.price_after_discount }} Dhs</span>
-                                </div>
-                                <!-- End .price-box -->
+
+                        <div class="price-box">
+                            {% if product.discount > 0 %}
+                         <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            <span class="old-price">{{ product.price }} Dhs</span>
+                            {% else %}
+                            <span class="new-price">{{ product.price_after_Discount }} Dhs</span>
+                            {% endif %}
+                        </div>                                <!-- End .price-box -->
                             </div>
                             <!-- End .product-details -->
                         </div>
