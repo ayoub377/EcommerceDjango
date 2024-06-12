@@ -17,8 +17,6 @@ from django.template.loader import render_to_string
 from xhtml2pdf import pisa
 
 
-@login_required
-@login_required
 def Order_create(request):
     cart = Cart(request)
     products_list = []

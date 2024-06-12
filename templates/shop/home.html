@@ -26,6 +26,7 @@
             <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
                 <figure class="w-100">
                     <img src="{% static 'images/demoes/demo7/banners/banner-1.png' %}" style="background-color: #4a4a4a;" alt="banner">
+
                 </figure>
                 <!-- End .banner-layer -->
             </div><!-- End .home-slide -->
@@ -73,6 +74,7 @@
                             <figure>
                                 <a href="{% url 'myshop:details_product' product.id %}">
                                     <img src="{{ product.image.url }}" alt="product" width="300" height="300">
+
                                 </a>
                                 <div class="label-group">
                                     {% if product.discount %}

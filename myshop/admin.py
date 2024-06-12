@@ -1,5 +1,4 @@
 import csv
-
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.urls import reverse
@@ -57,9 +56,10 @@ class ImagesAdmin(ModelAdmin):
     list_display = ['name']
     list_display_links = ('name',)
 
+
 @admin.register(Subscriber)
 class ImagesAdmin(ModelAdmin):
-    list_display = ['email']
+    list_display = ['email', 'subscribed_at']
 
 
 class RatingAdmin(admin.ModelAdmin):
@@ -68,9 +68,9 @@ class RatingAdmin(admin.ModelAdmin):
 
 
 class AdditionalInformationInline(admin.ModelAdmin):
-    list_display = ('poids','couleurs','marque','product')
+    list_display = ('poids', 'couleurs', 'marque', 'product')
 
 
 admin.site.register(Review, RatingAdmin)
 
-admin.site.register(AdditionalInformation,AdditionalInformationInline)
+admin.site.register(AdditionalInformation, AdditionalInformationInline)
