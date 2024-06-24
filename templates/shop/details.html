@@ -43,13 +43,10 @@
 
                         <div class="prod-thumbnail owl-dots">
                             {% for image in images %}
-
                                 <div class="owl-dot">
                                     <img src="{{ image.image.url }}" width="110" height="110"
                                          alt="product-thumbnail"/>
                                 </div>
-
-
                             {% endfor %}
 
                         </div>
@@ -73,7 +70,7 @@
                                 </a>
                             </div>
 
-                            <div class="product-next">
+                        <div class="product-next">
                                 <a href="#">
                                     <span class="product-link"></span>
                                     <span class="product-popup">
@@ -109,7 +106,7 @@
                         </ul>
 
                         <div class="product-action">
-                            <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}" method="post">
+                            <form class="add-to-cart-form" action="{% url 'cart:cart_add' product.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="product-single-qty">
                                     {{ formCart.quantity }}

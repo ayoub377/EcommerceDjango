@@ -20,13 +20,12 @@
     </style>
  <main class="main">
         <div class="home-top-container appear-animate" data-animation-name="fadeIn" data-animation-delay="100">
-            <div class="container">
-        <div class="row">
-        <div class="col-lg-6 mb-2">
+        <div class="container">
+         <div class="row">
+         <div class="col-lg-6 mb-2">
             <div class="home-banner banner banner1 banner-md-vw banner-sm-vw d-flex align-items-center">
                 <figure class="w-100">
                     <img src="{% static 'images/demoes/demo7/banners/banner-1.png' %}" style="background-color: #4a4a4a;" alt="banner">
-
                 </figure>
                 <!-- End .banner-layer -->
             </div><!-- End .home-slide -->
@@ -48,7 +47,7 @@
             <section class="featured-products-section appear-animate" data-animation-name="fadeInUpShorter"
                      data-animation-delay="100">
  {%if hot_deals %}
-          <h2 class="section-title text-center d-flex align-items-center">Featured Products
+          <h2 class="section-title text-center d-flex align-items-center">Produits populaires
                 </h2> 
 
 {%endif %}
@@ -69,7 +68,7 @@
                                                             }
                                                         }
                                                     }">
-                    {% for product in hot_deals %}
+                    {% for product in featured_products %}
                         <div class="product-default left-details">
                             <figure>
                                 <a href="{% url 'myshop:details_product' product.id %}">
@@ -157,7 +156,7 @@
              data-animation-delay="100">
             {% if hot_deals %}
                 <div class="container">
-                <h2 class="section-title text-center d-flex align-items-center">Hot Deals</h2>
+                <h2 class="section-title text-center d-flex align-items-center">Bonnes Affaires</h2>
 
                 <div class="row">
                     {% for product in hot_deals %}
