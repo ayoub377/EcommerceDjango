@@ -43,13 +43,10 @@
 
                         <div class="prod-thumbnail owl-dots">
                             {% for image in images %}
-
                                 <div class="owl-dot">
                                     <img src="{{ image.image.url }}" width="110" height="110"
                                          alt="product-thumbnail"/>
                                 </div>
-
-
                             {% endfor %}
 
                         </div>
@@ -58,7 +55,6 @@
 
                     <div class="col-lg-7 col-md-6 product-single-details">
                         <h1 class="product-title">{{ product.name }}</h1>
-
                         <div class="product-nav">
                             <div class="product-prev">
                                 <a href="#">
@@ -67,13 +63,12 @@
                     <span class="box-content">
                         <img alt="product" width="150" height="150" src="{{ product.image.url }}"
                              style="padding-top: 0px;">
-
                     </span>
                 </span>
-                                </a>
+               </a>
                             </div>
 
-                            <div class="product-next">
+                        <div class="product-next">
                                 <a href="#">
                                     <span class="product-link"></span>
                                     <span class="product-popup">
@@ -109,7 +104,7 @@
                         </ul>
 
                         <div class="product-action">
-                            <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}" method="post">
+                            <form class="add-to-cart-form" action="{% url 'cart:cart_add' product.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="product-single-qty">
                                     {{ formCart.quantity }}
@@ -149,8 +144,8 @@
                         <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content"
                            role="tab" aria-controls="product-reviews-content" aria-selected="false"></a>
                     </li>
-                </ul>
 
+                </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
                          aria-labelledby="product-tab-desc">
@@ -204,9 +199,9 @@
             <!-- End .product-single-tabs -->
 
             <div class="products-section pt-0">
-{%if recommended_products %}
+        {%if recommended_products %}
                   <h2 class="section-title mt-0">Produits Similaires</h2>
-{%endif %}
+        {%endif %}
                 <div class="products-slider 5col owl-carousel owl-theme dots-top dots-small" data-owl-options="{
 						'dots': true
 					}">

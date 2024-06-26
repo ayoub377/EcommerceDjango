@@ -6,6 +6,8 @@ type_paiements = [
     ('paiement par virement bancaire', 'paiement par virement bancaire'),
     ('paiement sur livraison', 'paiement sur livraison')
 ]
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
     prenom = models.CharField('prenom', max_length=50)
