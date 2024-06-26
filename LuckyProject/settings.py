@@ -35,7 +35,7 @@ DEBUG = env('DEBUG')
 
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = ['www.jouetspalace.com', '45.90.123.159', '127.0.0.1']
+ALLOWED_HOSTS = ['www.jouetspalace.com', '45.90.123.159', '127.0.0.1','jouetspalace.com']
 
 INSTALLED_APPS = [
     'account',

@@ -26,12 +26,6 @@
                                                     <span class="product-label label-sale">-{{ product.discount_percentage }}%</span>
                                                 </div>
                                             {% endif %}
-                                            <div class="btn-icon-group">
-                                                <a href="#" class="btn-icon btn-icon-wish">
-                                                    <i class="icon-heart"></i>
-                                                </a>
-                                            </div>
-                                            <a href="#" class="btn-quickview" title="Quick View">Quick View</a>
                                         </figure>
                                         <div class="product-details">
                                             <div class="category-list">
@@ -43,14 +37,19 @@
                                             <div class="ratings-container">
                                                 <!-- Render product ratings here if available -->
                                             </div>
-                                            <div class="price-box">
-                                                {% if product.discounted_price %}
-                                                    <span class="product-price">{{ product.discounted_price }} Dhs</span>
+
+                                           <div class="price-box">
+                                                {% if product.discount > 0 %}                                       
+
+                                                        <span class="product-price">{{ product.price_after_Discount }} Dhs
+
                                                     <del class="product-old-price">{{ product.price }} Dhs</del>
                                                 {% else %}
                                                     <span class="product-price">{{ product.price }} Dhs</span>
                                                 {% endif %}
                                             </div>
+
+                                           
                                             <div class="product-action">
                                                 <form id="add-to-cart" action="{% url 'cart:cart_add' product.id %}"
                                                       method="post">
@@ -102,7 +101,7 @@
                                                             <!-- Add your rating display logic here if applicable -->
                                                         </div>
                                                         <div class="price-box">
-                                                            <span class="product-price">{{ product.price_after_discount }}</span>
+                                                            <span class="product-price">{{ product.price_after_Discount }} Dhs</span>
                                                         </div>
                                                     </div>
                                                 </div>
