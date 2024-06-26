@@ -1461,6 +1461,7 @@
 				}, 300 );
 			} );
 		},
+
 		videoModal: function () {
 			// Popup - Iframe Video - Map etc.
 			if ( $.fn.magnificPopup ) {
